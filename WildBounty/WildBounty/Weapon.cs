@@ -7,7 +7,7 @@ namespace WildBounty
 {
     /*
      * Authors: Dezmon Gilbert
-     * Purpose: Parent class for weapons
+     * Purpose: class for weapons
      * Caveats: none
      * */
     class Weapon

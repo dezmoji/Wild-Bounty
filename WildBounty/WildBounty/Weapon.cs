@@ -10,7 +10,7 @@ namespace WildBounty
      * Purpose: class for weapons
      * Caveats: none
      * */
-    class Weapon
+    class Weapon : Drop
     {
         // attributes
         private int damage; // damage dealt

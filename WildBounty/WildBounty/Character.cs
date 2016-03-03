@@ -10,7 +10,7 @@ namespace WildBounty
      * Purpose: Parent class for player and enemies
      * Caveats: none
      * */
-    class Character
+    class Character : GameObject
     {
         // attributs
         private int health; // health of character

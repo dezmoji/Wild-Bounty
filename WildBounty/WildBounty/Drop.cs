@@ -7,5 +7,7 @@ namespace WildBounty
 {
     class Drop : GameObject
     {
+        // Rectangle
+        // Texture
     }
 }

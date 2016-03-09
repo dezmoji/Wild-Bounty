@@ -7,5 +7,11 @@ namespace WildBounty
 {
     class Cover : GameObject
     {
+        // Health value
+
+        // Health property
+        
+        
+        // If the health of the object is below zero, disappear
     }
 }

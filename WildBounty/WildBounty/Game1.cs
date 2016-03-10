@@ -4,6 +4,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace WildBounty
 {
+    /*
+     * Author: Dezmon Gilbert
+     * Purpose: To handle running the game 
+     * Caveats: none
+     * */
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -11,6 +16,21 @@ namespace WildBounty
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        // attributes 
+        enum GameState {Menu, // main menu
+        Game,// the game being played
+        GameOver, // when the game is finished
+        Credits, // credit screen
+        Scores, // screen to display scores
+        Options, // screen to display the options
+        Help, // help screen
+        About,  // screen that gives information about the game and the creators
+        Tips, // screen that gives the user tips on how to succeed and play
+        Controls // shows the user the controls for the game
+        }
+        GameState gameState;
+        KeyboardState kbState, prevKbState;
 
         public Game1()
         {
@@ -27,7 +47,8 @@ namespace WildBounty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            // intial state of the game
+            gameState = GameState.Menu;
             base.Initialize();
         }
 
@@ -64,6 +85,55 @@ namespace WildBounty
 
             // TODO: Add your update logic here
 
+            // set up the finite state machine using a switch
+            switch(gameState)
+            {
+                case GameState.Menu:
+                    /* psuedo code for now until i can implement this 
+                     * if(player presses 's')
+                     * {
+                     *      gameState = GameState.Game;
+                     *      this.StartGame();
+                     * }
+                     * if(player presses 'c')
+                     * {
+                     *      gameState = GameState.Credits;
+                     * }
+                     * if(player presses 'h')
+                     * {
+                     *      gameState = GameState.Help;
+                     * }
+                     * if(player presses 'r')
+                     * {
+                     *      gameState = GameState.Scores;
+                     * }
+                     * */
+                    break;
+                case GameState.Game:
+                    /*
+                     * if(player health = 0)
+                     * {
+                     *      gameState = GameState.GameOver;
+                     * }
+                     * */
+                    break;
+                case GameState.GameOver:
+                    break;
+                case GameState.Scores:
+                    break;
+                case GameState.Options:
+                    break;
+                case GameState.Credits:
+                    break;
+                case GameState.Help:
+                    break;
+                case GameState.About:
+                    break;
+                case GameState.Tips:
+                    break;
+                case GameState.Controls:
+                    break;
+            }
             base.Update(gameTime);
         }
 

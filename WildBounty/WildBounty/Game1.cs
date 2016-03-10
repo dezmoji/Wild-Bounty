@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 namespace WildBounty
 {
     /*
-     * Author: Dezmon Gilbert
+     * Authors: Dezmon Gilbert
      * Purpose: To handle running the game 
      * Caveats: none
      * */
@@ -111,27 +111,95 @@ namespace WildBounty
                     break;
                 case GameState.Game:
                     /*
-                     * if(player health = 0)
+                     * if(player.Health == 0)
                      * {
                      *      gameState = GameState.GameOver;
+                     * }
+                     * if(enemy.Health == 0)
+                     * {
+                     *      player.BountyScore += enemy.Points;
                      * }
                      * */
                     break;
                 case GameState.GameOver:
+                    /*
+                     * if(player presses 't') // for try again
+                     * {
+                     *      gameState = GameState.Game;
+                     * }
+                     * if(player presses 'm') 
+                     * {
+                     *      gameState = GameState.Menu;
+                     * }
+                     * */
                     break;
                 case GameState.Scores:
+                    /*
+                     * if(player presses 'b')
+                     * {
+                     *      gameState = GameState.Menu;
+                     * }   
+                     * */
                     break;
                 case GameState.Options:
+                    /*
+                     * if(player presses 'b')
+                     * {
+                     *      gameState = GameState.Menu;
+                     * }   
+                     * */
                     break;
                 case GameState.Credits:
+                    /*
+                     * if(player presses 'b')
+                     * {
+                     *      gameState = GameState.Menu;
+                     * }   
+                     * */
                     break;
                 case GameState.Help:
+                    /*
+                     * if(player presses 'b')
+                     * {
+                     *      gameState = GameState.Menu;
+                     * } 
+                     * * if(player presses 'a')
+                     * {
+                     *      gameState = GameState.About;
+                     * } 
+                     * * if(player presses 't')
+                     * {
+                     *      gameState = GameState.Tips;
+                     * } 
+                     * * if(player presses 'c')
+                     * {
+                     *      gameState = GameState.Controls;
+                     * } 
+                     * */
                     break;
                 case GameState.About:
+                    /*
+                     * if(player presses 'b')
+                     * {
+                     *      gameState = GameState.Help;
+                     * }   
+                     * */
                     break;
                 case GameState.Tips:
+                    /*
+                     * if(player presses 'b')
+                     * {
+                     *      gameState = GameState.Help;
+                     * }   
+                     * */
                     break;
                 case GameState.Controls:
+                    /*
+                     * if(player presses 'b')
+                     * {
+                     *      gameState = GameState.Help;
+                     * }   
+                     * */
                     break;
             }
             base.Update(gameTime);
@@ -146,8 +214,51 @@ namespace WildBounty
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            if(gameState == GameState.Menu)
+            {
 
+            }
+            if (gameState == GameState.Game)
+            {
+
+            }
+            if (gameState == GameState.GameOver)
+            {
+
+            }
+            if (gameState == GameState.Scores)
+            {
+
+            }
+            if (gameState == GameState.Options)
+            {
+
+            }
+            if (gameState == GameState.Credits)
+            {
+
+            }
+            if (gameState == GameState.Help)
+            {
+
+            }
+            if (gameState == GameState.About)
+            {
+
+            }
+            if (gameState == GameState.Tips)
+            {
+
+            }
+            if (gameState == GameState.Controls)
+            {
+
+            }
+            spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        // method to check for input
     }
 }

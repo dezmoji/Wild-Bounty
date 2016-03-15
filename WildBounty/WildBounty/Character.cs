@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace WildBounty
 {
@@ -22,6 +25,10 @@ namespace WildBounty
             set { health = value; }
         }
 
+        public Character(int hlth,Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght)
+        {
+            health = hlth;
+        }
         // Property to get the x value of the retangle
 
         // Property to get the y value of the rectangle

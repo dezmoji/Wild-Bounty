@@ -84,122 +84,113 @@ namespace WildBounty
                 Exit();
 
             // TODO: Add your update logic here
+            prevKbState = kbState;
+            kbState = Keyboard.GetState();
 
             // set up the finite state machine using a switch
             switch(gameState)
             {
                 case GameState.Menu:
-                    /* psuedo code for now until i can implement this 
-                     * if(player presses 's')
-                     * {
-                     *      gameState = GameState.Game;
-                     *      this.StartGame();
-                     * }
-                     * if(player presses 'c')
-                     * {
-                     *      gameState = GameState.Credits;
-                     * }
-                     * if(player presses 'h')
-                     * {
-                     *      gameState = GameState.Help;
-                     * }
-                     * if(player presses 'r')
-                     * {
-                     *      gameState = GameState.Scores;
-                     * }
-                     * */
+                    
+                     if(this.SingleKeyPress(Keys.S)== true)
+                     {
+                        gameState = GameState.Game;
+                        //this.StartGame();
+                     }
+                     if(this.SingleKeyPress(Keys.C)== true)
+                     {
+                        gameState = GameState.Credits;
+                     }
+                     if(this.SingleKeyPress(Keys.H)== true)
+                     {
+                        gameState = GameState.Help;
+                     }
+                     if (this.SingleKeyPress(Keys.R) == true)
+                     {
+                        gameState = GameState.Scores;
+                     }
+                     
                     break;
                 case GameState.Game:
-                    /*
-                     * if(player.Health == 0)
-                     * {
-                     *      gameState = GameState.GameOver;
-                     * }
-                     * if(enemy.Health == 0)
-                     * {
-                     *      player.BountyScore += enemy.Points;
-                     * }
-                     * */
+                    
+                     /*if(player.Health == 0)
+                     {
+                        gameState = GameState.GameOver;
+                     }
+                     if(enemy.Health == 0)
+                     {
+                        player.BountyScore += enemy.Points;
+                     }*/
+                     
                     break;
                 case GameState.GameOver:
-                    /*
-                     * if(player presses 't') // for try again
-                     * {
-                     *      gameState = GameState.Game;
-                     * }
-                     * if(player presses 'm') 
-                     * {
-                     *      gameState = GameState.Menu;
-                     * }
-                     * */
+                    
+                     if(this.SingleKeyPress(Keys.T)== true) // for try again
+                     {
+                        gameState = GameState.Game;
+                     }
+                     if(this.SingleKeyPress(Keys.M)== true) 
+                     {
+                        gameState = GameState.Menu;
+                     }
+                     
                     break;
                 case GameState.Scores:
-                    /*
-                     * if(player presses 'b')
-                     * {
-                     *      gameState = GameState.Menu;
-                     * }   
-                     * */
+                    
+                     if(this.SingleKeyPress(Keys.B)== true)
+                     {
+                        gameState = GameState.Menu;
+                     }   
+                     
                     break;
                 case GameState.Options:
-                    /*
-                     * if(player presses 'b')
-                     * {
-                     *      gameState = GameState.Menu;
-                     * }   
-                     * */
+                    if (this.SingleKeyPress(Keys.B) == true)
+                    {
+                        gameState = GameState.Menu;
+                    } 
                     break;
                 case GameState.Credits:
-                    /*
-                     * if(player presses 'b')
-                     * {
-                     *      gameState = GameState.Menu;
-                     * }   
-                     * */
+                    if (this.SingleKeyPress(Keys.B) == true)
+                    {
+                        gameState = GameState.Menu;
+                    } 
                     break;
                 case GameState.Help:
-                    /*
-                     * if(player presses 'b')
-                     * {
-                     *      gameState = GameState.Menu;
-                     * } 
-                     * * if(player presses 'a')
-                     * {
-                     *      gameState = GameState.About;
-                     * } 
-                     * * if(player presses 't')
-                     * {
-                     *      gameState = GameState.Tips;
-                     * } 
-                     * * if(player presses 'c')
-                     * {
-                     *      gameState = GameState.Controls;
-                     * } 
-                     * */
+                    if(this.SingleKeyPress(Keys.B)== true)
+                     {
+                        gameState = GameState.Menu;
+                     } 
+                     if(this.SingleKeyPress(Keys.A) == true)
+                     {
+                        gameState = GameState.About;
+                     } 
+                     if(this.SingleKeyPress(Keys.T) == true)
+                     {
+                        gameState = GameState.Tips;
+                     } 
+                     if(this.SingleKeyPress(Keys.C) == true)
+                     {
+                        gameState = GameState.Controls;
+                     } 
+                     
                     break;
                 case GameState.About:
-                    /*
-                     * if(player presses 'b')
-                     * {
-                     *      gameState = GameState.Help;
-                     * }   
-                     * */
+                    if (this.SingleKeyPress(Keys.B) == true)
+                    {
+                        gameState = GameState.Help;
+                    }
                     break;
                 case GameState.Tips:
-                    /*
-                     * if(player presses 'b')
-                     * {
-                     *      gameState = GameState.Help;
-                     * }   
-                     * */
+                    if (this.SingleKeyPress(Keys.B) == true)
+                    {
+                        gameState = GameState.Help;
+                    }
                     break;
                 case GameState.Controls:
-                    /*
-                     * if(player presses 'b')
-                     * {
-                     *      gameState = GameState.Help;
-                     * }   
-                     * */
+                    if (this.SingleKeyPress(Keys.B) == true)
+                    {
+                        gameState = GameState.Help;
+                    }
                     break;
             }
             base.Update(gameTime);
@@ -217,7 +208,7 @@ namespace WildBounty
             spriteBatch.Begin();
             if(gameState == GameState.Menu)
             {
-
+                
             }
             if (gameState == GameState.Game)
             {
@@ -229,7 +220,7 @@ namespace WildBounty
             }
             if (gameState == GameState.Scores)
             {
-
+                GraphicsDevice.Clear(Color.Azure);
             }
             if (gameState == GameState.Options)
             {
@@ -259,6 +250,17 @@ namespace WildBounty
             base.Draw(gameTime);
         }
 
-        // method to check for input
+        // checks to see if a button was pressed
+        public bool SingleKeyPress(Keys key)
+        {
+            if (kbState.IsKeyDown(key) == true && prevKbState.IsKeyDown(key) == false)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

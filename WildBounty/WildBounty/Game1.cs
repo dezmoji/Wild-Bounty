@@ -127,11 +127,11 @@ namespace WildBounty
                     break;
                 case GameState.Game:
                     
-                     /*if(player.Health == 0)
+                     if(user.Health <= 0)
                      {
                         gameState = GameState.GameOver;
                      }
-                     if(enemy.Health == 0)
+                     /*if(enemy.Health <= 0)
                      {
                         player.BountyScore += enemy.Points;
                      }*/
@@ -275,6 +275,8 @@ namespace WildBounty
             if (gameState == GameState.Scores)
             {
                 GraphicsDevice.Clear(Color.Azure);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50), Color.Black);
+
             }
             if (gameState == GameState.Options)
             {
@@ -298,7 +300,7 @@ namespace WildBounty
             }
             if (gameState == GameState.Controls)
             {
-
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 50, GraphicsDevice.Viewport.Height - 20),Color.White);
             }
             spriteBatch.End();
             base.Draw(gameTime);

@@ -28,6 +28,7 @@ namespace WildBounty
             if(bCollision.Intersects(obj.Rect))// Property for game object rectangle
             {
                 // Use property and subtract 10 health from that
+                obj.Health = obj.Health - 10; 
             }
 
             // Not using:

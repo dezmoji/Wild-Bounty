@@ -16,6 +16,12 @@ namespace WildBounty
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D background;
+        SpriteFont font;
+        Texture2D playerImg;
+        Texture2D bImage; 
+        Player user;
+        Bullet b; 
 
         // attributes 
         enum GameState {Menu, // main menu
@@ -47,9 +53,13 @@ namespace WildBounty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            user = new Player(100, playerImg, 0, 0, 50, 50);
+            b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y, 10, 10);
+
             // intial state of the game
             gameState = GameState.Menu;
             base.Initialize();
+
         }
 
         /// <summary>
@@ -62,6 +72,10 @@ namespace WildBounty
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            background = Content.Load<Texture2D>("Wild-West-1");
+            font = Content.Load<SpriteFont>("SpriteFont1");
+            playerImg = Content.Load<Texture2D>("CharacterAsset");
+            bImage = Content.Load<Texture2D>("BulletAsset");
         }
 
         /// <summary>
@@ -121,7 +135,41 @@ namespace WildBounty
                      {
                         player.BountyScore += enemy.Points;
                      }*/
-                     
+
+                    // Player Movement
+                    if(kbState.IsKeyDown(Keys.Up))
+                    {
+                        user.Rect = new Rectangle(user.Rect.X, user.Rect.Y - 5, user.Rect.Width, user.Rect.Height);
+                        // ScreenWrap(player);
+                    }
+
+                    if(kbState.IsKeyDown(Keys.Left))
+                    {
+                        user.Rect = new Rectangle(user.Rect.X - 5, user.Rect.Y, user.Rect.Width, user.Rect.Height);
+                        // ScreenWrap(player);
+                    }
+
+                    if(kbState.IsKeyDown(Keys.Down))
+                    {
+                        user.Rect = new Rectangle(user.Rect.X, user.Rect.Y + 5, user.Rect.Width, user.Rect.Height); 
+                        // ScreenWrap(player);
+                    }
+
+                    if(kbState.IsKeyDown(Keys.Right))
+                    {
+                        user.Rect = new Rectangle(user.Rect.X + 5, user.Rect.Y, user.Rect.Width, user.Rect.Height); 
+                        // ScreenWrap(player);
+                    }
+
+                    // Bullets
+                    if(kbState.IsKeyDown(Keys.Space))
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            b.Rect = new Rectangle(b.Rect.X + 5, b.Rect.Y, b.Rect.Width, b.Rect.Height);
+                        }
+                    }
+
                     break;
                 case GameState.GameOver:
                     
@@ -208,11 +256,17 @@ namespace WildBounty
             spriteBatch.Begin();
             if(gameState == GameState.Menu)
             {
-                
-            }
+                spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Wild Bounty", new Vector2(200, 120), Color.Red, 0, new Vector2(0, 0), 3, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, "Press S to Start", new Vector2(200, 190), Color.Red);
+                spriteBatch.DrawString(font, "Press C for Credits", new Vector2(200, 210), Color.Red);
+                spriteBatch.DrawString(font, "Press H for Help", new Vector2(200, 230), Color.Red);
+                spriteBatch.DrawString(font, "Press R for Scores", new Vector2(200, 250), Color.Red);
+            } 
             if (gameState == GameState.Game)
             {
-
+                spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                spriteBatch.Draw(bImage, b.Rect, Color.White);
             }
             if (gameState == GameState.GameOver)
             {

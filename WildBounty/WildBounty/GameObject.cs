@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 /*
- * Authors: Alex Pierce, Dezmon Gilbert
+ * Authors: Alex Pierce, Dezmon Gilbert, Niko Bazos
  * Purpose: game object class
  * Date: 3/2/2016
  */
@@ -17,6 +17,7 @@ namespace WildBounty
         // attributes
         private Texture2D image;
         private Rectangle rect;
+        private int health; 
 
         // properties
         public Texture2D Image
@@ -29,6 +30,28 @@ namespace WildBounty
         {
             get { return rect; }
             set { rect = value; }
+        }
+
+        // Not sure if needed
+        /*
+        public int xRec
+        {
+            set { rect.X = value; }
+            get { return rect.X; }
+        }
+
+        public int yRec
+        {
+            set { rect.Y = value; }
+            get { return rect.Y; }
+        }
+        **/
+
+        // All gameobjects will have a health including obstacles
+        public int Health
+        {
+            get { return health; }
+            set { health = value; }
         }
 
         // parameterized constructor to set Rectangles attribute

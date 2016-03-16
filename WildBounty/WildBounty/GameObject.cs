@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Input;
  */
 namespace WildBounty
 {
-    class GameObject
+    public class GameObject
     {
         // attributes
         private Texture2D image;

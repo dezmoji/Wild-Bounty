@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Drawing;
 
 namespace WildBounty
 {
@@ -21,7 +22,9 @@ namespace WildBounty
         Texture2D playerImg;
         Texture2D bImage; 
         Player user;
-        Bullet b; 
+        Bullet b;
+
+        bool bulletExist;
 
         // attributes 
         enum GameState {Menu, // main menu
@@ -54,7 +57,8 @@ namespace WildBounty
         {
             // TODO: Add your initialization logic here
             user = new Player(100, playerImg, 0, 0, 50, 50);
-            b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y, 10, 10);
+            //b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y, 10, 10);
+            bulletExist = false;
 
             // intial state of the game
             gameState = GameState.Menu;
@@ -140,33 +144,43 @@ namespace WildBounty
                     if(kbState.IsKeyDown(Keys.Up))
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y - 5, user.Rect.Width, user.Rect.Height);
-                        // ScreenWrap(player);
+                        ScreenWrap(user);
                     }
 
                     if(kbState.IsKeyDown(Keys.Left))
                     {
                         user.Rect = new Rectangle(user.Rect.X - 5, user.Rect.Y, user.Rect.Width, user.Rect.Height);
-                        // ScreenWrap(player);
+                        ScreenWrap(user);
                     }
 
                     if(kbState.IsKeyDown(Keys.Down))
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y + 5, user.Rect.Width, user.Rect.Height); 
-                        // ScreenWrap(player);
+                        ScreenWrap(user);
                     }
 
                     if(kbState.IsKeyDown(Keys.Right))
                     {
                         user.Rect = new Rectangle(user.Rect.X + 5, user.Rect.Y, user.Rect.Width, user.Rect.Height); 
-                        // ScreenWrap(player);
+                        ScreenWrap(user);
                     }
 
                     // Bullets
-                    if(kbState.IsKeyDown(Keys.Space))
+                    if(kbState.IsKeyDown(Keys.Space)&&bulletExist == false)
                     {
-                        for (int i = 0; i < 5; i++)
+                        b = new Bullet(10, bImage, user.Rect.X+50, user.Rect.Y+10, 10, 10);
+                        bulletExist = true;
+                        /*for (int i = 0; i < 5; i++)
                         {
                             b.Rect = new Rectangle(b.Rect.X + 5, b.Rect.Y, b.Rect.Width, b.Rect.Height);
+                        }*/
+                    }
+                    if(bulletExist == true)
+                    {
+                        b.Rect = new Rectangle(b.Rect.X + 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
+                        if(b.Rect.X > GraphicsDevice.Viewport.Width)
+                        {
+                            bulletExist = false;
                         }
                     }
 
@@ -266,7 +280,10 @@ namespace WildBounty
             if (gameState == GameState.Game)
             {
                 spriteBatch.Draw(playerImg, user.Rect, Color.White);
-                spriteBatch.Draw(bImage, b.Rect, Color.White);
+                if(bulletExist == true)
+                {
+                    spriteBatch.Draw(bImage, b.Rect, Color.White);
+                }
             }
             if (gameState == GameState.GameOver)
             {
@@ -316,6 +333,26 @@ namespace WildBounty
             else
             {
                 return false;
+            }
+        }
+
+        public void ScreenWrap(GameObject g)
+        {
+            if (g.Rect.X < -g.Rect.Width)
+            {
+                g.Rect = new Rectangle(GraphicsDevice.Viewport.Width, g.Rect.Y, g.Rect.Width, g.Rect.Height);
+            }
+            if (g.Rect.X > GraphicsDevice.Viewport.Width)
+            {
+                g.Rect = new Rectangle(0, g.Rect.Y, g.Rect.Width, g.Rect.Height);
+            }
+            if (g.Rect.Y < -g.Rect.Height)
+            {
+                g.Rect = new Rectangle(g.Rect.X, GraphicsDevice.Viewport.Height, g.Rect.Width, g.Rect.Height);
+            }
+            if (g.Rect.Y > GraphicsDevice.Viewport.Height)
+            {
+                g.Rect = new Rectangle(g.Rect.X, 0, g.Rect.Width, g.Rect.Height);
             }
         }
     }

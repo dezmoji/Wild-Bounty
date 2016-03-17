@@ -6,7 +6,7 @@ using System.Drawing;
 namespace WildBounty
 {
     /*
-     * Authors: Dezmon Gilbert
+     * Authors: Dezmon Gilbert, Niko Bazos, Alex Pierce
      * Purpose: To handle running the game 
      * Caveats: none
      * */
@@ -20,7 +20,12 @@ namespace WildBounty
         Texture2D background;
         SpriteFont font;
         Texture2D playerImg;
-        Texture2D bImage; 
+        Texture2D bImage;
+        Texture2D helpMenu;
+        Texture2D gameoverMenu;
+        Texture2D creditsMenu;
+        Texture2D scoresMenu;
+        Texture2D optionsMenu;
         Player user;
         Bullet b;
 
@@ -80,6 +85,11 @@ namespace WildBounty
             font = Content.Load<SpriteFont>("SpriteFont1");
             playerImg = Content.Load<Texture2D>("CharacterAsset");
             bImage = Content.Load<Texture2D>("BulletAsset");
+            helpMenu = Content.Load<Texture2D>("help");
+            gameoverMenu = Content.Load<Texture2D>("game over");
+            optionsMenu = Content.Load<Texture2D>("options");
+            scoresMenu = Content.Load<Texture2D>("scores");
+            creditsMenu = Content.Load<Texture2D>("credits");
         }
 
         /// <summary>
@@ -287,37 +297,44 @@ namespace WildBounty
             }
             if (gameState == GameState.GameOver)
             {
-
+                spriteBatch.Draw(gameoverMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             }
             if (gameState == GameState.Scores)
             {
-                GraphicsDevice.Clear(Color.Azure);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50), Color.Black);
-
+                spriteBatch.Draw(scoresMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
             }
             if (gameState == GameState.Options)
             {
-
+                spriteBatch.Draw(optionsMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200,0), Color.Black);
             }
             if (gameState == GameState.Credits)
             {
-
+                spriteBatch.Draw(creditsMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
             }
             if (gameState == GameState.Help)
             {
-
+                spriteBatch.Draw(helpMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
             }
             if (gameState == GameState.About)
             {
+                spriteBatch.DrawString(font, "About Menu", new Vector2(0,0), Color.Black);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
             if (gameState == GameState.Tips)
             {
+                spriteBatch.DrawString(font, "Tips Menu", new Vector2(0, 0), Color.Black);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
             if (gameState == GameState.Controls)
             {
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 50, GraphicsDevice.Viewport.Height - 20),Color.White);
+                spriteBatch.DrawString(font, "Controls Menu", new Vector2(0, 0), Color.Black);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50),Color.White);
             }
             spriteBatch.End();
             base.Draw(gameTime);

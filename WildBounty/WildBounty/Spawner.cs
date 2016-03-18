@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+    
+namespace WildBounty
+{
     /*
      * Authors: Alex Pierce
      * Purpose: spawner class
-     * Date: 3/2/2016
+     * Caveats: Not entirely developed because refers to AI. 
      */
-namespace WildBounty
-{
     class Spawner
     {
+        // attributes
         private int round;
     }
 }

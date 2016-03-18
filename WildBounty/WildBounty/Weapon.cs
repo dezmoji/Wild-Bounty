@@ -12,7 +12,7 @@ namespace WildBounty
      * Authors: Dezmon Gilbert
      * Purpose: class for weapons
      * Caveats: none
-     * */
+     */
     class Weapon : Drop
     {
         // attributes
@@ -24,6 +24,7 @@ namespace WildBounty
             get { return damage; }
         }
 
+        // Parameterized constructor
         public Weapon(Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght)
         {
             

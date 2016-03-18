@@ -5,13 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-/*
- * Authors: Alex Pierce, Dezmon Gilbert, Niko Bazos
- * Purpose: game object class
- * Date: 3/2/2016
- */
+
 namespace WildBounty
 {
+    /*
+     * Authors: Alex Pierce, Dezmon Gilbert, Niko Bazos
+     * Purpose: game object class
+     * Caveats: None
+     */
     public class GameObject
     {
         // attributes

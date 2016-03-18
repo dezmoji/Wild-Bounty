@@ -11,8 +11,8 @@ namespace WildBounty
     /*
      * Authors: Dezmon Gilbert
      * Purpose: Parent class for player and enemies
-     * Caveats: none
-     * */
+     * Caveats: Needs to be added on to for the purpose of AI. 
+     */
     class Character : GameObject
     {
         // attributes

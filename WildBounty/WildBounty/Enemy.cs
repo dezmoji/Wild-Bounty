@@ -8,10 +8,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace WildBounty
 {
-    /*Authors: Dezmon Gilbert
+    /*
+     * Authors: Dezmon Gilbert
      * Purpose: class for the enemy
      * Caveats: none
-     * */
+     */
     class Enemy : Character
     {
         // attributes

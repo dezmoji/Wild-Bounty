@@ -10,8 +10,9 @@ namespace WildBounty
 {
     /*
      * Authors: Alex Pierce, Dezmon Gilbert
-     * Purpose:
-     * */
+     * Purpose: Suppposed to handle in-game obstacles and their deterioration.
+     * Caveats: How the inanimate objects acti in game is not fully completed. 
+     */
     class Cover : GameObject
     {
         // Health value

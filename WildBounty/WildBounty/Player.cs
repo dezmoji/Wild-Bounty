@@ -7,8 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 /*
  * Authors: Alex Pierce, Dezmon Gilbert
- * Purpose: player class
- * Date: 3/2/2016
+ * Purpose: Player Class
+ * Caveats: Score feature is not fully implemented. 
  */
 namespace WildBounty
 {

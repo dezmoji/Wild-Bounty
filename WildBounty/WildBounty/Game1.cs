@@ -15,6 +15,8 @@ namespace WildBounty
     /// </summary>
     public class Game1 : Game
     {
+        // Attributes 
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
@@ -29,19 +31,19 @@ namespace WildBounty
         Player user;
         Bullet b;
 
-        bool bulletExist;
+        bool bulletExist; // bool for projectile algorithim
 
-        // attributes 
-        enum GameState {Menu, // main menu
-        Game,// the game being played
-        GameOver, // when the game is finished
-        Credits, // credit screen
-        Scores, // screen to display scores
-        Options, // screen to display the options
-        Help, // help screen
-        About,  // screen that gives information about the game and the creators
-        Tips, // screen that gives the user tips on how to succeed and play
-        Controls // shows the user the controls for the game
+        // Enum
+        enum GameState {Menu,   // main menu
+        Game,                   // the game being played
+        GameOver,               // when the game is finished
+        Credits,                // credit screen
+        Scores,                 // screen to display scores
+        Options,                // screen to display the options
+        Help,                   // help screen
+        About,                  // screen that gives information about the game and the creators
+        Tips,                   // screen that gives the user tips on how to succeed and play
+        Controls                // shows the user the controls for the game
         }
         GameState gameState;
         KeyboardState kbState, prevKbState;
@@ -61,11 +63,15 @@ namespace WildBounty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
             user = new Player(100, playerImg, 0, 0, 50, 50);
+
             //b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y, 10, 10);
+            
             bulletExist = false;
 
             // intial state of the game
+            
             gameState = GameState.Menu;
             base.Initialize();
 
@@ -118,6 +124,7 @@ namespace WildBounty
             // set up the finite state machine using a switch
             switch(gameState)
             {
+                // Menu State
                 case GameState.Menu:
                     
                      if(this.SingleKeyPress(Keys.S)== true)
@@ -139,12 +146,16 @@ namespace WildBounty
                      }
                      
                     break;
+
+                // Game State
                 case GameState.Game:
                     
                      if(user.Health <= 0)
                      {
                         gameState = GameState.GameOver;
                      }
+
+                    // To be added
                      /*if(enemy.Health <= 0)
                      {
                         player.BountyScore += enemy.Points;
@@ -180,11 +191,8 @@ namespace WildBounty
                     {
                         b = new Bullet(10, bImage, user.Rect.X+50, user.Rect.Y+10, 10, 10);
                         bulletExist = true;
-                        /*for (int i = 0; i < 5; i++)
-                        {
-                            b.Rect = new Rectangle(b.Rect.X + 5, b.Rect.Y, b.Rect.Width, b.Rect.Height);
-                        }*/
                     }
+
                     if(bulletExist == true)
                     {
                         b.Rect = new Rectangle(b.Rect.X + 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
@@ -193,8 +201,9 @@ namespace WildBounty
                             bulletExist = false;
                         }
                     }
-
                     break;
+
+                // GameOver State
                 case GameState.GameOver:
                     
                      if(this.SingleKeyPress(Keys.T)== true) // for try again
@@ -205,8 +214,9 @@ namespace WildBounty
                      {
                         gameState = GameState.Menu;
                      }
-                     
                     break;
+
+                // Scores State
                 case GameState.Scores:
                     
                      if(this.SingleKeyPress(Keys.B)== true)
@@ -215,18 +225,24 @@ namespace WildBounty
                      }   
                      
                     break;
+
+                // Options State
                 case GameState.Options:
                     if (this.SingleKeyPress(Keys.B) == true)
                     {
                         gameState = GameState.Menu;
                     } 
                     break;
+
+                // Credits State
                 case GameState.Credits:
                     if (this.SingleKeyPress(Keys.B) == true)
                     {
                         gameState = GameState.Menu;
                     } 
                     break;
+
+                // Help State
                 case GameState.Help:
                     if(this.SingleKeyPress(Keys.B)== true)
                      {
@@ -244,20 +260,25 @@ namespace WildBounty
                      {
                         gameState = GameState.Controls;
                      } 
-                     
                     break;
+
+                // About State
                 case GameState.About:
                     if (this.SingleKeyPress(Keys.B) == true)
                     {
                         gameState = GameState.Help;
                     }
                     break;
+
+                // Tips State
                 case GameState.Tips:
                     if (this.SingleKeyPress(Keys.B) == true)
                     {
                         gameState = GameState.Help;
                     }
                     break;
+
+                // Controls State
                 case GameState.Controls:
                     if (this.SingleKeyPress(Keys.B) == true)
                     {
@@ -278,6 +299,8 @@ namespace WildBounty
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+
+            // Menu
             if(gameState == GameState.Menu)
             {
                 spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
@@ -287,6 +310,8 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Press H for Help", new Vector2(200, 230), Color.Red);
                 spriteBatch.DrawString(font, "Press R for Scores", new Vector2(200, 250), Color.Red);
             } 
+
+            // Game
             if (gameState == GameState.Game)
             {
                 spriteBatch.Draw(playerImg, user.Rect, Color.White);
@@ -295,47 +320,65 @@ namespace WildBounty
                     spriteBatch.Draw(bImage, b.Rect, Color.White);
                 }
             }
+
+            // Game Over
             if (gameState == GameState.GameOver)
             {
                 spriteBatch.Draw(gameoverMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             }
+
+            // Scores
             if (gameState == GameState.Scores)
             {
                 spriteBatch.Draw(scoresMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
             }
+
+            // Options
             if (gameState == GameState.Options)
             {
                 spriteBatch.Draw(optionsMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200,0), Color.Black);
             }
+
+            // Credits
             if (gameState == GameState.Credits)
             {
                 spriteBatch.Draw(creditsMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
             }
+
+            // Help
             if (gameState == GameState.Help)
             {
                 spriteBatch.Draw(helpMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
             }
+
+            // About
             if (gameState == GameState.About)
             {
                 spriteBatch.DrawString(font, "About Menu", new Vector2(0,0), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
+
+            // Tips
             if (gameState == GameState.Tips)
             {
                 spriteBatch.DrawString(font, "Tips Menu", new Vector2(0, 0), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
+
+            // Controls
             if (gameState == GameState.Controls)
             {
                 spriteBatch.DrawString(font, "Controls Menu", new Vector2(0, 0), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50),Color.White);
             }
+
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -353,6 +396,7 @@ namespace WildBounty
             }
         }
 
+        // ScreenWrap Method
         public void ScreenWrap(GameObject g)
         {
             if (g.Rect.X < -g.Rect.Width)

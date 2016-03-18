@@ -15,7 +15,7 @@ namespace WildBounty
      * */
     class Character : GameObject
     {
-        // attributs
+        // attributes
         private int health; // health of character
         
         // properties 
@@ -25,6 +25,8 @@ namespace WildBounty
             set { health = value; }
         }
 
+
+        // Parameterzied constructor
         public Character(int hlth,Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght)
         {
             health = hlth;

@@ -54,7 +54,7 @@ namespace WildBounty
             set { health = value; }
         }
 
-        // parameterized constructor to set Rectangles attribute
+        // Parameterized constructor to set Rectangles attribute
         public GameObject(Texture2D img, int x, int y, int wth, int hght)
         {
             image = img;

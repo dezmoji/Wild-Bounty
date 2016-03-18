@@ -14,17 +14,17 @@ namespace WildBounty
 {
     class Player : Character
     {
-        // attributes 
+        // Attributes 
         private int bountyScore;
 
-        // properties
+        // Properties
         public int BountyScore
         {
             get { return bountyScore; }
             set { bountyScore = value; }
         }
 
-        // parameterized constructor
+        // Parameterized constructor
         public Player(int hlth, Texture2D img, int x, int y, int wth, int hght):base(hlth,img,x,y,wth,hght)
         {
             bountyScore = 0;

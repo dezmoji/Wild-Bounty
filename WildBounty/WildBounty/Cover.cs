@@ -16,6 +16,7 @@ namespace WildBounty
     {
         // Health value
         private int covHealth;
+
         // Health property
         public int CovHealth
         {
@@ -23,6 +24,7 @@ namespace WildBounty
             set { covHealth = value; }
         }
         
+        // Parameterized Constructor
         public Cover(int ch,Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght)
         {
             covHealth = ch;

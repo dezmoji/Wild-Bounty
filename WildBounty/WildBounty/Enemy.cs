@@ -24,7 +24,7 @@ namespace WildBounty
             set { points = value; }
         }
 
-        // paramterized constructor
+        // Paramterized constructor
         public Enemy(int pnts, int hlth, Texture2D img, int x, int y, int wth, int hght)
             : base(hlth, img, x, y, wth, hght)
         {

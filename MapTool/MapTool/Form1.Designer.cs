@@ -57,7 +57,7 @@
             // TexturePreview
             // 
             this.TexturePreview.Location = new System.Drawing.Point(11, 307);
-            this.TexturePreview.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TexturePreview.Margin = new System.Windows.Forms.Padding(2);
             this.TexturePreview.Name = "TexturePreview";
             this.TexturePreview.Size = new System.Drawing.Size(143, 111);
             this.TexturePreview.TabIndex = 0;
@@ -67,16 +67,20 @@
             // TextureChooser
             // 
             this.TextureChooser.FormattingEnabled = true;
+            this.TextureChooser.Items.AddRange(new object[] {
+            "Dark Sand",
+            "Light Sand"});
             this.TextureChooser.Location = new System.Drawing.Point(11, 257);
-            this.TextureChooser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TextureChooser.Margin = new System.Windows.Forms.Padding(2);
             this.TextureChooser.Name = "TextureChooser";
             this.TextureChooser.Size = new System.Drawing.Size(144, 21);
             this.TextureChooser.TabIndex = 1;
+            this.TextureChooser.SelectedIndexChanged += new System.EventHandler(this.TextureChooser_SelectedIndexChanged);
             // 
             // Confirm
             // 
             this.Confirm.Location = new System.Drawing.Point(11, 452);
-            this.Confirm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Confirm.Margin = new System.Windows.Forms.Padding(2);
             this.Confirm.Name = "Confirm";
             this.Confirm.Size = new System.Drawing.Size(143, 60);
             this.Confirm.TabIndex = 2;
@@ -87,7 +91,7 @@
             // HealthBox
             // 
             this.HealthBox.Location = new System.Drawing.Point(11, 147);
-            this.HealthBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.HealthBox.Margin = new System.Windows.Forms.Padding(2);
             this.HealthBox.Name = "HealthBox";
             this.HealthBox.Size = new System.Drawing.Size(143, 20);
             this.HealthBox.TabIndex = 3;
@@ -95,7 +99,7 @@
             // HeightBox
             // 
             this.HeightBox.Location = new System.Drawing.Point(87, 92);
-            this.HeightBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.HeightBox.Margin = new System.Windows.Forms.Padding(2);
             this.HeightBox.Name = "HeightBox";
             this.HeightBox.Size = new System.Drawing.Size(66, 20);
             this.HeightBox.TabIndex = 4;
@@ -103,7 +107,7 @@
             // XposBox
             // 
             this.XposBox.Location = new System.Drawing.Point(11, 40);
-            this.XposBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.XposBox.Margin = new System.Windows.Forms.Padding(2);
             this.XposBox.Name = "XposBox";
             this.XposBox.Size = new System.Drawing.Size(66, 20);
             this.XposBox.TabIndex = 5;
@@ -112,7 +116,7 @@
             // WidthBox
             // 
             this.WidthBox.Location = new System.Drawing.Point(11, 92);
-            this.WidthBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.WidthBox.Margin = new System.Windows.Forms.Padding(2);
             this.WidthBox.Name = "WidthBox";
             this.WidthBox.Size = new System.Drawing.Size(66, 20);
             this.WidthBox.TabIndex = 6;
@@ -120,7 +124,7 @@
             // YposBox
             // 
             this.YposBox.Location = new System.Drawing.Point(87, 40);
-            this.YposBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.YposBox.Margin = new System.Windows.Forms.Padding(2);
             this.YposBox.Name = "YposBox";
             this.YposBox.Size = new System.Drawing.Size(66, 20);
             this.YposBox.TabIndex = 7;
@@ -128,7 +132,7 @@
             // LootChanceBox
             // 
             this.LootChanceBox.Location = new System.Drawing.Point(11, 201);
-            this.LootChanceBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LootChanceBox.Margin = new System.Windows.Forms.Padding(2);
             this.LootChanceBox.Name = "LootChanceBox";
             this.LootChanceBox.Size = new System.Drawing.Size(143, 20);
             this.LootChanceBox.TabIndex = 9;
@@ -235,7 +239,7 @@
             this.Controls.Add(this.Confirm);
             this.Controls.Add(this.TextureChooser);
             this.Controls.Add(this.TexturePreview);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.TexturePreview)).EndInit();

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Drawing;
+using System.IO;
 
 namespace WildBounty
 {
@@ -20,6 +20,7 @@ namespace WildBounty
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
+        Texture2D gameBackground;
         SpriteFont font;
         Texture2D playerImg;
         Texture2D bImage;
@@ -64,11 +65,22 @@ namespace WildBounty
         {
             // TODO: Add your initialization logic here
 
+            // create player
             user = new Player(100, playerImg, 0, 0, 50, 50);
-
-            //b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y, 10, 10);
-            
             bulletExist = false;
+
+            // read from file
+            try
+            {
+                BinaryReader input = new BinaryReader(File.OpenRead("map.dat"));
+                gameBackground = Content.Load<Texture2D>(input.ReadString());
+            }
+            catch (IOException ioe)
+            {
+                gameBackground = Content.Load<Texture2D>("defaultSand");
+            }
+
+            // get background from file
 
             // intial state of the game
             
@@ -314,7 +326,9 @@ namespace WildBounty
             // Game
             if (gameState == GameState.Game)
             {
+                spriteBatch.Draw(gameBackground, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.Draw(playerImg, user.Rect, Color.White);
+
                 if(bulletExist == true)
                 {
                     spriteBatch.Draw(bImage, b.Rect, Color.White);
@@ -377,7 +391,6 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Controls Menu", new Vector2(0, 0), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50),Color.White);
             }
-
 
             spriteBatch.End();
             base.Draw(gameTime);

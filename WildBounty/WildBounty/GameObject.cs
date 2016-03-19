@@ -48,7 +48,7 @@ namespace WildBounty
         }
         **/
 
-        // All gameobjects will have a health including obstacles
+        // All GameObjects will have a health including obstacles
         public int Health
         {
             get { return health; }

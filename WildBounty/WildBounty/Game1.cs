@@ -203,6 +203,7 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X - 5, user.Rect.Y, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
+                        // switch param for animation FSM
                         strState = "FaceLeft";
                     }
 
@@ -216,10 +217,11 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X + 5, user.Rect.Y, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
+                        // switch param for animation FSM
                         strState = "FaceRight";
                     }
 
-                    // FSM for player direction
+                    // FSM for player animation
                     switch(strState)
                     {
                         case "FaceLeft": move = PlayerState.FaceLeft; break;

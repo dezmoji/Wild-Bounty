@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -10,13 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-=======
+//=======
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
->>>>>>> origin/axm8774-patch-1
+//>>>>>>> origin/axm8774-patch-1
 
 namespace WildBounty
 {
@@ -44,12 +44,16 @@ namespace WildBounty
         Texture2D creditsMenu;
         Texture2D scoresMenu;
         Texture2D optionsMenu;
+        Texture2D BarrelTex;
+        Texture2D CactusTex;
+        Texture2D RubbleTex;
         Player user;
         Bullet b;
         List<Enemy> enemyObj;
         List<Thread> enemyThread;
         int waveCount;
-        
+
+        List<Scenery> SceneryColl;
 
         Vector2 playerLoc;
         bool bulletExist; // bool for projectile algorithim
@@ -107,8 +111,28 @@ namespace WildBounty
             // read from file
             try
             {
-                BinaryReader input = new BinaryReader(File.OpenRead("map.dat"));
-                gameBackground = Content.Load<Texture2D>(input.ReadString());
+                //BinaryReader input = new BinaryReader(File.OpenRead("map.dat"));
+                //gameBackground = Content.Load<Texture2D>(input.ReadString());
+
+                try
+                {
+                    while(true)
+                    {
+                        using (Stream stream = File.Open("map.dat", FileMode.Open))
+                        {
+                            var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                            SceneryColl.Add((Scenery)binaryFormatter.Deserialize(stream));
+                        }
+                    }
+                }
+                catch (EndOfStreamException eos)
+                {
+
+                }
+                catch (IOException ioe)
+                {
+                }
             }
             catch (IOException ioe)
             {
@@ -143,6 +167,9 @@ namespace WildBounty
             optionsMenu = Content.Load<Texture2D>("options");
             scoresMenu = Content.Load<Texture2D>("scores");
             creditsMenu = Content.Load<Texture2D>("credits");
+            BarrelTex = Content.Load<Texture2D>("Barrel");
+            CactusTex = Content.Load<Texture2D>("Cactus");
+            RubbleTex = Content.Load<Texture2D>("Rubble");
         }
 
         /// <summary>

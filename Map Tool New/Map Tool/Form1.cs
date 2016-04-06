@@ -102,7 +102,45 @@ namespace Map_Tool
 
         private void Save_Click(object sender, EventArgs e)
         {
-            
+
+            //select map texture
+            //try
+            //{
+                // create a stream
+                Stream str = File.OpenWrite("..\\..\\..\\..\\..\\WildBounty\\WildBounty\\bin\\WindowsGL\\Debug\\map.dat");
+                str.Close();
+                // create the binary writer object
+                //BinaryWriter output = new BinaryWriter(str);
+
+                    for(int i = 0; i < sceneryColl.Count; i++)
+                    {
+                        using (Stream stream = File.Open("..\\..\\..\\..\\..\\WildBounty\\WildBounty\\bin\\WindowsGL\\Debug\\map.dat", false ? FileMode.Append : FileMode.Create))
+                        {
+                            var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                            binaryFormatter.Serialize(stream, sceneryColl[i]);
+                        }
+                    }
+
+                // populate the file with user selected texture
+                /*switch (TextureChooser.SelectedIndex)
+                {
+                    case 0:
+                        output.Write("mapToolTest");
+                        break;
+                    case 1:
+                        output.Write("defaultSand");
+                        break;
+                    default:
+                        output.Write("defaultSand");
+                        break;
+                }*/
+
+                // close the file since we are done
+                //output.Close();
+            //}
+            //catch (IOException ioe)
+            //{
+            //}
             //try to create a binary file to contain all objects on the map
            // try
            // {
@@ -111,7 +149,7 @@ namespace Map_Tool
 
                 //create the binarywriter
                 //BinaryWriter output = new BinaryWriter(str);
-
+            /*
                 //create file path
                 string dir = @"c:\temp";
                 string serializationFile = Path.Combine(dir, "Map.bin");
@@ -123,7 +161,7 @@ namespace Map_Tool
 
                     bformatter.Serialize(stream, sceneryColl);
                 }
-
+            */
             //}
            // catch(IOException)
             //{

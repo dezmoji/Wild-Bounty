@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -9,6 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+=======
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> origin/axm8774-patch-1
 
 namespace WildBounty
 {
@@ -43,21 +51,32 @@ namespace WildBounty
         int waveCount;
         
 
+        Vector2 playerLoc;
         bool bulletExist; // bool for projectile algorithim
 
         // Enum
-        enum GameState {Menu,   // main menu
-        Game,                   // the game being played
-        GameOver,               // when the game is finished
-        Credits,                // credit screen
-        Scores,                 // screen to display scores
-        Options,                // screen to display the options
-        Help,                   // help screen
-        About,                  // screen that gives information about the game and the creators
-        Tips,                   // screen that gives the user tips on how to succeed and play
-        Controls                // shows the user the controls for the game
+        enum GameState
+        {
+            Menu,   // main menu
+            Game,                   // the game being played
+            GameOver,               // when the game is finished
+            Credits,                // credit screen
+            Scores,                 // screen to display scores
+            Options,                // screen to display the options
+            Help,                   // help screen
+            About,                  // screen that gives information about the game and the creators
+            Tips,                   // screen that gives the user tips on how to succeed and play
+            Controls                // shows the user the controls for the game
         }
+        enum PlayerState            // For animation
+        {
+            FaceRight,              // player faces left
+            FaceLeft                // player faces right
+        }
+
+
         GameState gameState;
+        PlayerState move; 
         KeyboardState kbState, prevKbState;
 
         public Game1()
@@ -75,6 +94,7 @@ namespace WildBounty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            playerLoc = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
 
             // create player
             user = new Player(playerImg, 0, 0, 50, 50,100);
@@ -147,6 +167,8 @@ namespace WildBounty
             // TODO: Add your update logic here
             prevKbState = kbState;
             kbState = Keyboard.GetState();
+            // For animation FSM
+            string strState = "";            
 
             // set up the finite state machine using a switch
             switch(gameState)
@@ -199,6 +221,7 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X - 5, user.Rect.Y, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
+                        strState = "FaceLeft";
                     }
 
                     if(kbState.IsKeyDown(Keys.Down))
@@ -211,6 +234,15 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X + 5, user.Rect.Y, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
+                        strState = "FaceRight";
+                    }
+
+                    // FSM for player direction
+                    switch(strState)
+                    {
+                        case "FaceLeft": move = PlayerState.FaceLeft; break;
+
+                        case "FaceRight": move = PlayerState.FaceRight; break;
                     }
 
                     // Bullets
@@ -343,11 +375,26 @@ namespace WildBounty
             {
                 spriteBatch.Draw(gameBackground, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.Draw(playerImg, user.Rect, Color.White);
+               
 
+                // Code beginnings for player animation
+                /*
+                if(move == PlayerState.FaceRight)
+                {
+                    spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                }
+
+                if(move == PlayerState.FaceLeft)
+                {
+                    spriteBatch.Draw(playerImg, playerLoc, user.Rect, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
+                }
+                */
+          
                 if(bulletExist == true)
                 {
                     spriteBatch.Draw(bImage, b.Rect, Color.White);
                 }
+                
             }
 
             // Game Over

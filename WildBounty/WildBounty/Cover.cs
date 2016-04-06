@@ -15,22 +15,27 @@ namespace WildBounty
      */
     class Cover : GameObject
     {
-        // Health value
-        private int covHealth;
-
-        // Health property
-        public int CovHealth
-        {
-            get { return covHealth; }
-            set { covHealth = value; }
-        }
+        
         
         // Parameterized Constructor
-        public Cover(int ch,Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght)
+        public Cover(Texture2D img, int x, int y, int wth, int hght,int hlth):base(img,x,y,wth,hght,hlth)
         {
-            covHealth = ch;
+            // when the game first starts, the cover will exist
+            IsActive = true;
+
+            // calls the method to make cover disappear at certain point
+            CoverActive();
+
         }
 
         // If the health of the object is below zero, disappear
+        public void CoverActive()
+        {
+            if(this.Health <= 0)
+            {
+                // cover will be set to disappear
+                IsActive = false;
+            }
+        }
     }
 }

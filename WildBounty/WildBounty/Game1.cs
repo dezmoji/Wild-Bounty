@@ -2,6 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System;
 
 namespace WildBounty
 {
@@ -31,6 +38,10 @@ namespace WildBounty
         Texture2D optionsMenu;
         Player user;
         Bullet b;
+        List<Enemy> enemyObj;
+        List<Thread> enemyThread;
+        int waveCount;
+        
 
         bool bulletExist; // bool for projectile algorithim
 
@@ -68,6 +79,10 @@ namespace WildBounty
             // create player
             user = new Player(100, playerImg, 0, 0, 50, 50);
             bulletExist = false;
+
+            // initialize the lists for the enemies
+            enemyObj = new List<Enemy>();
+            enemyThread = new List<Thread>();
 
             // read from file
             try
@@ -406,6 +421,41 @@ namespace WildBounty
             else
             {
                 return false;
+            }
+        }
+        
+        //method to start the game
+        public void StartGame()
+        {
+            // clear data
+            user.BountyScore = 0;
+            waveCount = 0;
+            
+            // start the next way
+            this.NextWave();
+        }
+
+        //method to start the next waves
+        public void NextWave()
+        {   
+            // increment the wave count and calculate how many enemies to make
+            waveCount += 1;
+            int make = 2*waveCount +3;
+
+            // clear the lists
+            enemyObj.Clear();
+            enemyThread.Clear();
+            
+            // loop to create the objects
+            for(int i = 0; i < make; i++)
+            {
+
+            }
+
+            // loop for threads
+            for(int i = 0; i < enemyObj.Count; i++)
+            {
+
             }
         }
 

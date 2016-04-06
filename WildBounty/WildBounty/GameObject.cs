@@ -18,7 +18,8 @@ namespace WildBounty
         // attributes
         private Texture2D image;
         private Rectangle rect;
-        private int health; 
+        private int health;
+        private bool isActive;
 
         // properties
         public Texture2D Image
@@ -31,6 +32,12 @@ namespace WildBounty
         {
             get { return rect; }
             set { rect = value; }
+        }
+
+        public bool IsActive
+        {
+            get { return isActive; }
+            set { isActive = value; }
         }
 
         // Not sure if needed
@@ -56,10 +63,11 @@ namespace WildBounty
         }
 
         // Parameterized constructor to set Rectangles attribute
-        public GameObject(Texture2D img, int x, int y, int wth, int hght)
+        public GameObject(Texture2D img, int x, int y, int wth, int hght, int hlth)
         {
             image = img;
             rect = new Rectangle(x, y, wth, hght);
+            health = hlth;
         }
     }
 }

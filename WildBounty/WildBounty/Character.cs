@@ -15,21 +15,13 @@ namespace WildBounty
      */
     class Character : GameObject
     {
-        // attributes
-        private int health; // health of character
         
-        // properties 
-        public int Health
-        {
-            get { return health; }
-            set { health = value; }
-        }
 
 
         // Parameterzied constructor
-        public Character(int hlth,Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght)
+        public Character(Texture2D img, int x, int y, int wth, int hght, int hlth):base(img,x,y,wth,hght,hlth)
         {
-            health = hlth;
+            
         }
         // Property to get the x value of the retangle
 

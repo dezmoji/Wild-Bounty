@@ -55,19 +55,26 @@ namespace WildBounty
         }
         **/
 
-        // All GameObjects will have a health including obstacles
+        // Most GameObjects will have a health including obstacles
         public int Health
         {
             get { return health; }
             set { health = value; }
         }
 
-        // Parameterized constructor to set Rectangles attribute
+        // Parameterized constructor to set Rectangles and health attributes
         public GameObject(Texture2D img, int x, int y, int wth, int hght, int hlth)
         {
             image = img;
             rect = new Rectangle(x, y, wth, hght);
             health = hlth;
+        }
+
+        // constuctor just to set Rectangles
+        public GameObject(Texture2D img, int x, int y, int wth, int hght)
+        {
+            image = img;
+            rect = new Rectangle(x, y, wth, hght);
         }
     }
 }

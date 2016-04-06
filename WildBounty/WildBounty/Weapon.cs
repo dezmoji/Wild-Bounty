@@ -25,9 +25,9 @@ namespace WildBounty
         }
 
         // Parameterized constructor
-        public Weapon(Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght)
+        public Weapon(Texture2D img, int x, int y, int wth, int hght, int dmg):base(img,x,y,wth,hght)
         {
-            
+            damage = dmg;
         }
     }
 }

@@ -25,9 +25,10 @@ namespace WildBounty
         }
 
         // Parameterized constructor
-        public Player(int hlth, Texture2D img, int x, int y, int wth, int hght):base(hlth,img,x,y,wth,hght)
+        public Player(Texture2D img, int x, int y, int wth, int hght, int hlth):base(img,x,y,wth,hght,hlth)
         {
             bountyScore = 0;
+            IsActive = true;
         }
     }
 }

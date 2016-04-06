@@ -77,7 +77,7 @@ namespace WildBounty
             // TODO: Add your initialization logic here
 
             // create player
-            user = new Player(100, playerImg, 0, 0, 50, 50);
+            user = new Player(playerImg, 0, 0, 50, 50,100);
             bulletExist = false;
 
             // initialize the lists for the enemies

@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Map_Tool
 {
-    [Serializable]
     public class Scenery
     {
         //scenery attributes

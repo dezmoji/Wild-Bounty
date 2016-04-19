@@ -35,6 +35,10 @@ namespace WildBounty
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
+        Texture2D background2;
+        Texture2D background3;
+        Texture2D background4;
+        Texture2D background5;
         Texture2D gameBackground;
         SpriteFont font;
         Texture2D playerImg;
@@ -159,7 +163,11 @@ namespace WildBounty
 
             // TODO: use this.Content to load your game content here
             background = Content.Load<Texture2D>("Wild-West-1");
-            font = Content.Load<SpriteFont>("SpriteFont1");
+            background2 = Content.Load<Texture2D>("Wild-West-2");
+            background3 = Content.Load<Texture2D>("Wild-Weset-3");
+            background4 = Content.Load<Texture2D>("Wild-West-4");
+            background5 = Content.Load<Texture2D>("Wild-West-5");
+            font = Content.Load<SpriteFont>("myfont");
             playerImg = Content.Load<Texture2D>("CharacterAsset");
             bImage = Content.Load<Texture2D>("BulletAsset");
             helpMenu = Content.Load<Texture2D>("help");
@@ -167,9 +175,9 @@ namespace WildBounty
             optionsMenu = Content.Load<Texture2D>("options");
             scoresMenu = Content.Load<Texture2D>("scores");
             creditsMenu = Content.Load<Texture2D>("credits");
-            BarrelTex = Content.Load<Texture2D>("Barrel");
-            CactusTex = Content.Load<Texture2D>("Cactus");
-            RubbleTex = Content.Load<Texture2D>("Rubble");
+            //BarrelTex = Content.Load<Texture2D>("Barrel");
+            //CactusTex = Content.Load<Texture2D>("Cactus");
+            //RubbleTex = Content.Load<Texture2D>("Rubble");
         }
 
         /// <summary>
@@ -427,58 +435,88 @@ namespace WildBounty
             // Game Over
             if (gameState == GameState.GameOver)
             {
-                spriteBatch.Draw(gameoverMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.Draw(background5, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Game Over!", new Vector2(GraphicsDevice.Viewport.Width / 2, 100), Color.Black, 0, new Vector2(0, 0), 3, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, "Your Bounty was ", new Vector2(GraphicsDevice.Viewport.Width / 2, 200), Color.Black);
+                spriteBatch.DrawString(font, "Try Again", new Vector2(GraphicsDevice.Viewport.Width / 2 - 200, 300), Color.Black);
+                spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 + 200, 300), Color.Black);
+
             }
 
             // Scores
             if (gameState == GameState.Scores)
             {
-                spriteBatch.Draw(scoresMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
+                spriteBatch.Draw(background3, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, 0), Color.Black);
+                spriteBatch.DrawString(font, "High Scores:", new Vector2(GraphicsDevice.Viewport.Width / 2 - 75, 100), Color.Black, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0f);
+
             }
 
             // Options
             if (gameState == GameState.Options)
             {
                 spriteBatch.Draw(optionsMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200,0), Color.Black);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250,0), Color.Black);
             }
 
             // Credits
             if (gameState == GameState.Credits)
             {
-                spriteBatch.Draw(creditsMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
+                spriteBatch.Draw(background2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, 0), Color.Black);
+                spriteBatch.DrawString(font, "Credits", new Vector2(50, 50), Color.Black);
+                spriteBatch.DrawString(font, "Niko Bazos- Lead, Game View", new Vector2(50, 100), Color.Black);
+                spriteBatch.DrawString(font, "Alex Martinelli- Design, Map Tool", new Vector2(50, 150), Color.Black);
+                spriteBatch.DrawString(font, "Alex Pearce- Architecture, Character and Object Implementation", new Vector2(50, 200), Color.Black);
+                spriteBatch.DrawString(font, "Dez Gilbert- UI, Gameplay", new Vector2(50, 250), Color.Black);
             }
 
             // Help
             if (gameState == GameState.Help)
             {
-                spriteBatch.Draw(helpMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, 0), Color.Black);
+                spriteBatch.Draw(background4, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, 0), Color.Black);
+                spriteBatch.DrawString(font, "Help", new Vector2(50, 50), Color.Black, 0, new Vector2(0, 0), 2, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, "About (Press A)", new Vector2(50, 100), Color.Black);
+                spriteBatch.DrawString(font, "Controls (Press C)", new Vector2(50, 200), Color.Black);
+                spriteBatch.DrawString(font, "Tips (Press T)", new Vector2(50, 300), Color.Black);
+
             }
 
             // About
             if (gameState == GameState.About)
             {
-                spriteBatch.DrawString(font, "About Menu", new Vector2(0,0), Color.Black);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50), Color.Black);
+                spriteBatch.Draw(background4, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "About Menu", new Vector2(50,50), Color.Black);
+                spriteBatch.DrawString(font, "Wild Bounty is a retro-arcade inspired, Western themed 2D shooter.", new Vector2(50, 100), Color.Black);
+                spriteBatch.DrawString(font, "The goal is simple: survive. If you can last the horde of adversaries, your legendary bounty will forever be remembered. Have Fun!", new Vector2(50, 150), Color.Black);
+                spriteBatch.DrawString(font, "your legendary bounty will forever be remembered. Have Fun!", new Vector2(50, 200), Color.Black);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
 
             // Tips
             if (gameState == GameState.Tips)
             {
-                spriteBatch.DrawString(font, "Tips Menu", new Vector2(0, 0), Color.Black);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50), Color.Black);
+                spriteBatch.Draw(background4, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Tips Menu", new Vector2(50, 50), Color.Black);
+                spriteBatch.DrawString(font, "Move to avoid enemy bullets!", new Vector2(50, 100), Color.Black);
+                spriteBatch.DrawString(font, "Fire your bullet and move!", new Vector2(50, 150), Color.Black);
+                spriteBatch.DrawString(font, "You shoot faster near the edges of the screen!", new Vector2(50, 200), Color.Black);
+                spriteBatch.DrawString(font, "Try to constantly look for pick-ups!", new Vector2(50, 250), Color.Black);
+                spriteBatch.DrawString(font, "Be vigilant for the different types of enemies!", new Vector2(50, 300), Color.Black);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
 
             // Controls
             if (gameState == GameState.Controls)
             {
-                spriteBatch.DrawString(font, "Controls Menu", new Vector2(0, 0), Color.Black);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 200, GraphicsDevice.Viewport.Height - 50),Color.White);
+                spriteBatch.Draw(background4, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Controls Menu", new Vector2(50, 50), Color.Black);
+                spriteBatch.DrawString(font, "Arrow Keys to Move", new Vector2(50, 100), Color.Black);
+                spriteBatch.DrawString(font, "Space to Shoot", new Vector2(50, 150), Color.Black);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, GraphicsDevice.Viewport.Height - 50),Color.White);
             }
 
             spriteBatch.End();

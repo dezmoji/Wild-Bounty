@@ -132,10 +132,14 @@ namespace WildBounty
                 }
                 catch (EndOfStreamException eos)
                 {
-
+                    
                 }
                 catch (IOException ioe)
                 {
+                }
+                catch(Exception ex)
+                {
+                    
                 }
             }
             catch (IOException ioe)
@@ -408,7 +412,7 @@ namespace WildBounty
             // Game
             if (gameState == GameState.Game)
             {
-                spriteBatch.Draw(gameBackground, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.Draw(playerImg, user.Rect, Color.White);
                
 
@@ -543,12 +547,12 @@ namespace WildBounty
             user.BountyScore = 0;
             waveCount = 0;
             
-            // start the next way
-            this.NextWave();
+            // start the next wave
+            //this.NextWave();
         }
 
         //method to start the next waves
-        public void NextWave()
+       /* public void NextWave()
         {   
             // increment the wave count and calculate how many enemies to make
             waveCount += 1;
@@ -569,7 +573,7 @@ namespace WildBounty
             {
 
             }
-        }
+        }*/
 
         // ScreenWrap Method
         public void ScreenWrap(GameObject g)

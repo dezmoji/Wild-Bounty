@@ -15,9 +15,6 @@ namespace WildBounty
      */
     class Character : GameObject
     {
-        
-
-
         // Parameterzied constructor
         public Character(Texture2D img, int x, int y, int wth, int hght, int hlth):base(img,x,y,wth,hght,hlth)
         {

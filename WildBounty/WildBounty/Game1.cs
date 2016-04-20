@@ -422,7 +422,7 @@ namespace WildBounty
             // Game
             if (gameState == GameState.Game)
             {
-                spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.CornflowerBlue);
                 spriteBatch.Draw(playerImg, user.Rect, Color.White);
                 foreach(Enemy e in enemyObj)
                 {

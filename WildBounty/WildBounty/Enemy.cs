@@ -31,15 +31,41 @@ namespace WildBounty
         public Enemy(int pnts, Texture2D img, int x, int y, int wth, int hght, int hlth): base(img, x, y, wth, hght,hlth)
         {
             points = pnts;
+            IsActive = true;
         }
 
-        // method to make the enemy move toward the player
+        // method to make the enemy move toward the player 
+        //* work in progress
         public void Movement(Player player)
         {
-            int xValue = player.Rect.X - Rect.X;
-            int yValue = player.Rect.Y - Rect.Y;
-            Vector2 direction = new Vector2(xValue, yValue);
+            
+            
+            int xDist = player.Rect.X - Rect.X;
+            int yDist = player.Rect.Y - Rect.Y;
+            this.Rect = new Rectangle(xDist +100, yDist + 100, Rect.Width, Rect.Height);
+            Vector2 direction = new Vector2(xDist, yDist);
             direction.Normalize();
+        }
+
+        // handles when the enemy dies
+        public bool EnemyDeath()
+        {
+            if(Health <= 0)
+            {
+                IsActive = false;
+                return true;
+            }
+            return false;
+        }
+
+        public void BulletCollision(Bullet bullet)
+        {
+            if (this.Rect.Intersects(bullet.Rect) == true) // Property for game object rectangle
+            {
+                // Use property and subtract 10 health from that
+                this.Health -= 10;
+                bullet.IsActive = false;
+            }
         }
     }
 }

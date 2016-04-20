@@ -21,7 +21,7 @@ namespace WildBounty
         // Parameterized constructor
         public Bullet(int hlth, Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght,hlth)
         {
-            
+            IsActive = false;   
         }
 
         // @param Character object
@@ -32,7 +32,8 @@ namespace WildBounty
             if(bCollision.Intersects(obj.Rect)) // Property for game object rectangle
             {
                 // Use property and subtract 10 health from that
-                obj.Health = obj.Health - 10; 
+                obj.Health = obj.Health - 10;
+                IsActive = false;
             }
         }
 

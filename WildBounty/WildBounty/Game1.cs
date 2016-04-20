@@ -52,10 +52,12 @@ namespace WildBounty
         Texture2D CactusTex;
         Texture2D RubbleTex;
         Player user;
+        Enemy enemy;
         Bullet b;
         List<Enemy> enemyObj;
-        List<Thread> enemyThread;
         int waveCount;
+        Random rgen;
+        int rndX, rndY;
 
         List<Scenery> SceneryColl;
 
@@ -106,11 +108,12 @@ namespace WildBounty
 
             // create player
             user = new Player(playerImg, 0, 0, 50, 50,100);
+            enemy = new Enemy(50, playerImg, 200, 400, 50,50, 100);
             bulletExist = false;
+            rgen = new Random();
 
             // initialize the lists for the enemies
             enemyObj = new List<Enemy>();
-            enemyThread = new List<Thread>();
 
             // read from file
             try
@@ -218,7 +221,7 @@ namespace WildBounty
                      if(this.SingleKeyPress(Keys.S)== true)
                      {
                         gameState = GameState.Game;
-                        //this.StartGame();
+                        this.StartGame();
                      }
                      if(this.SingleKeyPress(Keys.C)== true)
                      {
@@ -238,16 +241,22 @@ namespace WildBounty
                 // Game State
                 case GameState.Game:
                     
+                     
                      if(user.Health <= 0)
                      {
                         gameState = GameState.GameOver;
                      }
-
-                    // To be added
-                     /*if(enemy.Health <= 0)
-                     {
-                        player.BountyScore += enemy.Points;
-                     }*/
+                     //enemy.Movement(user);
+                     // To be added
+                    
+                    foreach(Enemy e in enemyObj)
+                    {
+                        if (e.EnemyDeath() == true)
+                        {
+                            user.BountyScore += e.Points;
+                        }
+                    }
+                     
 
                     // Player Movement
                     if(kbState.IsKeyDown(Keys.Up))
@@ -294,6 +303,7 @@ namespace WildBounty
                     if(bulletExist == true)
                     {
                         b.Rect = new Rectangle(b.Rect.X + 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
+                        enemy.BulletCollision(b);
                         if(b.Rect.X > GraphicsDevice.Viewport.Width)
                         {
                             bulletExist = false;
@@ -414,7 +424,15 @@ namespace WildBounty
             {
                 spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.Draw(playerImg, user.Rect, Color.White);
-               
+                foreach(Enemy e in enemyObj)
+                {
+                    if (e.IsActive)
+                    {
+                        spriteBatch.Draw(playerImg, enemy.Rect, Color.White);
+                    }
+                }
+                
+                
 
                 // Code beginnings for player animation
                 /*
@@ -428,7 +446,8 @@ namespace WildBounty
                     spriteBatch.Draw(playerImg, playerLoc, user.Rect, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
                 }
                 */
-          
+
+                spriteBatch.DrawString(font, "Enemy Health:" + enemy.Health + "\nPoints " + user.BountyScore, new Vector2(100, 100), Color.Black);
                 if(bulletExist == true)
                 {
                     spriteBatch.Draw(bImage, b.Rect, Color.White);
@@ -548,32 +567,29 @@ namespace WildBounty
             waveCount = 0;
             
             // start the next wave
-            //this.NextWave();
+            this.NextWave();
         }
 
         //method to start the next waves
-       /* public void NextWave()
-        {   
+        public void NextWave()
+        {
             // increment the wave count and calculate how many enemies to make
-            waveCount += 1;
-            int make = 2*waveCount +3;
+            waveCount++;
+            int make = 2 * waveCount + 3;
 
             // clear the lists
             enemyObj.Clear();
-            enemyThread.Clear();
-            
+
             // loop to create the objects
-            for(int i = 0; i < make; i++)
+            for (int i = 0; i <= make; i++)
             {
-
+                rndX = rgen.Next(0, GraphicsDevice.Viewport.Width - 200);
+                rndY = rgen.Next(0, GraphicsDevice.Viewport.Height - 50);
+                Enemy enemy = new Enemy(100, playerImg, rndX, rndY, 50, 100, 100);
+                enemyObj.Add(enemy);              
             }
-
-            // loop for threads
-            for(int i = 0; i < enemyObj.Count; i++)
-            {
-
-            }
-        }*/
+        }
+          
 
         // ScreenWrap Method
         public void ScreenWrap(GameObject g)

@@ -67,5 +67,13 @@ namespace WildBounty
                 bullet.IsActive = false;
             }
         }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (IsActive == true)
+            {
+                spriteBatch.Draw(Image,Rect,Color.White);
+            }
+        }
     }
 }

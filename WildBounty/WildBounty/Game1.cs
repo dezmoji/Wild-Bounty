@@ -48,6 +48,7 @@ namespace WildBounty
         Texture2D creditsMenu;
         Texture2D scoresMenu;
         Texture2D optionsMenu;
+        Texture2D enemyImg;
         Texture2D BarrelTex;
         Texture2D CactusTex;
         Texture2D RubbleTex;
@@ -176,12 +177,14 @@ namespace WildBounty
             background5 = Content.Load<Texture2D>("Wild-West-5");
             font = Content.Load<SpriteFont>("myfont");
             playerImg = Content.Load<Texture2D>("CharacterAsset");
+            enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
             helpMenu = Content.Load<Texture2D>("help");
             gameoverMenu = Content.Load<Texture2D>("game over");
             optionsMenu = Content.Load<Texture2D>("options");
             scoresMenu = Content.Load<Texture2D>("scores");
             creditsMenu = Content.Load<Texture2D>("credits");
+
             //BarrelTex = Content.Load<Texture2D>("Barrel");
             //CactusTex = Content.Load<Texture2D>("Cactus");
             //RubbleTex = Content.Load<Texture2D>("Rubble");
@@ -249,13 +252,7 @@ namespace WildBounty
                      //enemy.Movement(user);
                      // To be added
                     
-                    foreach(Enemy e in enemyObj)
-                    {
-                        if (e.EnemyDeath() == true)
-                        {
-                            user.BountyScore += e.Points;
-                        }
-                    }
+                    
                      
 
                     // Player Movement
@@ -308,6 +305,18 @@ namespace WildBounty
                         {
                             bulletExist = false;
                         }
+                    }
+                    foreach (Enemy e in enemyObj)
+                    {
+                        //e.BulletCollision(b);
+                        if (e.EnemyDeath() == true)
+                        {
+                            user.BountyScore += e.Points;
+                        }
+                    }
+                    if(enemyObj.Count == 0)
+                    {
+                        this.NextWave();
                     }
                     break;
 
@@ -428,7 +437,7 @@ namespace WildBounty
                 {
                     if (e.IsActive)
                     {
-                        spriteBatch.Draw(playerImg, enemy.Rect, Color.White);
+                        e.Draw(spriteBatch);
                     }
                 }
                 
@@ -585,7 +594,7 @@ namespace WildBounty
             {
                 rndX = rgen.Next(0, GraphicsDevice.Viewport.Width - 200);
                 rndY = rgen.Next(0, GraphicsDevice.Viewport.Height - 50);
-                Enemy enemy = new Enemy(100, playerImg, rndX, rndY, 50, 100, 100);
+                Enemy enemy = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 100);
                 enemyObj.Add(enemy);              
             }
         }

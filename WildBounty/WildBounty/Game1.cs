@@ -440,7 +440,8 @@ namespace WildBounty
             if (gameState == GameState.Game)
             {
                 spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.CornflowerBlue);
-                spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                spriteBatch.DrawString(font, "Health: " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
+                spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
                 foreach(Enemy e in enemyObj)
                 {
                     if (e.IsActive)
@@ -451,8 +452,8 @@ namespace WildBounty
                 
                 
 
-                // Code beginnings for player animation
-                /*
+                // Code for player animation
+                
                 if(move == PlayerState.FaceRight)
                 {
                     spriteBatch.Draw(playerImg, user.Rect, Color.White);
@@ -460,11 +461,11 @@ namespace WildBounty
 
                 if(move == PlayerState.FaceLeft)
                 {
-                    spriteBatch.Draw(playerImg, playerLoc, user.Rect, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
+                    spriteBatch.Draw(playerImg, user.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
                 }
-                */
 
-                spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(100, 100), Color.Black);
+
+                
                 if(bulletExist == true)
                 {
                     if(b.IsActive)

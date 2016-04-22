@@ -244,8 +244,7 @@ namespace WildBounty
 
                 // Game State
                 case GameState.Game:
-                    
-                     
+                    // when the player dies, it's game over
                      if(user.Health <= 0)
                      {
                         gameState = GameState.GameOver;
@@ -312,20 +311,25 @@ namespace WildBounty
                         {
                             b.Collision(e);
                         }
-                        
-                    }
-                    foreach (Enemy e in enemyObj)
-                    {
                         if (e.EnemyDeath() == true)
                         {
                             user.BountyScore += e.Points;
-                            //killcount++;
                         }
                     }
+
+                    for (int i = 0; i < enemyObj.Count;i++)
+                    {
+                        if(enemyObj[i].IsActive == false)
+                        {
+                            killcount++;
+                        }
+                    }
+
+                    // when all the amount of enemies in the list are dead, call the next wave
                     if(enemyObj.Count == killcount)
                     {
                         this.NextWave();
-                    };
+                    }
                     break;
 
                 // GameOver State
@@ -443,12 +447,11 @@ namespace WildBounty
                 spriteBatch.Draw(playerImg, user.Rect, Color.White);
                 foreach(Enemy e in enemyObj)
                 {
-                    if (e.IsActive)
+                    if(e.IsActive)
                     {
                         e.Draw(spriteBatch);
                     }
                 }
-                
                 
 
                 // Code beginnings for player animation
@@ -595,6 +598,7 @@ namespace WildBounty
         {
             // increment the wave count and calculate how many enemies to make
             waveCount++;
+            killcount = 0;
             int make = 2 * waveCount + 3;
 
             // clear the lists
@@ -606,7 +610,7 @@ namespace WildBounty
                 rndX = rgen.Next(50, GraphicsDevice.Viewport.Width - 200);
                 rndY = rgen.Next(50, GraphicsDevice.Viewport.Height - 50);
                 Enemy enemy = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 100);
-                enemyObj.Add(enemy);              
+                enemyObj.Add(enemy);
             }
         }
           

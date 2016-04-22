@@ -45,16 +45,6 @@ namespace WildBounty
             return false;
         }
 
-        public void BulletCollision(Bullet bullet)
-        {
-            if (this.Rect.Intersects(bullet.Rect) == true) // Property for game object rectangle
-            {
-                // Use property and subtract 10 health from that
-                this.Health -= 10;
-                bullet.IsActive = false;
-            }
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             if (IsActive == true)

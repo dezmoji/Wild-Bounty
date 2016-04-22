@@ -28,15 +28,16 @@ namespace WildBounty
         // Check to see if rectangles intersect with a character object
         public void Collision(GameObject obj)
         {
-            // Subtract the health from a general GameObject value without specifying because all GameObjects will have a health
-            if(this.Rect.Intersects(obj.Rect)) // Property for game object rectangle
+            if(IsActive == true)
             {
-                // Use property and subtract 10 health from that
-                obj.Health = obj.Health - 10;
-                this.IsActive = false;
+                // Subtract the health from a general GameObject value without specifying because all GameObjects will have a health
+                if (this.Rect.Intersects(obj.Rect)) // Property for game object rectangle
+                {
+                    // Use property and subtract 10 health from that
+                    obj.Health = obj.Health - 25;
+                    this.IsActive = false;
+                }
             }
         }
-
-        
     }
 }

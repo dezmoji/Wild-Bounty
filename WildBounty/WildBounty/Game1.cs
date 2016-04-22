@@ -176,7 +176,7 @@ namespace WildBounty
             background3 = Content.Load<Texture2D>("Wild-Weset-3");
             background4 = Content.Load<Texture2D>("Wild-West-4");
             background5 = Content.Load<Texture2D>("Wild-West-5");
-            font = Content.Load<SpriteFont>("myfont");
+            font = Content.Load<SpriteFont>("Font/Lemiesz_16");
             playerImg = Content.Load<Texture2D>("CharacterAsset");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
@@ -433,7 +433,7 @@ namespace WildBounty
             if(gameState == GameState.Menu)
             {
                 spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-                spriteBatch.DrawString(font, "Wild Bounty", new Vector2(200, 120), Color.Red, 0, new Vector2(0, 0), 3, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, "Wild Bounty", new Vector2(250, 120), Color.Red, 0, new Vector2(0, 0), 2, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font, "Press S to Start", new Vector2(200, 190), Color.Red);
                 spriteBatch.DrawString(font, "Press C for Credits", new Vector2(200, 210), Color.Red);
                 spriteBatch.DrawString(font, "Press H for Help", new Vector2(200, 230), Color.Red);
@@ -444,7 +444,8 @@ namespace WildBounty
             if (gameState == GameState.Game)
             {
                 spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.CornflowerBlue);
-                spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                spriteBatch.DrawString(font, "Health: " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
+                spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
                 foreach(Enemy e in enemyObj)
                 {
                     if(e.IsActive)
@@ -454,8 +455,8 @@ namespace WildBounty
                 }
                 
 
-                // Code beginnings for player animation
-                /*
+                // Code for player animation
+                
                 if(move == PlayerState.FaceRight)
                 {
                     spriteBatch.Draw(playerImg, user.Rect, Color.White);
@@ -463,11 +464,11 @@ namespace WildBounty
 
                 if(move == PlayerState.FaceLeft)
                 {
-                    spriteBatch.Draw(playerImg, playerLoc, user.Rect, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
+                    spriteBatch.Draw(playerImg, user.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
                 }
-                */
 
-                spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(100, 100), Color.Black);
+
+                
                 if(bulletExist == true)
                 {
                     if(b.IsActive)
@@ -513,7 +514,7 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Credits", new Vector2(50, 50), Color.Black);
                 spriteBatch.DrawString(font, "Niko Bazos- Lead, Game View", new Vector2(50, 100), Color.Black);
                 spriteBatch.DrawString(font, "Alex Martinelli- Design, Map Tool", new Vector2(50, 150), Color.Black);
-                spriteBatch.DrawString(font, "Alex Pearce- Architecture, Character and Object Implementation", new Vector2(50, 200), Color.Black);
+                spriteBatch.DrawString(font, "Alex Pearce- Architecture, Asset Implementation", new Vector2(50, 200), Color.Black);
                 spriteBatch.DrawString(font, "Dez Gilbert- UI, Gameplay", new Vector2(50, 250), Color.Black);
             }
 
@@ -534,9 +535,10 @@ namespace WildBounty
             {
                 spriteBatch.Draw(background4, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "About Menu", new Vector2(50,50), Color.Black);
-                spriteBatch.DrawString(font, "Wild Bounty is a retro-arcade inspired, Western themed 2D shooter.", new Vector2(50, 100), Color.Black);
-                spriteBatch.DrawString(font, "The goal is simple: survive. If you can last the horde of adversaries, your legendary bounty will forever be remembered. Have Fun!", new Vector2(50, 150), Color.Black);
-                spriteBatch.DrawString(font, "your legendary bounty will forever be remembered. Have Fun!", new Vector2(50, 200), Color.Black);
+                spriteBatch.DrawString(font, "Wild Bounty is a retro-arcade inspired, Western", new Vector2(50, 100), Color.Black);
+                spriteBatch.DrawString(font, "themed 2D shooter. The goal is simple-survive. If you can ", new Vector2(50, 150), Color.Black);
+                spriteBatch.DrawString(font, "last the horde of adversaries, your legendary bounty ", new Vector2(50, 200), Color.Black);
+                spriteBatch.DrawString(font, "will forever be remembered. Have Fun!", new Vector2(50, 250), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }

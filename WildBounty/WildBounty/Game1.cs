@@ -57,6 +57,7 @@ namespace WildBounty
         Bullet b;
         List<Enemy> enemyObj;
         int waveCount;
+        int killcount;
         Random rgen;
         int rndX, rndY;
 
@@ -300,24 +301,31 @@ namespace WildBounty
                     if(bulletExist == true)
                     {
                         b.Rect = new Rectangle(b.Rect.X + 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
-                        enemy.BulletCollision(b);
                         if(b.Rect.X > GraphicsDevice.Viewport.Width)
                         {
                             bulletExist = false;
                         }
                     }
+                    foreach(Enemy e in enemyObj)
+                    {
+                        if(bulletExist == true)
+                        {
+                            b.Collision(e);
+                        }
+                        
+                    }
                     foreach (Enemy e in enemyObj)
                     {
-                        //e.BulletCollision(b);
                         if (e.EnemyDeath() == true)
                         {
                             user.BountyScore += e.Points;
+                            //killcount++;
                         }
                     }
-                    if(enemyObj.Count == 0)
+                    if(enemyObj.Count == killcount)
                     {
                         this.NextWave();
-                    }
+                    };
                     break;
 
                 // GameOver State
@@ -456,10 +464,13 @@ namespace WildBounty
                 }
                 */
 
-                spriteBatch.DrawString(font, "Enemy Health:" + enemy.Health + "\nPoints " + user.BountyScore, new Vector2(100, 100), Color.Black);
+                spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(100, 100), Color.Black);
                 if(bulletExist == true)
                 {
-                    spriteBatch.Draw(bImage, b.Rect, Color.White);
+                    if(b.IsActive)
+                    {
+                        spriteBatch.Draw(bImage, b.Rect, Color.White);
+                    }
                 }
                 
             }
@@ -590,10 +601,10 @@ namespace WildBounty
             enemyObj.Clear();
 
             // loop to create the objects
-            for (int i = 0; i <= make; i++)
+            for (int i = 0; i < make; i++)
             {
-                rndX = rgen.Next(0, GraphicsDevice.Viewport.Width - 200);
-                rndY = rgen.Next(0, GraphicsDevice.Viewport.Height - 50);
+                rndX = rgen.Next(50, GraphicsDevice.Viewport.Width - 200);
+                rndY = rgen.Next(50, GraphicsDevice.Viewport.Height - 50);
                 Enemy enemy = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 100);
                 enemyObj.Add(enemy);              
             }

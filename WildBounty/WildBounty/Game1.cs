@@ -288,13 +288,6 @@ namespace WildBounty
                         gameState = GameState.GameOver;
                      }
 
-                     //enemy.Movement(user);
-                     // To be added
-                    
-
-                    
-                     
-
                     // Player Movement
                     if(kbState.IsKeyDown(Keys.Up))
                     {
@@ -379,35 +372,33 @@ namespace WildBounty
                         }*/
                     }
 
-                    
-
                     for (int i = 0; i < enemyObj.Count;i++)
                     {
 
                         // Enemy Movement
                         if(i < enemyObj.Count/2)
                         {
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X , enemyObj[i].Rect.Y + 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
+                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X -5, enemyObj[i].Rect.Y - 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
                         else 
                         {
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
+                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y+5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
 
-                        enemyObj[i].EnemyDeath(user);
+                        /*enemyObj[i].EnemyDeath();
                         if(enemyObj[i].IsActive == false)
                         {
                             user.GainBullet();
                             killcount++;
-                            //user.BountyScore += enemyObj[i].Points;
-                        }
+                            user.BountyScore += enemyObj[i].Points;
+                        }*/
                     }
 
-                    
+                    this.Death();
                     // when all the amount of enemies in the list are dead, call the next wave
-                    if(enemyObj.Count == killcount)
+                    if(enemyObj.Count == 0)
                     {
                         this.NextWave();
                     }
@@ -418,6 +409,9 @@ namespace WildBounty
                     
                      if(this.SingleKeyPress(Keys.T)== true) // for try again
                      {
+                         waveCount = 0;
+                         user.Health = 100;
+                         NextWave();
                         gameState = GameState.Game;
                      }
                      if(this.SingleKeyPress(Keys.M)== true) 
@@ -743,6 +737,21 @@ namespace WildBounty
             if (g.Rect.Y > GraphicsDevice.Viewport.Height)
             {
                 g.Rect = new Rectangle(g.Rect.X, 0, g.Rect.Width, g.Rect.Height);
+            }
+        }
+
+        public void Death()
+        {
+            for(int i = 0; i < enemyObj.Count;i++)
+            {
+                enemyObj[i].EnemyDeath();
+                if (enemyObj[i].IsActive == false)
+                {
+                    user.GainBullet();
+                    //killcount++;
+                    enemyObj.RemoveAt(i);
+                    user.BountyScore += enemyObj[i].Points;
+                }
             }
         }
     }

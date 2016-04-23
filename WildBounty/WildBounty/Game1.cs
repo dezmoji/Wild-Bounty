@@ -293,8 +293,11 @@ namespace WildBounty
                     // Bullets
                     if(kbState.IsKeyDown(Keys.Space)&&bulletExist == false)
                     {
-                        b = new Bullet(10, bImage, user.Rect.X+50, user.Rect.Y+10, 10, 10);
-                        bulletExist = true;
+                        if (move == PlayerState.FaceRight)
+                        {
+                            b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 10, 10, 10);
+                            bulletExist = true;
+                        }
                     }
 
                     if(bulletExist == true)
@@ -473,7 +476,14 @@ namespace WildBounty
                 {
                     if(b.IsActive)
                     {
-                        spriteBatch.Draw(bImage, b.Rect, Color.White);
+                        if (move == PlayerState.FaceRight)
+                        {
+                            spriteBatch.Draw(bImage, b.Rect, Color.White);
+                        }
+                        if (move == PlayerState.FaceLeft)
+                        {
+                            spriteBatch.Draw(bImage, b.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
+                        }
                     }
                 }
                 

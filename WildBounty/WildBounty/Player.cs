@@ -16,6 +16,7 @@ namespace WildBounty
     {
         // Attributes 
         private int bountyScore;
+        int bCount;
         private Bullet bullets;
 
         // Properties
@@ -34,6 +35,7 @@ namespace WildBounty
         // Parameterized constructor
         public Player(Texture2D img, int x, int y, int wth, int hght, int hlth):base(img,x,y,wth,hght,hlth)
         {
+            bCount = 10;
             bountyScore = 0;
             IsActive = true;
         }
@@ -53,6 +55,24 @@ namespace WildBounty
                     }
                 }
             }
+        }
+
+        public int BCount
+        {
+            get { return bCount; }
+        }
+
+        public void UseBullet()
+        {
+            if (bCount > 0)
+            {
+                bCount--;
+            }
+        }
+
+        public void GainBullet()
+        {
+            bCount += 5;
         }
     }
 }

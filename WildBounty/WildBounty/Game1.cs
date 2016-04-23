@@ -39,6 +39,7 @@ namespace WildBounty
         Texture2D background3;
         Texture2D background4;
         Texture2D background5;
+        Texture2D background6;
         Texture2D gameBackground;
         SpriteFont font;
         Texture2D playerImg;
@@ -55,6 +56,7 @@ namespace WildBounty
         Player user;
         Enemy enemy;
         Bullet b;
+        Ammo a;
         List<Enemy> enemyObj;
         int waveCount;
         int killcount;
@@ -198,6 +200,7 @@ namespace WildBounty
             background3 = Content.Load<Texture2D>("Wild-Weset-3");
             background4 = Content.Load<Texture2D>("Wild-West-4");
             background5 = Content.Load<Texture2D>("Wild-West-5");
+            background6 = Content.Load<Texture2D>("Wild-West-6");
             font = Content.Load<SpriteFont>("Font/Lemiesz_16");
             playerImg = Content.Load<Texture2D>("CharacterAsset");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
@@ -333,24 +336,44 @@ namespace WildBounty
                             b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 10, 10, 10);
                             bulletExist = true;
                         }
+
+                        if (move == PlayerState.FaceLeft)
+                        {
+                            b = new Bullet(10, bImage, user.Rect.X - 50, user.Rect.Y - 10, 10, 10);
+                            bulletExist = true;
+                        }
+
+                        user.UseBullet();
                     }
 
-                    if(bulletExist == true)
+                    if (bulletExist == true)
                     {
-                        b.Rect = new Rectangle(b.Rect.X + 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
-                        if(b.Rect.X > GraphicsDevice.Viewport.Width)
+                        if(move == PlayerState.FaceRight)
+                        {
+                            b.Rect = new Rectangle(b.Rect.X + 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
+                        }
+                        
+                        if(move == PlayerState.FaceLeft)
+                        {
+                            b.Rect = new Rectangle(b.Rect.X - 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
+                        }
+                        
+                        if(b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
                         {
                             bulletExist = false;
                         }
+
                     }
+
                     foreach(Enemy e in enemyObj)
                     {
-                        if(bulletExist == true)
+                        if (bulletExist == true)
                         {
                             b.Collision(e);
                         }
                         if (e.EnemyDeath() == true)
                         {
+                            user.GainBullet();
                             user.BountyScore += e.Points;
                         }
                     }
@@ -481,9 +504,8 @@ namespace WildBounty
             // Game
             if (gameState == GameState.Game)
             {
-                spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.CornflowerBlue);
-<<<<<<< HEAD
-                spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                spriteBatch.Draw(background6, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+
                 foreach (var sObj in SceneryColl)
                 {
                     Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
@@ -497,10 +519,11 @@ namespace WildBounty
                     }
                     //sObj.Draw(spriteBatch);
                 }
-=======
+
                 spriteBatch.DrawString(font, "Health: " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
                 spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
->>>>>>> 9ca649aeffeaff43fb687dd30749bb1745e2279e
+                spriteBatch.DrawString(font, "Ammo " + user.BCount, new Vector2(GraphicsDevice.Viewport.Width - 150, 50), Color.White);
+
                 foreach(Enemy e in enemyObj)
                 {
                     if(e.IsActive)
@@ -524,7 +547,7 @@ namespace WildBounty
 
 
                 
-                if(bulletExist == true)
+                if(bulletExist == true && user.BCount > 0)
                 {
                     if(b.IsActive)
                     {

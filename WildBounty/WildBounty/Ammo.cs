@@ -18,7 +18,7 @@ namespace WildBounty
         // Parameterized constructor
         public Ammo(Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght)
         {
-            
+  
         }
     }
 }

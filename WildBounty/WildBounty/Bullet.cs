@@ -21,7 +21,7 @@ namespace WildBounty
         // Parameterized constructor
         public Bullet(int hlth, Texture2D img, int x, int y, int wth, int hght):base(img,x,y,wth,hght,hlth)
         {
-            IsActive = true;   
+            IsActive = true;
         }
 
         // @param Character object

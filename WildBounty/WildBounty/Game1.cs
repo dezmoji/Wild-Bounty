@@ -346,17 +346,19 @@ namespace WildBounty
                         {
                             b.Collision(e);
                         }
-                        if (e.EnemyDeath() == true)
+                        /*if (e.EnemyDeath() == true)
                         {
                             user.BountyScore += e.Points;
-                        }
+                        }*/
                     }
 
                     for (int i = 0; i < enemyObj.Count;i++)
                     {
+                        enemyObj[i].EnemyDeath(user);
                         if(enemyObj[i].IsActive == false)
                         {
                             killcount++;
+                            //user.BountyScore += enemyObj[i].Points;
                         }
                     }
 
@@ -479,8 +481,6 @@ namespace WildBounty
             if (gameState == GameState.Game)
             {
                 spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.CornflowerBlue);
-<<<<<<< HEAD
-                spriteBatch.Draw(playerImg, user.Rect, Color.White);
                 foreach (var sObj in SceneryColl)
                 {
                     Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
@@ -494,10 +494,8 @@ namespace WildBounty
                     }
                     //sObj.Draw(spriteBatch);
                 }
-=======
                 spriteBatch.DrawString(font, "Health: " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
                 spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
->>>>>>> 9ca649aeffeaff43fb687dd30749bb1745e2279e
                 foreach(Enemy e in enemyObj)
                 {
                     if(e.IsActive)

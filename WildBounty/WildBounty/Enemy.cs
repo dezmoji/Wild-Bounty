@@ -35,11 +35,12 @@ namespace WildBounty
         }
 
         // handles when the enemy dies
-        public bool EnemyDeath()
+        public bool EnemyDeath(Player player)
         {
             if(Health <= 0)
             {
                 IsActive = false;
+                player.BountyScore += Points;
                 return true;
             }
             return false;

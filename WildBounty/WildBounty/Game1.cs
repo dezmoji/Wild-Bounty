@@ -371,18 +371,20 @@ namespace WildBounty
                         {
                             b.Collision(e);
                         }
-                        if (e.EnemyDeath() == true)
+                        /*if (e.EnemyDeath() == true)
                         {
                             user.GainBullet();
                             user.BountyScore += e.Points;
-                        }
+                        }*/
                     }
 
                     for (int i = 0; i < enemyObj.Count;i++)
                     {
+                        enemyObj[i].EnemyDeath(user);
                         if(enemyObj[i].IsActive == false)
                         {
                             killcount++;
+                            //user.BountyScore += enemyObj[i].Points;
                         }
                     }
 
@@ -504,8 +506,12 @@ namespace WildBounty
             // Game
             if (gameState == GameState.Game)
             {
+<<<<<<< HEAD
                 spriteBatch.Draw(background6, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
+=======
+                spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.CornflowerBlue);
+>>>>>>> 0c4eb69cb0bdacd9a6395f9d1073d19353aa05cf
                 foreach (var sObj in SceneryColl)
                 {
                     Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
@@ -519,11 +525,16 @@ namespace WildBounty
                     }
                     //sObj.Draw(spriteBatch);
                 }
+<<<<<<< HEAD
 
                 spriteBatch.DrawString(font, "Health: " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
                 spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
                 spriteBatch.DrawString(font, "Ammo " + user.BCount, new Vector2(GraphicsDevice.Viewport.Width - 150, 50), Color.White);
 
+=======
+                spriteBatch.DrawString(font, "Health: " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
+                spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
+>>>>>>> 0c4eb69cb0bdacd9a6395f9d1073d19353aa05cf
                 foreach(Enemy e in enemyObj)
                 {
                     if(e.IsActive)

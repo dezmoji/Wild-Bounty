@@ -59,7 +59,6 @@ namespace WildBounty
         Ammo a;
         List<Enemy> enemyObj;
         int waveCount;
-        int killcount;
         Random rgen;
         int rndX, rndY;
 
@@ -113,7 +112,6 @@ namespace WildBounty
 
             // create player
             user = new Player(playerImg, 0, 0, 50, 50,100);
-            enemy = new Enemy(50, playerImg, 200, 400, 50,50, 100);
             bulletExist = false;
             rgen = new Random();
 
@@ -367,10 +365,6 @@ namespace WildBounty
                         {
                             b.Collision(e);
                         }
-                        /*if (e.EnemyDeath() == true)
-                        {
-                            user.BountyScore += e.Points;
-                        }*/
                     }
 
                     for (int i = 0; i < enemyObj.Count;i++)
@@ -379,46 +373,33 @@ namespace WildBounty
                         // Enemy Movement
                         if(i < enemyObj.Count/2)
                         {
-<<<<<<< HEAD
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X -5, enemyObj[i].Rect.Y - 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
-=======
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y + 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
->>>>>>> e48604c12c24bbbd9858873b44b01f19c8db107a
                             ScreenWrap(enemyObj[i]);
                         }
                         else 
                         {
-<<<<<<< HEAD
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y+5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
 
                         /*enemyObj[i].EnemyDeath();
-=======
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X - 5, enemyObj[i].Rect.Y - 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
-                        }
+                        }*/
 
                         // Damage done by collision
-                        /*
-                        if (user.Rect.Intersects(enemyObj[i].Rect))
+                        
+                        /*if (user.Rect.Intersects(enemyObj[i].Rect))
                         {
                             user.Health = user.Health - 10;
-                        }
-                        */
-
-                        enemyObj[i].EnemyDeath(user);
->>>>>>> e48604c12c24bbbd9858873b44b01f19c8db107a
-                        if(enemyObj[i].IsActive == false)
-                        {
-                            user.GainBullet();
-                            killcount++;
-                            user.BountyScore += enemyObj[i].Points;
                         }*/
                     }
 
+                    // calls the death method for enemies
                     this.Death();
-                    // when all the amount of enemies in the list are dead, call the next wave
+
+                    // when the list of enemies is empty, call the next wave
                     if(enemyObj.Count == 0)
                     {
                         this.NextWave();
@@ -564,10 +545,7 @@ namespace WildBounty
 
                 foreach(Enemy e in enemyObj)
                 {
-                    if(e.IsActive)
-                    {
-                        e.Draw(spriteBatch);
-                    }
+                    e.Draw(spriteBatch);
                 }
                 
 
@@ -723,7 +701,6 @@ namespace WildBounty
         {
             // increment the wave count and calculate how many enemies to make
             waveCount++;
-            killcount = 0;
             int make = 2 * waveCount + 3;
 
             // clear the lists
@@ -761,17 +738,26 @@ namespace WildBounty
             }
         }
 
+        // method to handle the death of an enemy
         public void Death()
         {
+            // loop goes through the entire list to check each enmy
             for(int i = 0; i < enemyObj.Count;i++)
             {
+                // checks if the enemy is dead and if the are, the enemy is set to inactive
                 enemyObj[i].EnemyDeath();
+
+                // if the enemy is inactive
                 if (enemyObj[i].IsActive == false)
                 {
+                    // user gains bullets
                     user.GainBullet();
-                    //killcount++;
-                    enemyObj.RemoveAt(i);
+
+                    // player score is incremented
                     user.BountyScore += enemyObj[i].Points;
+
+                    // enemy is removed from the list
+                    enemyObj.RemoveAt(i);
                 }
             }
         }

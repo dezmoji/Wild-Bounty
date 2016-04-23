@@ -2,7 +2,6 @@
 
 namespace Map_Tool
 {
-#if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>
@@ -23,5 +22,4 @@ namespace Map_Tool
 
         }
     }
-#endif
 }

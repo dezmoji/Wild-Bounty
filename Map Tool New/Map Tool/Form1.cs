@@ -14,6 +14,7 @@ namespace Map_Tool
     {
         //list to hold all objects
         private List<Scenery> sceneryColl = new List<Scenery>();
+        private List<Array> sceneConColl = new List<Array>();
         //property of list
         public List<Scenery> SceneryColl
         {
@@ -35,6 +36,15 @@ namespace Map_Tool
             int FWidth = Convert.ToInt32(WidthBox.Value);
             int FHeight = Convert.ToInt32(HeightBox.Value);
             string FTexture = TextureBox.Text;
+            int FTextNum = -1;
+            if(FTexture == "Barrel")
+            {
+                FTextNum = 1;
+            }
+            if (FTexture == "Cactus") 
+            {
+                FTextNum = 0; 
+            }
 
             //check if necessary fields are filled
             if (FY != 0 && FX != 0 && FWidth != 0 && FHeight != 0)
@@ -43,17 +53,18 @@ namespace Map_Tool
                 if (TextureBox.Items.Contains(TextureBox.Text))
                 {
                     //create scenery object
-                    Scenery sceneryObj = new Scenery(FX, FY, FWidth, FHeight, FHealth, FLoot, FTexture);
+                    Scenery sceneryObj = new Scenery(FX, FY, FWidth, FHeight, FHealth, FLoot, FTextNum);
 
                     bool conflicts = false;
                     //check if this object collides with any others
-                    foreach(var sObj in sceneryColl)
+                    /*foreach(var sObj in sceneryColl)
                     {
+                        Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
                         if(sObj.ObjPos.Intersects(sceneryObj.ObjPos))
                         {
                             conflicts = true;
                         }
-                    }
+                    }*/
 
                     //if it intersects with nothing, then it will finally be added
                     if(conflicts == false)
@@ -73,6 +84,7 @@ namespace Map_Tool
                         YposBox.Value = 0;
                         WidthBox.Value = 0;
                         HeightBox.Value = 0;
+                        FTextNum = -1;
                         FTexture = "";
                         Confirm.Text = "Confirm";
                     }
@@ -102,73 +114,43 @@ namespace Map_Tool
 
         private void Save_Click(object sender, EventArgs e)
         {
+            Stream str = File.OpenWrite("..\\..\\..\\..\\..\\WildBounty\\WildBounty\\bin\\WindowsGL\\Debug\\map.dat");
+            str.Close();
 
-            //select map texture
-            //try
-            //{
-                // create a stream
-                Stream str = File.OpenWrite("..\\..\\..\\..\\..\\WildBounty\\WildBounty\\bin\\WindowsGL\\Debug\\map.dat");
-                str.Close();
-                // create the binary writer object
-                //BinaryWriter output = new BinaryWriter(str);
+            foreach(var obj in sceneryColl)
+            {
+                SceneConverter newObj = new SceneConverter(obj.X, obj.Y, obj.Width, obj.Height, obj.Health, obj.LootChance, obj.TextureNum);
+                int[] array = new int[7];
+                array[0] = obj.X;
+                array[1] = obj.Y;
+                array[2] = obj.Width;
+                array[3] = obj.Height;
+                array[4] = obj.Health;
+                array[5] = obj.LootChance;
+                array[6] = obj.TextureNum;
+                sceneConColl.Add(array);
+            }
 
-                    for(int i = 0; i < sceneryColl.Count; i++)
+            using (BinaryWriter writer = new BinaryWriter(File.Open("..\\..\\..\\..\\..\\WildBounty\\WildBounty\\bin\\WindowsGL\\Debug\\map.dat", FileMode.Create)))
+            {
+                for(int j = 0; j < sceneConColl.Count;j++)
+                {
+                    for(int k = 0; k < sceneConColl[j].Length; k++)
                     {
-                        using (Stream stream = File.Open("..\\..\\..\\..\\..\\WildBounty\\WildBounty\\bin\\WindowsGL\\Debug\\map.dat", false ? FileMode.Append : FileMode.Create))
-                        {
-                            var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                            binaryFormatter.Serialize(stream, sceneryColl[i]);
-                        }
+                        int[] n = (int[])sceneConColl[j];
+                        writer.Write(n[k]);
                     }
-
-                // populate the file with user selected texture
-                /*switch (TextureChooser.SelectedIndex)
-                {
-                    case 0:
-                        output.Write("mapToolTest");
-                        break;
-                    case 1:
-                        output.Write("defaultSand");
-                        break;
-                    default:
-                        output.Write("defaultSand");
-                        break;
-                }*/
-
-                // close the file since we are done
-                //output.Close();
-            //}
-            //catch (IOException ioe)
-            //{
-            //}
-            //try to create a binary file to contain all objects on the map
-           // try
-           // {
-                //create a stream
-               // Stream str = File.OpenWrite("Map.dat");
-
-                //create the binarywriter
-                //BinaryWriter output = new BinaryWriter(str);
-            /*
-                //create file path
-                string dir = @"c:\temp";
-                string serializationFile = Path.Combine(dir, "Map.bin");
-
-                //serialize 
-                using (Stream stream = File.Open(serializationFile, FileMode.Create))
-                {
-                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-                    bformatter.Serialize(stream, sceneryColl);
                 }
-            */
-            //}
-           // catch(IOException)
-            //{
-
-           // }
-
-           
+            }
+            
+            /*for (int i = 0; i < sceneConColl.Count; i++)
+            {
+                using (Stream stream = File.Open("..\\..\\..\\..\\..\\WildBounty\\WildBounty\\bin\\WindowsGL\\Debug\\map.dat", false ? FileMode.Append : FileMode.Create))
+                {
+                    var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                    binaryFormatter.Serialize(stream, sceneConColl[i]);
+                }
+            }*/
         }
 
         private void TextureBox_SelectedIndexChanged(object sender, EventArgs e)

@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace WildBounty
 {
-    [Serializable]
     public class Scenery
     {
         //scenery attributes
@@ -20,7 +19,7 @@ namespace WildBounty
         Random rng = new Random();
         private Texture2D objTexture;
         private Texture2D rubbleTexture;
-        private string textureName; //used to set textures
+        private int textureNum; //used to set textures
 
 
         //properties
@@ -50,10 +49,10 @@ namespace WildBounty
             set { objTexture = value; }
         }
 
-        public string TextureName
+        public int TextureNum
         {
-            get { return textureName; }
-            set { textureName = value; }
+            get { return textureNum; }
+            set { textureNum = value; }
         }
 
         public int LootChance
@@ -116,7 +115,7 @@ namespace WildBounty
         }
 
         //constructor
-        public Scenery(int x, int y, int width, int height, int hp, int loot, string tex)
+        public Scenery(int x, int y, int width, int height, int hp, int loot, int tex)
         {
             Height = height;
             X = x;
@@ -125,7 +124,7 @@ namespace WildBounty
             Health = hp;
             LootChance = loot;
             Looted = false;
-            TextureName = tex;
+            TextureNum = tex;
         }
 
 

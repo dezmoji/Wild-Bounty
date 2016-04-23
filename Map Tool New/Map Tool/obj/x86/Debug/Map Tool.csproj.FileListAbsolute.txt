@@ -43,3 +43,29 @@ Z:\IGMProfile\Documents\WildBounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.
 Z:\IGMProfile\Documents\WildBounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Form1.resources
 Z:\IGMProfile\Documents\WildBounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Properties.Resources.resources
 Z:\IGMProfile\Documents\WildBounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csproj.GenerateResource.Cache
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.exe
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.pdb
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csprojResolveAssemblyReference.cache
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Form1.resources
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Properties.Resources.resources
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csproj.GenerateResource.Cache
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Barrel.xnb
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Cactus.xnb
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Rubble.xnb
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Map Tool.exe
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Map Tool.pdb
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\MonoGame.Framework.dll
+\\banner.main.ad.rit.edu\students\axp8233\IGMProfile\Desktop\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\OpenTK.dll
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.exe
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.pdb
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Barrel.xnb
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Cactus.xnb
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Rubble.xnb
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Map Tool.exe
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\Map Tool.pdb
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\MonoGame.Framework.dll
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\bin\WindowsGL\Debug\OpenTK.dll
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csprojResolveAssemblyReference.cache
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Form1.resources
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Properties.Resources.resources
+D:\Users\axp8233\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csproj.GenerateResource.Cache

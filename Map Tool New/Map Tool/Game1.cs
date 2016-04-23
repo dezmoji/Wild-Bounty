@@ -102,11 +102,11 @@ namespace Map_Tool
             //set added items textures. it is in the update because they are being progressively added and load and initialize only run once
             foreach (var sObj in mapForm.SceneryColl)
             {
-                if (sObj.TextureName == "Cactus")
+                if (sObj.TextureNum == 0)
                 {
                     sObj.ObjTexture = CactusTex;
                 }
-                else if (sObj.TextureName == "Barrel")
+                else if (sObj.TextureNum == 1)
                 {
                     sObj.ObjTexture = BarrelTex;
                 }
@@ -128,7 +128,16 @@ namespace Map_Tool
             spriteBatch.Begin();
             foreach (var sObj in mapForm.SceneryColl)
             {
-                sObj.Draw(spriteBatch);
+                Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
+                if (sObj.Health > 0)
+                {
+                    spriteBatch.Draw(sObj.ObjTexture, rect, Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(sObj.RubbleTexture, rect, Color.White);
+                }
+                //sObj.Draw(spriteBatch);
             }
             //spriteBatch.Draw(test.ObjTexture, test.ObjPos, Color.White);// test draw
             spriteBatch.End();

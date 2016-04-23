@@ -52,6 +52,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SceneConverter.cs" />
     <Compile Include="Scenery.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -62,6 +62,7 @@ namespace WildBounty
         int rndX, rndY;
 
         List<Scenery> SceneryColl;
+        List<Array> SceneryConColl;
 
         Vector2 playerLoc;
         bool bulletExist; // bool for projectile algorithim
@@ -116,14 +117,37 @@ namespace WildBounty
 
             // initialize the lists for the enemies
             enemyObj = new List<Enemy>();
+            SceneryColl = new List<Scenery>();
+            SceneryConColl = new List<Array>();
 
             // read from file
-            try
-            {
+            //try
+            //{
                 //BinaryReader input = new BinaryReader(File.OpenRead("map.dat"));
                 //gameBackground = Content.Load<Texture2D>(input.ReadString());
 
-                try
+                if (File.Exists("map.dat"))
+                {
+                    FileStream str = new FileStream("map.dat",FileMode.Open);
+                    long lineCount = str.Length;
+                    str.Close();
+
+                    using (BinaryReader reader = new BinaryReader(File.Open("map.dat", FileMode.Open)))
+                    {
+                        for (int j = 0; j < (lineCount/28); j++)
+                        {
+                            int[] n = new int[7];
+
+                            for (int k = 0; k < n.Length; k++)
+                            {
+                                n[k] = reader.ReadInt32();
+                            }
+
+                            SceneryConColl.Add(n);
+                        }
+                    }
+                }
+                /*try
                 {
                     while(true)
                     {
@@ -131,29 +155,27 @@ namespace WildBounty
                         {
                             var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 
-                            SceneryColl.Add((Scenery)binaryFormatter.Deserialize(stream));
+                            SceneryConColl.Add((SceneConverter)binaryFormatter.Deserialize(stream));
                         }
                     }
-                }
-                catch (EndOfStreamException eos)
-                {
-                    
-                }
-                catch (IOException ioe)
-                {
                 }
                 catch(Exception ex)
                 {
                     
-                }
-            }
-            catch (IOException ioe)
-            {
-                gameBackground = Content.Load<Texture2D>("defaultSand");
-            }
+                }*/
+            //}
+            //catch (Exception ex)
+            //{
+            //    gameBackground = Content.Load<Texture2D>("defaultSand");
+            //}
 
             // get background from file
-
+            foreach (var objct in SceneryConColl)
+            {
+                int[] obj = (int[])objct;
+                Scenery newObj = new Scenery(obj[0], obj[1], obj[2], obj[3], obj[4], obj[5], obj[6]);
+                SceneryColl.Add(newObj);
+            }
             // intial state of the game
             
             gameState = GameState.Menu;
@@ -186,9 +208,22 @@ namespace WildBounty
             scoresMenu = Content.Load<Texture2D>("scores");
             creditsMenu = Content.Load<Texture2D>("credits");
 
-            //BarrelTex = Content.Load<Texture2D>("Barrel");
-            //CactusTex = Content.Load<Texture2D>("Cactus");
-            //RubbleTex = Content.Load<Texture2D>("Rubble");
+            BarrelTex = Content.Load<Texture2D>("Barrel");
+            CactusTex = Content.Load<Texture2D>("Cactus");
+            RubbleTex = Content.Load<Texture2D>("Rubble");
+
+            foreach (var sObj in SceneryColl)
+            {
+                if (sObj.TextureNum == 0)
+                {
+                    sObj.ObjTexture = CactusTex;
+                }
+                else if (sObj.TextureNum == 1)
+                {
+                    sObj.ObjTexture = BarrelTex;
+                }
+                sObj.RubbleTexture = RubbleTex;
+            }
         }
 
         /// <summary>
@@ -447,8 +482,25 @@ namespace WildBounty
             if (gameState == GameState.Game)
             {
                 spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.CornflowerBlue);
+<<<<<<< HEAD
+                spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                foreach (var sObj in SceneryColl)
+                {
+                    Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
+                    if (sObj.Health > 0)
+                    {
+                        spriteBatch.Draw(sObj.ObjTexture, rect, Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(sObj.RubbleTexture, rect, Color.White);
+                    }
+                    //sObj.Draw(spriteBatch);
+                }
+=======
                 spriteBatch.DrawString(font, "Health: " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
                 spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
+>>>>>>> 9ca649aeffeaff43fb687dd30749bb1745e2279e
                 foreach(Enemy e in enemyObj)
                 {
                     if(e.IsActive)

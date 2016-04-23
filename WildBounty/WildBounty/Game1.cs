@@ -330,6 +330,7 @@ namespace WildBounty
                         case "FaceRight": move = PlayerState.FaceRight; break;
                     }
 
+
                     // Bullets
                     if(kbState.IsKeyDown(Keys.Space)&&bulletExist == false)
                     {
@@ -387,14 +388,22 @@ namespace WildBounty
                         // Enemy Movement
                         if(i < enemyObj.Count/2)
                         {
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X , enemyObj[i].Rect.Y + 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
+                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y + 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
                         else 
                         {
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
+                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X - 5, enemyObj[i].Rect.Y - 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
+
+                        // Damage done by collision
+                        /*
+                        if (user.Rect.Intersects(enemyObj[i].Rect))
+                        {
+                            user.Health = user.Health - 10;
+                        }
+                        */
 
                         enemyObj[i].EnemyDeath(user);
                         if(enemyObj[i].IsActive == false)
@@ -591,10 +600,10 @@ namespace WildBounty
             if (gameState == GameState.GameOver)
             {
                 spriteBatch.Draw(background5, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-                spriteBatch.DrawString(font, "Game Over!", new Vector2(GraphicsDevice.Viewport.Width / 2, 100), Color.Black, 0, new Vector2(0, 0), 3, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(font, "Your Bounty was ", new Vector2(GraphicsDevice.Viewport.Width / 2, 200), Color.Black);
-                spriteBatch.DrawString(font, "Try Again", new Vector2(GraphicsDevice.Viewport.Width / 2 - 200, 300), Color.Black);
-                spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 + 200, 300), Color.Black);
+                spriteBatch.DrawString(font, "Game Over!", new Vector2(GraphicsDevice.Viewport.Width / 2 - 200, 100), Color.Red, 0, new Vector2(0, 0), 3, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, "Your Bounty was " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width / 2 - 150, 200), Color.Red);
+                spriteBatch.DrawString(font, "Try Again", new Vector2(GraphicsDevice.Viewport.Width / 2 - 250, 300), Color.Red);
+                spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 + 150, 300), Color.Red);
 
             }
 

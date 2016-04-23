@@ -287,9 +287,11 @@ namespace WildBounty
                      {
                         gameState = GameState.GameOver;
                      }
+
                      //enemy.Movement(user);
                      // To be added
                     
+
                     
                      
 
@@ -377,8 +379,23 @@ namespace WildBounty
                         }*/
                     }
 
+                    
+
                     for (int i = 0; i < enemyObj.Count;i++)
                     {
+
+                        // Enemy Movement
+                        if(i < enemyObj.Count/2)
+                        {
+                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X , enemyObj[i].Rect.Y + 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
+                            ScreenWrap(enemyObj[i]);
+                        }
+                        else 
+                        {
+                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
+                            ScreenWrap(enemyObj[i]);
+                        }
+
                         enemyObj[i].EnemyDeath(user);
                         if(enemyObj[i].IsActive == false)
                         {

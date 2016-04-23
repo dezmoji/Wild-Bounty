@@ -34,19 +34,6 @@ namespace WildBounty
             IsActive = true;
         }
 
-        // method to make the enemy move toward the player 
-        //* work in progress
-        public void Movement(Player player)
-        {
-            
-            
-            int xDist = player.Rect.X - Rect.X;
-            int yDist = player.Rect.Y - Rect.Y;
-            this.Rect = new Rectangle(xDist +100, yDist + 100, Rect.Width, Rect.Height);
-            Vector2 direction = new Vector2(xDist, yDist);
-            direction.Normalize();
-        }
-
         // handles when the enemy dies
         public bool EnemyDeath()
         {
@@ -56,16 +43,6 @@ namespace WildBounty
                 return true;
             }
             return false;
-        }
-
-        public void BulletCollision(Bullet bullet)
-        {
-            if (this.Rect.Intersects(bullet.Rect) == true) // Property for game object rectangle
-            {
-                // Use property and subtract 10 health from that
-                this.Health -= 10;
-                bullet.IsActive = false;
-            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

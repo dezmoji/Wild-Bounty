@@ -60,6 +60,7 @@ namespace WildBounty
         public int BCount
         {
             get { return bCount; }
+            set { bCount = value; }
         }
 
         public void UseBullet()

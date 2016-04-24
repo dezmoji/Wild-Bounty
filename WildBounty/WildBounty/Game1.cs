@@ -59,6 +59,7 @@ namespace WildBounty
         Ammo a;
         List<Enemy> enemyObj;
         int waveCount;
+        int wave = 0;
         Random rgen;
         int rndX, rndY;
 
@@ -373,13 +374,12 @@ namespace WildBounty
                         // Enemy Movement
                         if(i < enemyObj.Count/2)
                         {
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X -5, enemyObj[i].Rect.Y - 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y + 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
+                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X - 2, enemyObj[i].Rect.Y - 2, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
                         else 
                         {
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 5, enemyObj[i].Rect.Y+5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
+                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 2, enemyObj[i].Rect.Y + 2, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
 
@@ -388,12 +388,13 @@ namespace WildBounty
                             ScreenWrap(enemyObj[i]);
                         }*/
 
+
                         // Damage done by collision
                         
-                        /*if (user.Rect.Intersects(enemyObj[i].Rect))
+                        if (user.Rect.Intersects(enemyObj[i].Rect))
                         {
                             user.Health = user.Health - 10;
-                        }*/
+                        }
                     }
 
                     // calls the death method for enemies
@@ -413,7 +414,7 @@ namespace WildBounty
                      {
                          waveCount = 0;
                          user.Health = 100;
-                         NextWave();
+                         StartGame();
                         gameState = GameState.Game;
                      }
                      if(this.SingleKeyPress(Keys.M)== true) 
@@ -541,15 +542,24 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Health " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
                 spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
                 spriteBatch.DrawString(font, "Ammo " + user.BCount, new Vector2(GraphicsDevice.Viewport.Width - 150, 50), Color.White);
-
+                spriteBatch.DrawString(font, "Wave " + wave, new Vector2(GraphicsDevice.Viewport.Width - 150, 70), Color.White);
 
                 foreach(Enemy e in enemyObj)
                 {
-                    e.Draw(spriteBatch);
+                    // Enemy Direction based on player loc
+
+                    if(user.Rect.X < e.Rect.X)
+                    {
+                        spriteBatch.Draw(enemyImg, e.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
+                    }
+                    else
+                    {
+                        e.Draw(spriteBatch);
+                    }
                 }
                 
 
-                // Code for player animation
+                // Code for player direction
                 
                 if(move == PlayerState.FaceRight)
                 {
@@ -561,8 +571,8 @@ namespace WildBounty
                     spriteBatch.Draw(playerImg, user.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
                 }
 
-
                 
+                // Code for bullet direction
                 if(bulletExist == true && user.BCount > 0)
                 {
                     if(b.IsActive)
@@ -586,8 +596,8 @@ namespace WildBounty
                 spriteBatch.Draw(background5, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "Game Over!", new Vector2(GraphicsDevice.Viewport.Width / 2 - 200, 100), Color.Red, 0, new Vector2(0, 0), 3, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font, "Your Bounty was " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width / 2 - 150, 200), Color.Red);
-                spriteBatch.DrawString(font, "Try Again", new Vector2(GraphicsDevice.Viewport.Width / 2 - 250, 300), Color.Red);
-                spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 + 150, 300), Color.Red);
+                spriteBatch.DrawString(font, "Try Again(T)", new Vector2(GraphicsDevice.Viewport.Width / 2 - 300, 300), Color.Red);
+                spriteBatch.DrawString(font, "Main Menu(M)", new Vector2(GraphicsDevice.Viewport.Width / 2 + 150, 300), Color.Red);
 
             }
 
@@ -688,9 +698,12 @@ namespace WildBounty
         //method to start the game
         public void StartGame()
         {
-            // clear data
+            // reset data
             user.BountyScore = 0;
             waveCount = 0;
+            wave = 0;
+            user.BCount = 10;
+             
             
             // start the next wave
             this.NextWave();
@@ -700,8 +713,10 @@ namespace WildBounty
         public void NextWave()
         {
             // increment the wave count and calculate how many enemies to make
+            wave++;
             waveCount++;
             int make = 2 * waveCount + 3;
+           
 
             // clear the lists
             enemyObj.Clear();

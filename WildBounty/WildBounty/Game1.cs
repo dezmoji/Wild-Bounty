@@ -121,6 +121,8 @@ namespace WildBounty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+
             //playerLoc = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
 
             // create player
@@ -213,7 +215,7 @@ namespace WildBounty
             background5 = Content.Load<Texture2D>("Wild-West-5");
             background6 = Content.Load<Texture2D>("Wild-West-6");
             font = Content.Load<SpriteFont>("Font/Lemiesz_16");
-            //playerImg = Content.Load<Texture2D>("CharacterAsset");
+            //playerImg = Content.Load<Texture2D>("CharacterAsset"); (Spritesheet for animation)
             playerImg = Content.Load<Texture2D>("CharacterAssetSingle");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
@@ -258,6 +260,7 @@ namespace WildBounty
             // TODO: Add your update logic here
             prevKbState = kbState;
             kbState = Keyboard.GetState();
+
             // For animation FSM
             string strState = "";            
 
@@ -298,6 +301,7 @@ namespace WildBounty
 
                     // Player Movement
 
+                    // Frames for animation
                     //framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
                     //frame = framesElapsed % numFrames + 1;
 
@@ -312,8 +316,11 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X - 5, user.Rect.Y, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
+                        
+                        // Frames for animation
                         //framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
                         //frame = framesElapsed % numFrames + 1;
+
                         strState = "FaceLeft";
                     }
 
@@ -327,8 +334,11 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X + 5, user.Rect.Y, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
+
+                        // Frames for animation
                         //framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
                         //frame = framesElapsed % numFrames + 1;
+
                         strState = "FaceRight";
                     }
 
@@ -400,12 +410,6 @@ namespace WildBounty
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 2, enemyObj[i].Rect.Y + 2, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
-
-                        /*enemyObj[i].EnemyDeath();
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X - 5, enemyObj[i].Rect.Y - 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
-                            ScreenWrap(enemyObj[i]);
-                        }*/
-
                     }
 
                     // calls the death method for enemies
@@ -549,7 +553,7 @@ namespace WildBounty
                     //sObj.Draw(spriteBatch);
                 }
 
-
+                // In-game UI
                 spriteBatch.DrawString(font, "Health " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
                 spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
                 spriteBatch.DrawString(font, "Ammo " + user.BCount, new Vector2(GraphicsDevice.Viewport.Width - 150, 50), Color.White);

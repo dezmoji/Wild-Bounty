@@ -66,6 +66,7 @@ namespace WildBounty
         List<Scenery> SceneryColl;
         List<Array> SceneryConColl;
 
+
         Vector2 playerLoc;
         bool bulletExist; // bool for projectile algorithim
 
@@ -226,6 +227,8 @@ namespace WildBounty
                 }
                 sObj.RubbleTexture = RubbleTex;
             }
+
+
         }
 
         /// <summary>
@@ -362,10 +365,13 @@ namespace WildBounty
 
                     foreach(Enemy e in enemyObj)
                     {
+                        //set the enemy's bullet images
+                        e.BImage = bImage;
                         if (bulletExist == true)
                         {
                             b.Collision(e);
                         }
+                        e.Shoot(user);
                     }
 
                     for (int i = 0; i < enemyObj.Count;i++)
@@ -393,7 +399,7 @@ namespace WildBounty
                         
                         if (user.Rect.Intersects(enemyObj[i].Rect))
                         {
-                            user.Health = user.Health - 10;
+                            user.Health = user.Health - 1;
                         }
                     }
 
@@ -546,8 +552,11 @@ namespace WildBounty
 
                 foreach(Enemy e in enemyObj)
                 {
+                    if (e.Shooting == true)
+                    {
+                        spriteBatch.Draw(bImage, e.Bullets.Rect, Color.White);
+                    }
                     // Enemy Direction based on player loc
-
                     if(user.Rect.X < e.Rect.X)
                     {
                         spriteBatch.Draw(enemyImg, e.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);

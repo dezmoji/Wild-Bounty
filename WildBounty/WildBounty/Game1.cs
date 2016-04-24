@@ -66,8 +66,23 @@ namespace WildBounty
         List<Scenery> SceneryColl;
         List<Array> SceneryConColl;
 
+<<<<<<< HEAD
 
+=======
+        // animation attributes
+        /*
+>>>>>>> 339752f42a859eb31ccca8058cceec1b31f2cea5
         Vector2 playerLoc;
+        int frame;
+        double timePerFrame = 100;
+        int numFrames = 3;
+        int framesElapsed;
+        const int CHARACTER_Y = 58;
+        const int CHARACTER_HEIGHT = 36;
+        const int CHARACTER_WIDTH = 22;
+        const int CHARACTER_X_OFFSET = 2;
+         */
+
         bool bulletExist; // bool for projectile algorithim
 
         // Enum
@@ -110,10 +125,12 @@ namespace WildBounty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            playerLoc = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
+
+
+            //playerLoc = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
 
             // create player
-            user = new Player(playerImg, 0, 0, 50, 50,100);
+            user = new Player(playerImg, 0, 0, 175, 175, 100);
             bulletExist = false;
             rgen = new Random();
 
@@ -202,14 +219,10 @@ namespace WildBounty
             background5 = Content.Load<Texture2D>("Wild-West-5");
             background6 = Content.Load<Texture2D>("Wild-West-6");
             font = Content.Load<SpriteFont>("Font/Lemiesz_16");
-            playerImg = Content.Load<Texture2D>("CharacterAsset");
+            //playerImg = Content.Load<Texture2D>("CharacterAsset"); (Spritesheet for animation)
+            playerImg = Content.Load<Texture2D>("CharacterAssetSingle");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
-            helpMenu = Content.Load<Texture2D>("help");
-            gameoverMenu = Content.Load<Texture2D>("game over");
-            optionsMenu = Content.Load<Texture2D>("options");
-            scoresMenu = Content.Load<Texture2D>("scores");
-            creditsMenu = Content.Load<Texture2D>("credits");
 
             BarrelTex = Content.Load<Texture2D>("Barrel");
             CactusTex = Content.Load<Texture2D>("Cactus");
@@ -253,6 +266,7 @@ namespace WildBounty
             // TODO: Add your update logic here
             prevKbState = kbState;
             kbState = Keyboard.GetState();
+
             // For animation FSM
             string strState = "";            
 
@@ -284,6 +298,7 @@ namespace WildBounty
 
                 // Game State
                 case GameState.Game:
+
                     // when the player dies, it's game over
                      if(user.Health <= 0)
                      {
@@ -291,6 +306,12 @@ namespace WildBounty
                      }
 
                     // Player Movement
+
+                    // Frames for animation
+                    //framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                    //frame = framesElapsed % numFrames + 1;
+
+
                     if(kbState.IsKeyDown(Keys.Up))
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y - 5, user.Rect.Width, user.Rect.Height);
@@ -301,6 +322,11 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X - 5, user.Rect.Y, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
+                        
+                        // Frames for animation
+                        //framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                        //frame = framesElapsed % numFrames + 1;
+
                         strState = "FaceLeft";
                     }
 
@@ -314,6 +340,11 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X + 5, user.Rect.Y, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
+
+                        // Frames for animation
+                        //framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                        //frame = framesElapsed % numFrames + 1;
+
                         strState = "FaceRight";
                     }
 
@@ -331,13 +362,13 @@ namespace WildBounty
                     {
                         if (move == PlayerState.FaceRight)
                         {
-                            b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 10, 10, 10);
+                            b = new Bullet(10, bImage, user.Rect.X + 100, user.Rect.Y + 70, 10, 10);
                             bulletExist = true;
                         }
 
                         if (move == PlayerState.FaceLeft)
                         {
-                            b = new Bullet(10, bImage, user.Rect.X - 50, user.Rect.Y - 10, 10, 10);
+                            b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 70, 10, 10);
                             bulletExist = true;
                         }
 
@@ -388,6 +419,7 @@ namespace WildBounty
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 2, enemyObj[i].Rect.Y + 2, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
+<<<<<<< HEAD
 
                         /*enemyObj[i].EnemyDeath();
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X - 5, enemyObj[i].Rect.Y - 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
@@ -401,6 +433,8 @@ namespace WildBounty
                         {
                             user.Health = user.Health - 1;
                         }
+=======
+>>>>>>> 339752f42a859eb31ccca8058cceec1b31f2cea5
                     }
 
                     // calls the death method for enemies
@@ -544,7 +578,7 @@ namespace WildBounty
                     //sObj.Draw(spriteBatch);
                 }
 
-
+                // In-game UI
                 spriteBatch.DrawString(font, "Health " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
                 spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
                 spriteBatch.DrawString(font, "Ammo " + user.BCount, new Vector2(GraphicsDevice.Viewport.Width - 150, 50), Color.White);
@@ -568,15 +602,17 @@ namespace WildBounty
                 }
                 
 
-                // Code for player direction
+                // Code for player direction and animation
                 
                 if(move == PlayerState.FaceRight)
                 {
+                    //spriteBatch.Draw(playerImg, playerLoc, new Rectangle(CHARACTER_X_OFFSET + frame * CHARACTER_WIDTH, CHARACTER_Y, CHARACTER_WIDTH, CHARACTER_HEIGHT), Color.White);
                     spriteBatch.Draw(playerImg, user.Rect, Color.White);
                 }
 
                 if(move == PlayerState.FaceLeft)
                 {
+                    //spriteBatch.Draw(playerImg, playerLoc, new Rectangle(CHARACTER_X_OFFSET + frame * CHARACTER_WIDTH, CHARACTER_Y, CHARACTER_WIDTH, CHARACTER_HEIGHT), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
                     spriteBatch.Draw(playerImg, user.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
                 }
 

@@ -16,7 +16,7 @@ namespace Map_Tool
             using (var game = new Game1())
                 game.Run();
 
-                //game.EnableVisualStyles();
+                //Application.EnableVisualStyles();
                 //game.SetCompatibleTextRenderingDefault(false);
                 //game.Run(new Form1());
 

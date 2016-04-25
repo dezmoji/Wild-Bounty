@@ -42,7 +42,7 @@ namespace Map_Tool
             // TODO: Add your initialization logic here
             mapForm.Activate();
             mapForm.Show();
-
+            IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -113,6 +113,20 @@ namespace Map_Tool
                 sObj.RubbleTexture = RubbleTex;
             }
 
+            //get mouse state
+            var mouseState = Mouse.GetState();
+            //if in the game screen
+            if(mouseState.X > 0 && mouseState.X < this.GraphicsDevice.Viewport.Width && mouseState.Y > 0 && mouseState.Y < GraphicsDevice.Viewport.Height)
+            {
+                //on click
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    //get mouse position and change the form variables
+                    mapForm.FX = mouseState.X;
+                    mapForm.FY = mouseState.Y;
+                }
+            }
+            
             base.Update(gameTime);
         }
 

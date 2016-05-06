@@ -207,11 +207,11 @@ namespace WildBounty
             playerImg = Content.Load<Texture2D>("CharacterAsset");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
-            helpMenu = Content.Load<Texture2D>("help");
-            gameoverMenu = Content.Load<Texture2D>("game over");
-            optionsMenu = Content.Load<Texture2D>("options");
-            scoresMenu = Content.Load<Texture2D>("scores");
-            creditsMenu = Content.Load<Texture2D>("credits");
+            //helpMenu = Content.Load<Texture2D>("help");
+            //gameoverMenu = Content.Load<Texture2D>("game over");
+            //optionsMenu = Content.Load<Texture2D>("options");
+           // scoresMenu = Content.Load<Texture2D>("scores");
+            //creditsMenu = Content.Load<Texture2D>("credits");
 
             BarrelTex = Content.Load<Texture2D>("Barrel");
             CactusTex = Content.Load<Texture2D>("Cactus");
@@ -333,13 +333,13 @@ namespace WildBounty
                     {
                         if (move == PlayerState.FaceRight)
                         {
-                            b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 10, 10, 10);
+                            b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 10, 10, 15,true);
                             bulletExist = true;
                         }
 
                         if (move == PlayerState.FaceLeft)
                         {
-                            b = new Bullet(10, bImage, user.Rect.X - 50, user.Rect.Y - 10, 10, 10);
+                            b = new Bullet(10, bImage, user.Rect.X - 50, user.Rect.Y - 10, 15, 15,false);
                             bulletExist = true;
                         }
 
@@ -348,14 +348,14 @@ namespace WildBounty
 
                     if (bulletExist == true)
                     {
-                        if(move == PlayerState.FaceRight)
+                        if(b.Side == true)
                         {
-                            b.Rect = new Rectangle(b.Rect.X + 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
+                            b.xRec += 10;
                         }
                         
-                        if(move == PlayerState.FaceLeft)
+                        if(b.Side == false)
                         {
-                            b.Rect = new Rectangle(b.Rect.X - 10, b.Rect.Y, b.Rect.Width, b.Rect.Height);
+                            b.xRec -= 10;
                         }
                         
                         if(b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
@@ -777,7 +777,7 @@ namespace WildBounty
             {
                 rndX = rgen.Next(50, GraphicsDevice.Viewport.Width - 200);
                 rndY = rgen.Next(50, GraphicsDevice.Viewport.Height - 50);
-                Enemy enemy = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 100);
+                Enemy enemy = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 50);
                 enemyObj.Add(enemy);
             }
         }

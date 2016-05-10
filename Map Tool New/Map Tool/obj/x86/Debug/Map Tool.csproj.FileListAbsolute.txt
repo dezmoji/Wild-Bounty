@@ -82,3 +82,16 @@ C:\Users\Ragallough\Documents\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Ma
 C:\Users\Ragallough\Documents\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Form1.resources
 C:\Users\Ragallough\Documents\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Properties.Resources.resources
 C:\Users\Ragallough\Documents\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csproj.GenerateResource.Cache
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.exe
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.pdb
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Barrel.xnb
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Cactus.xnb
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Rubble.xnb
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\bin\WindowsGL\Debug\Map Tool.exe
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\bin\WindowsGL\Debug\Map Tool.pdb
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csprojResolveAssemblyReference.cache
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Form1.resources
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Properties.Resources.resources
+C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csproj.GenerateResource.Cache

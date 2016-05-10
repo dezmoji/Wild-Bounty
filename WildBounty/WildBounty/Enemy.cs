@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 namespace WildBounty
 {
     /*
-     * Authors: Dezmon Gilbert, Alex Martinelli
+     * Authors: Dezmon Gilbert
      * Purpose: class for the enemy
      * Caveats: none
      */
@@ -18,7 +18,7 @@ namespace WildBounty
     {
         // attributes
         private int points; // points that are added to the players bounty 
-        private Bullet bullet; 
+        private Bullet bullets; 
         private Texture2D bImage; // texture2d to hold enemy bullet image
         private bool shooting;
    
@@ -39,7 +39,7 @@ namespace WildBounty
         //enemy bullet property
         public Bullet Bullets
         {
-            get { return bullet; }
+            get { return bullets; }
         }
 
         //enemy bullet image property
@@ -77,7 +77,7 @@ namespace WildBounty
         }
 
         //enemy shoot
-        public Bullet Shoot(Player player1)
+        public void Shoot(Player player1)
         {
             //if player is in this box
             if (this.xRec - 300 < player1.xRec && player1.xRec < this.xRec + 300 && player1.yRec < this.yRec + 100 && this.yRec - 100 < player1.yRec )
@@ -85,48 +85,51 @@ namespace WildBounty
                 //if this enemy hasn't shot a bullet recently
                 if(Shooting == false)
                 {
-                    //set shooting to true
-                    shooting = true;
-                    
-                    //determine the side of the enemy the bullet will appear on
-                    if(player1.xRec > this.xRec)//player is on the right
-                    {
-                        //create bullet
-                        bullet = new Bullet(1, bImage, xRec, yRec, 10, 10,true); //bullet will fire right
-                    }
-                    if(player1.xRec < this.xRec) //player is on the left
-                    {
-                        //create bullet
-                        bullet = new Bullet(1, bImage, xRec, yRec, 10, 10,false); //bullet will fire left
-                    }
 
-                    //return the bullet
-                    return bullet;
+                    //enemy is shooting
+                    Shooting = true;
+                    //create new bullet
+                    bullets = new Bullet(10, bImage, xRec + 50, yRec + 10, 10, 10);
+                    //set it to active
+                    bullets.IsActive = true;
+                    //while active
+                    while (bullets.IsActive)
+                    {
+                        //increment bullet x position
+                        bullets.xRec += 10;
+                        //if bullet goes too far
+                        if (bullets.Rect.X > 300)
+                        {
+                            //set to inactive
+                            bullets.IsActive = false;
+                            //set shooting to false after bullet becomes inactive 
+                            Shooting = false;
+                        }
 
-                }
-                else
-                {
-                    return null;
-                }
+                    }
+                   
+                   
+                }  
             }
             //if shooting is true and player is outside of box
             else if(Shooting == true)
             {
-                //is the bullet active?
-                if(bullet.IsActive == true)
+                //while active
+                while (bullets.IsActive)
                 {
-                    return null;
+
+                    //increment bullet x position
+                    bullets.xRec += 10;
+                    //if bullet goes too far
+                    if (bullets.Rect.X > 300)
+                    {
+                        //set to inactive
+                        bullets.IsActive = false;
+                        //set shooting to false after bullet becomes inactive 
+                        shooting = false;
+                    }
+
                 }
-                else
-                {
-                    shooting = false; // set shooting to false to allow for next bullet
-                    return null;
-                }
-                
-            }
-            else
-            {
-                return null;
             }
         }
     }

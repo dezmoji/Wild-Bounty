@@ -40,6 +40,23 @@ namespace WildBounty
             IsActive = true;
         }
 
+        public void PlayerShoot(KeyboardState kbState)
+        {
+            if (kbState.IsKeyDown(Keys.Space) == true)
+            {
+                bullets = new Bullet(10, bullets.Image, this.Rect.X + 50, this.Rect.Y + 10, 10, 10);
+                bullets.IsActive = true;
+                while(bullets.IsActive)
+                {
+                    bullets.Rect = new Rectangle(bullets.Rect.X + 10, bullets.Rect.Y, bullets.Rect.Width, bullets.Rect.Height);
+                    if(bullets.Rect.X > 300)
+                    {
+                        bullets.IsActive = false;
+                    }
+                }
+            }
+        }
+
         public int BCount
         {
             get { return bCount; }

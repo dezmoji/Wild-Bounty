@@ -34,7 +34,6 @@ namespace WildBounty
         Texture2D background5;
         Texture2D background6;
         SpriteFont font;
-        Texture2D playerImg;
         Texture2D bImage;
         Texture2D enemyImg;
         Texture2D BarrelTex;
@@ -54,8 +53,21 @@ namespace WildBounty
         List<Scenery> SceneryColl;
         List<Array> SceneryConColl;
 
+        // animation
+        Texture2D playerImg;
+        int frame;
+        double timePerFrame = 75;
+        int numFrames = 3;
+        int framesElapsed;
+        const int HERO_Y = 6;
+        const int HERO_HEIGHT = 100;
+        const int HERO_WIDTH = 100;
+        const int HERO_X_OFFSET = 1;
 
-        Vector2 playerLoc;
+
+
+
+        
         bool bulletExist; // bool for projectile algorithim
 
         // Enum
@@ -75,7 +87,12 @@ namespace WildBounty
         enum PlayerState            // For animation
         {
             FaceRight,              // player faces left
-            FaceLeft                // player faces right
+            FaceLeft,               // player faces right
+            WalkRight,              // player walks right
+            WalkLeft,               // player walk left
+            WalkDown,               // player walk down  
+            WalkUp                  // player walk up
+             
         }
 
 
@@ -98,10 +115,10 @@ namespace WildBounty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            playerLoc = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
 
             // create player
-            user = new Player(playerImg, 0, 0, 50, 50,100);
+            user = new Player(playerImg, 0, 0, 50, 100, 100);
+            //user = new Player(playerImg, 0, 0, HERO_WIDTH, HERO_HEIGHT, 100);
             bulletExist = false;
             rgen = new Random();
 
@@ -165,7 +182,8 @@ namespace WildBounty
             background5 = Content.Load<Texture2D>("Wild-West-5");
             background6 = Content.Load<Texture2D>("Wild-West-6");
             font = Content.Load<SpriteFont>("Font/Lemiesz_16");
-            playerImg = Content.Load<Texture2D>("CharacterAsset");
+            //playerImg = Content.Load<Texture2D>("CharacterAssetAttempt");
+            playerImg = Content.Load<Texture2D>("CharacterAssetSingle");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
             BarrelTex = Content.Load<Texture2D>("Barrel");
@@ -252,27 +270,51 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y - 5, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
+                        //strState = "FaceUp";
                     }
 
                     if(kbState.IsKeyDown(Keys.Left))
                     {
                         user.Rect = new Rectangle(user.Rect.X - 5, user.Rect.Y, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
+                        //strState = "WalkLeft";
                         strState = "FaceLeft";
+                        // animation
+                        framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                        frame = framesElapsed % numFrames + 1;
                     }
 
                     if(kbState.IsKeyDown(Keys.Down))
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y + 5, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
+                        //strState = "FaceDown";
                     }
 
                     if(kbState.IsKeyDown(Keys.Right))
                     {
                         user.Rect = new Rectangle(user.Rect.X + 5, user.Rect.Y, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
+                        //strState = "WalkRight";
                         strState = "FaceRight";
+                        // animation
+                        framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                        frame = framesElapsed % numFrames + 1;
                     }
+
+                    /*
+                    if(!kbState.IsKeyDown(Keys.Left) && !kbState.IsKeyDown(Keys.Right))
+                    {
+                        if(prevKbState.IsKeyDown(Keys.Left))
+                        {
+                            strState = "FaceLeft";
+                        }
+                        if(prevKbState.IsKeyDown(Keys.Right))
+                        {
+                            strState = "FaceRight";
+                        }
+                    }
+                     */
 
                     // FSM for player direction
                     switch(strState)
@@ -280,6 +322,15 @@ namespace WildBounty
                         case "FaceLeft": move = PlayerState.FaceLeft; break;
 
                         case "FaceRight": move = PlayerState.FaceRight; break;
+
+                        case "WalkLeft": move = PlayerState.WalkLeft; break;
+
+                        case "WalkRight": move = PlayerState.WalkRight; break;
+
+                        case "WalkDown": move = PlayerState.WalkDown; break;
+
+                        case "WalkUp": move = PlayerState.WalkUp; break;
+                         
                     }
 
 
@@ -560,13 +611,57 @@ namespace WildBounty
                 if(move == PlayerState.FaceRight)
                 {
                     spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                    //spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
                 }
 
                 if(move == PlayerState.FaceLeft)
                 {
                     spriteBatch.Draw(playerImg, user.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
+                    //spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
                 }
 
+                if(move == PlayerState.WalkRight)
+                {
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                }
+
+                if(move == PlayerState.WalkLeft)
+                {
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                }
+
+                
+                if(move == PlayerState.WalkUp)
+                {
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+
+                    /*
+                    if(prevKbState.IsKeyDown(Keys.Right))
+                    {
+                        spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    }
+                    if(prevKbState.IsKeyDown(Keys.Left))
+                    {
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                    }
+                     */
+                }
+
+                if(move == PlayerState.WalkDown)
+                {
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    /*
+                    if (prevKbState.IsKeyDown(Keys.Right))
+                    {
+                        spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    }
+                    if (prevKbState.IsKeyDown(Keys.Left))
+                    {
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                    }
+                     */
+                }
+                 
                 
                 // Code for bullet direction
                 if(bulletExist == true && user.BCount > 0)

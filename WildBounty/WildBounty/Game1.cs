@@ -40,15 +40,9 @@ namespace WildBounty
         Texture2D background4;
         Texture2D background5;
         Texture2D background6;
-        Texture2D gameBackground;
         SpriteFont font;
         Texture2D playerImg;
         Texture2D bImage;
-        Texture2D helpMenu;
-        Texture2D gameoverMenu;
-        Texture2D creditsMenu;
-        Texture2D scoresMenu;
-        Texture2D optionsMenu;
         Texture2D enemyImg;
         Texture2D BarrelTex;
         Texture2D CactusTex;
@@ -74,7 +68,7 @@ namespace WildBounty
         // Enum
         enum GameState
         {
-            Menu,   // main menu
+            Menu,                   // main menu
             Game,                   // the game being played
             GameOver,               // when the game is finished
             Credits,                // credit screen
@@ -125,53 +119,27 @@ namespace WildBounty
             EnemyBullets = new List<Bullet>();
 
             // read from file
-            //try
-            //{
-                //BinaryReader input = new BinaryReader(File.OpenRead("map.dat"));
-                //gameBackground = Content.Load<Texture2D>(input.ReadString());
+            if (File.Exists("map.dat"))
+            {
+                FileStream str = new FileStream("map.dat", FileMode.Open);
+                long lineCount = str.Length;
+                str.Close();
 
-                if (File.Exists("map.dat"))
+                using (BinaryReader reader = new BinaryReader(File.Open("map.dat", FileMode.Open)))
                 {
-                    FileStream str = new FileStream("map.dat",FileMode.Open);
-                    long lineCount = str.Length;
-                    str.Close();
-
-                    using (BinaryReader reader = new BinaryReader(File.Open("map.dat", FileMode.Open)))
+                    for (int j = 0; j < (lineCount / 28); j++)
                     {
-                        for (int j = 0; j < (lineCount/28); j++)
+                        int[] n = new int[7];
+
+                        for (int k = 0; k < n.Length; k++)
                         {
-                            int[] n = new int[7];
-
-                            for (int k = 0; k < n.Length; k++)
-                            {
-                                n[k] = reader.ReadInt32();
-                            }
-
-                            SceneryConColl.Add(n);
+                            n[k] = reader.ReadInt32();
                         }
+
+                        SceneryConColl.Add(n);
                     }
                 }
-                /*try
-                {
-                    while(true)
-                    {
-                        using (Stream stream = File.Open("map.dat", FileMode.Open))
-                        {
-                            var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-                            SceneryConColl.Add((SceneConverter)binaryFormatter.Deserialize(stream));
-                        }
-                    }
-                }
-                catch(Exception ex)
-                {
-                    
-                }*/
-            //}
-            //catch (Exception ex)
-            //{
-            //    gameBackground = Content.Load<Texture2D>("defaultSand");
-            //}
+            }
 
             // get background from file
             foreach (var objct in SceneryConColl)
@@ -180,8 +148,8 @@ namespace WildBounty
                 Scenery newObj = new Scenery(obj[0], obj[1], obj[2], obj[3], obj[4], obj[5], obj[6]);
                 SceneryColl.Add(newObj);
             }
+
             // intial state of the game
-            
             gameState = GameState.Menu;
             base.Initialize();
 
@@ -207,12 +175,6 @@ namespace WildBounty
             playerImg = Content.Load<Texture2D>("CharacterAsset");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
-            //helpMenu = Content.Load<Texture2D>("help");
-            //gameoverMenu = Content.Load<Texture2D>("game over");
-            //optionsMenu = Content.Load<Texture2D>("options");
-           // scoresMenu = Content.Load<Texture2D>("scores");
-            //creditsMenu = Content.Load<Texture2D>("credits");
-
             BarrelTex = Content.Load<Texture2D>("Barrel");
             CactusTex = Content.Load<Texture2D>("Cactus");
             RubbleTex = Content.Load<Texture2D>("Rubble");
@@ -394,10 +356,6 @@ namespace WildBounty
                             }
                             ebull.Travel(user);
                         }
-                        else
-                        {
-                            //EnemyBullets.Remove(ebull); //for whatever reason, un-commenting this causes the game to crash once an enemy shoots
-                        }
 
                     }
 
@@ -415,12 +373,6 @@ namespace WildBounty
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 2, enemyObj[i].Rect.Y + 2, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
-
-                        /*enemyObj[i].EnemyDeath();
-                            enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X - 5, enemyObj[i].Rect.Y - 5, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
-                            ScreenWrap(enemyObj[i]);
-                        }*/
-
 
                         // Damage done by collision
                         
@@ -568,7 +520,7 @@ namespace WildBounty
                     {
                         spriteBatch.Draw(sObj.RubbleTexture, rect, Color.White);
                     }
-                    //sObj.Draw(spriteBatch);
+                    
                 }
 
 

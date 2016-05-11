@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
-//<<<<<<< HEAD
+
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -10,8 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-//=======
-//>>>>>>> origin/axm8774-patch-1
 
 namespace WildBounty
 {
@@ -26,6 +24,7 @@ namespace WildBounty
     public class Game1 : Game
     {
         // Attributes 
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
@@ -35,36 +34,51 @@ namespace WildBounty
         Texture2D background5;
         Texture2D background6;
         SpriteFont font;
-        Texture2D playerImg;
         Texture2D bImage;
         Texture2D enemyImg;
         Texture2D BarrelTex;
         Texture2D CactusTex;
         Texture2D RubbleTex;
         Player user;
+        Enemy enemy;
         Bullet b;
         Ammo a;
         List<Enemy> enemyObj;
-        int wave;
+        int waveCount;
+        int wave = 0;
         Random rgen;
         int rndX, rndY;
-        List<int> highScores;
+
         List<Bullet> EnemyBullets;
         List<Scenery> SceneryColl;
         List<Array> SceneryConColl;
 
+        // animation
+        Texture2D playerImg;
+        int frame;
+        double timePerFrame = 75;
+        int numFrames = 3;
+        int framesElapsed;
+        const int HERO_Y = 6;
+        const int HERO_HEIGHT = 100;
+        const int HERO_WIDTH = 100;
+        const int HERO_X_OFFSET = 1;
 
-        Vector2 playerLoc;
+
+
+
+        
         bool bulletExist; // bool for projectile algorithim
 
         // Enum
         enum GameState
         {
-            Menu,   // main menu
+            Menu,                   // main menu
             Game,                   // the game being played
             GameOver,               // when the game is finished
             Credits,                // credit screen
             Scores,                 // screen to display scores
+            Options,                // screen to display the options
             Help,                   // help screen
             About,                  // screen that gives information about the game and the creators
             Tips,                   // screen that gives the user tips on how to succeed and play
@@ -73,7 +87,12 @@ namespace WildBounty
         enum PlayerState            // For animation
         {
             FaceRight,              // player faces left
-            FaceLeft                // player faces right
+            FaceLeft,               // player faces right
+            WalkRight,              // player walks right
+            WalkLeft,               // player walk left
+            WalkDown,               // player walk down  
+            WalkUp                  // player walk up
+             
         }
 
 
@@ -96,10 +115,10 @@ namespace WildBounty
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            playerLoc = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
 
             // create player
-            user = new Player(playerImg, 0, 0, 50, 100,100);
+            //user = new Player(playerImg, 0, 0, 50, 100, 100);
+            user = new Player(playerImg, 0, 0, HERO_WIDTH, HERO_HEIGHT, 100000000);
             bulletExist = false;
             rgen = new Random();
 
@@ -109,37 +128,29 @@ namespace WildBounty
             SceneryConColl = new List<Array>();
             EnemyBullets = new List<Bullet>();
 
-            // initialize the arrays for highscores
-            highScores = new List<int>();
-            
-            //fill the first five spots in the list to prevent compiler error when showing scores
-            for (int i = 0; i < 5;i++ )
+            // read from file
+            if (File.Exists("map.dat"))
             {
-                highScores.Add(0);
+                FileStream str = new FileStream("map.dat", FileMode.Open);
+                long lineCount = str.Length;
+                str.Close();
+
+                using (BinaryReader reader = new BinaryReader(File.Open("map.dat", FileMode.Open)))
+                {
+                    for (int j = 0; j < (lineCount / 28); j++)
+                    {
+                        int[] n = new int[7];
+
+                        for (int k = 0; k < n.Length; k++)
+                        {
+                            n[k] = reader.ReadInt32();
+                        }
+
+                        SceneryConColl.Add(n);
+                    }
+                }
             }
 
-                if (File.Exists("map.dat"))
-                {
-                    FileStream str = new FileStream("map.dat", FileMode.Open);
-                    long lineCount = str.Length;
-                    str.Close();
-
-                    using (BinaryReader reader = new BinaryReader(File.Open("map.dat", FileMode.Open)))
-                    {
-                        for (int j = 0; j < (lineCount / 28); j++)
-                        {
-                            int[] n = new int[7];
-
-                            for (int k = 0; k < n.Length; k++)
-                            {
-                                n[k] = reader.ReadInt32();
-                            }
-
-                            SceneryConColl.Add(n);
-                        }
-                    }
-                }    
- 
             // get background from file
             foreach (var objct in SceneryConColl)
             {
@@ -171,7 +182,8 @@ namespace WildBounty
             background5 = Content.Load<Texture2D>("Wild-West-5");
             background6 = Content.Load<Texture2D>("Wild-West-6");
             font = Content.Load<SpriteFont>("Font/Lemiesz_16");
-            playerImg = Content.Load<Texture2D>("CharacterAssetSingle");
+            playerImg = Content.Load<Texture2D>("CharacterAssetAttempt");
+            //playerImg = Content.Load<Texture2D>("CharacterAssetSingle");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
             BarrelTex = Content.Load<Texture2D>("Barrel");
@@ -250,7 +262,6 @@ namespace WildBounty
                     // when the player dies, it's game over
                      if(user.Health <= 0)
                      {
-                         SaveHighestScores(user.BountyScore);
                         gameState = GameState.GameOver;
                      }
 
@@ -259,27 +270,51 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y - 5, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
+                        strState = "FaceUp";
                     }
 
                     if(kbState.IsKeyDown(Keys.Left))
                     {
                         user.Rect = new Rectangle(user.Rect.X - 5, user.Rect.Y, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
-                        strState = "FaceLeft";
+                        strState = "WalkLeft";
+                        //strState = "FaceLeft";
+                        // animation
+                        framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                        frame = framesElapsed % numFrames + 1;
                     }
 
                     if(kbState.IsKeyDown(Keys.Down))
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y + 5, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
+                        strState = "FaceDown";
                     }
 
                     if(kbState.IsKeyDown(Keys.Right))
                     {
                         user.Rect = new Rectangle(user.Rect.X + 5, user.Rect.Y, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
-                        strState = "FaceRight";
+                        strState = "WalkRight";
+                        //strState = "FaceRight";
+                        // animation
+                        framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                        frame = framesElapsed % numFrames + 1;
                     }
+
+                    
+                    if(!kbState.IsKeyDown(Keys.Left) && !kbState.IsKeyDown(Keys.Right))
+                    {
+                        if(prevKbState.IsKeyDown(Keys.Left))
+                        {
+                            strState = "FaceLeft";
+                        }
+                        if(prevKbState.IsKeyDown(Keys.Right))
+                        {
+                            strState = "FaceRight";
+                        }
+                    }
+                     
 
                     // FSM for player direction
                     switch(strState)
@@ -287,6 +322,15 @@ namespace WildBounty
                         case "FaceLeft": move = PlayerState.FaceLeft; break;
 
                         case "FaceRight": move = PlayerState.FaceRight; break;
+
+                        case "WalkLeft": move = PlayerState.WalkLeft; break;
+
+                        case "WalkRight": move = PlayerState.WalkRight; break;
+
+                        case "WalkDown": move = PlayerState.WalkDown; break;
+
+                        case "WalkUp": move = PlayerState.WalkUp; break;
+                         
                     }
 
 
@@ -319,11 +363,7 @@ namespace WildBounty
                         {
                             b.xRec -= 10;
                         }
-
-                        foreach(Scenery scnry in SceneryColl)
-                        {
-                            b.Collision(scnry);
-                        }
+                        
                         if(b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
                         {
                             bulletExist = false;
@@ -359,36 +399,30 @@ namespace WildBounty
                                 ebull.xRec -= 5; //bullet goes left
                             }
                             ebull.Travel(user);
-                            
-                            foreach(Scenery scnry in SceneryColl)
-                            {
-                                if(scnry.Health >0)
-                                {
-                                    ebull.Collision(scnry);
-                                }
-                                
-                            }
-                        }
-                        else
-                        {
-                            //EnemyBullets.Remove(ebull); //for whatever reason, un-commenting this causes the game to crash once an enemy shoots
                         }
 
                     }
 
-                    for (int i = 0; i < enemyObj.Count; i++)
+                    for (int i = 0; i < enemyObj.Count;i++)
                     {
 
                         // Enemy Movement
-                        if (i < enemyObj.Count / 2)
+                        if(i < enemyObj.Count/2)
                         {
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X - 2, enemyObj[i].Rect.Y - 2, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
-                        else
+                        else 
                         {
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 2, enemyObj[i].Rect.Y + 2, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
+                        }
+
+                        // Damage done by collision
+                        
+                        if (user.Rect.Intersects(enemyObj[i].Rect))
+                        {
+                            user.Health = user.Health - 1;
                         }
                     }
 
@@ -407,6 +441,8 @@ namespace WildBounty
                     
                      if(this.SingleKeyPress(Keys.T)== true) // for try again
                      {
+                         waveCount = 0;
+                         user.Health = 100;
                          StartGame();
                         gameState = GameState.Game;
                      }
@@ -424,6 +460,14 @@ namespace WildBounty
                         gameState = GameState.Menu;
                      }   
                      
+                    break;
+
+                // Options State
+                case GameState.Options:
+                    if (this.SingleKeyPress(Keys.B) == true)
+                    {
+                        gameState = GameState.Menu;
+                    } 
                     break;
 
                 // Credits State
@@ -511,16 +555,19 @@ namespace WildBounty
 
                 foreach (var sObj in SceneryColl)
                 {
-                    //Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
+                    Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
                     if (sObj.Health > 0)
                     {
-                        spriteBatch.Draw(sObj.ObjTexture, sObj.ObjPos, Color.White);
+                        spriteBatch.Draw(sObj.ObjTexture, rect, Color.White);
                     }
                     else
                     {
-                        //spriteBatch.Draw(sObj.RubbleTexture, sObj.ObjPos, Color.White);
+                        spriteBatch.Draw(sObj.RubbleTexture, rect, Color.White);
                     }
+                    
                 }
+
+
                 spriteBatch.DrawString(font, "Health " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
                 spriteBatch.DrawString(font, "Points " + user.BountyScore, new Vector2(GraphicsDevice.Viewport.Width - 150, 30), Color.White);
                 spriteBatch.DrawString(font, "Ammo " + user.BCount, new Vector2(GraphicsDevice.Viewport.Width - 150, 50), Color.White);
@@ -534,7 +581,7 @@ namespace WildBounty
                         spriteBatch.Draw(enemyImg, e.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
                     }
                     else
-                    { 
+                    {
                         e.Draw(spriteBatch);
                     }
                 }
@@ -556,18 +603,65 @@ namespace WildBounty
                         
                     }
                 }
+                //spriteBatch.DrawString(font,"" + EnemyBullets.Count, new Vector2(100, 100), Color.White); //debug drawstring -- remove before final submission!
+
 
                 // Code for player direction
+                
                 if(move == PlayerState.FaceRight)
                 {
-                    spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                    //spriteBatch.Draw(playerImg, user.Rect, Color.White);
+                    spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
                 }
 
                 if(move == PlayerState.FaceLeft)
                 {
-                    spriteBatch.Draw(playerImg, user.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
+                    //spriteBatch.Draw(playerImg, user.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
                 }
 
+                if(move == PlayerState.WalkRight)
+                {
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                }
+
+                if(move == PlayerState.WalkLeft)
+                {
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                }
+
+                
+                if(move == PlayerState.WalkUp)
+                {
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+
+                    /*
+                    if(prevKbState.IsKeyDown(Keys.Right))
+                    {
+                        spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    }
+                    if(prevKbState.IsKeyDown(Keys.Left))
+                    {
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                    }
+                     */
+                }
+
+                if(move == PlayerState.WalkDown)
+                {
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    /*
+                    if (prevKbState.IsKeyDown(Keys.Right))
+                    {
+                        spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    }
+                    if (prevKbState.IsKeyDown(Keys.Left))
+                    {
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                    }
+                     */
+                }
+                 
                 
                 // Code for bullet direction
                 if(bulletExist == true && user.BCount > 0)
@@ -604,11 +698,14 @@ namespace WildBounty
                 spriteBatch.Draw(background3, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, 0), Color.Black);
                 spriteBatch.DrawString(font, "High Scores:", new Vector2(GraphicsDevice.Viewport.Width / 2 - 75, 100), Color.Black, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(font, "1. " + highScores[0], new Vector2(100, 150), Color.Black);
-                spriteBatch.DrawString(font, "2. " + highScores[1], new Vector2(100, 200), Color.Black);
-                spriteBatch.DrawString(font, "3. " + highScores[2], new Vector2(100, 250), Color.Black);
-                spriteBatch.DrawString(font, "4. " + highScores[3], new Vector2(100, 300), Color.Black);
-                spriteBatch.DrawString(font, "5. " + highScores[4], new Vector2(100, 350), Color.Black);
+
+            }
+
+            // Options
+            if (gameState == GameState.Options)
+            {
+                spriteBatch.Draw(background4, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250,0), Color.Black);
             }
 
             // Credits
@@ -656,8 +753,8 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Move to avoid enemy bullets!", new Vector2(50, 100), Color.Black);
                 spriteBatch.DrawString(font, "Fire your bullet and move!", new Vector2(50, 150), Color.Black);
                 spriteBatch.DrawString(font, "You shoot faster near the edges of the screen!", new Vector2(50, 200), Color.Black);
-                spriteBatch.DrawString(font, "Try to constantly look for pick-ups!", new Vector2(50, 250), Color.Black);
-                spriteBatch.DrawString(font, "Be vigilant for the different types of enemies!", new Vector2(50, 300), Color.Black);
+                spriteBatch.DrawString(font, "Killing enemies gives ammo!", new Vector2(50, 250), Color.Black);
+                spriteBatch.DrawString(font, "Do not run into enemies!", new Vector2(50, 300), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
@@ -694,10 +791,11 @@ namespace WildBounty
         {
             // reset data
             user.BountyScore = 0;
-            user.Health = 100;
-            user.BCount = 10;
+            waveCount = 0;
             wave = 0;
- 
+            user.BCount = 10;
+             
+            
             // start the next wave
             this.NextWave();
         }
@@ -707,8 +805,8 @@ namespace WildBounty
         {
             // increment the wave count and calculate how many enemies to make
             wave++;
-            int make = 2 * wave + 1;
-            user.Health = 100 + wave * 10;
+            waveCount++;
+            int make = 2 * waveCount + 3;
            
 
             // clear the lists
@@ -719,8 +817,8 @@ namespace WildBounty
             {
                 rndX = rgen.Next(50, GraphicsDevice.Viewport.Width - 200);
                 rndY = rgen.Next(50, GraphicsDevice.Viewport.Height - 50);
-                Enemy enemy1 = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 20);
-                enemyObj.Add(enemy1);
+                Enemy enemy = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 50);
+                enemyObj.Add(enemy);
             }
         }
           
@@ -768,19 +866,6 @@ namespace WildBounty
                     enemyObj.RemoveAt(i);
                 }
             }
-        }
-
-        // saves the scores *note: does not save elsewhere meaning there are no scores are not cumulative
-        public void SaveHighestScores(int score)
-        {
-            // add the score
-            highScores.Add(score);
-
-            // have the list be sorted
-            highScores.Sort();
-
-            // displays the greatest first
-            highScores.Reverse();
         }
     }
 }

@@ -70,6 +70,9 @@
     <Content Include="Content\CharacterAsset.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\CharacterAssetAttempt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\CharacterAssetSingle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

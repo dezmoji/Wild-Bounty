@@ -15,6 +15,30 @@ namespace Map_Tool
         //list to hold all objects
         private List<Scenery> sceneryColl = new List<Scenery>();
         private List<Array> sceneConColl = new List<Array>();
+        int fx;
+        int fy;
+
+        //x and y properties
+        public int FX
+        {
+            get { return fx; }
+            set 
+            { //set the xposbox whenever FX is set via property
+                fx = value;
+                XposBox.Value = value;
+            }
+        }
+
+        public int FY
+        {
+            get { return fy; }
+            set
+            { //set the yposbox whenever FY is set via property
+                fy = value;
+                YposBox.Value = value;
+            }
+        }
+
         //property of list
         public List<Scenery> SceneryColl
         {
@@ -31,8 +55,8 @@ namespace Map_Tool
             //get and store all variables (F is for form)
             int FHealth = Convert.ToInt32(HealthBox.Value);
             int FLoot = Convert.ToInt32(LootChanceBox.Value);
-            int FX = Convert.ToInt32(XposBox.Value);
-            int FY = Convert.ToInt32(YposBox.Value);
+            FX = Convert.ToInt32(XposBox.Value);
+            FY = Convert.ToInt32(YposBox.Value);
             int FWidth = Convert.ToInt32(WidthBox.Value);
             int FHeight = Convert.ToInt32(HeightBox.Value);
             string FTexture = TextureBox.Text;

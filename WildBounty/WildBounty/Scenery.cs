@@ -155,5 +155,30 @@ namespace WildBounty
                 Looted = true;
             }
         }
+
+        //collision method
+        public void Collide(GameObject obj)
+        {
+            if(obj.Rect.Intersects(this.ObjPos) == true && obj.xRec > this.X)
+            {
+
+               // obj.xRec = obj.xRec +1;
+            }
+            else if (obj.Rect.Intersects(this.ObjPos) == true && obj.xRec < this.X)
+            {
+               // int xhold = obj.xRec;
+               // obj.xRec = xhold;
+            }
+                /*
+            else if (obj.Rect.Intersects(this.ObjPos) == true && obj.yRec > this.Y)
+            {
+                obj.yRec = this.Y + 1;
+            }
+            else if (obj.Rect.Intersects(this.ObjPos) == true && obj.yRec > this.Y)
+            {
+                obj.yRec = this.Y - 1;
+            }
+                 */ 
+        }
     }
 }

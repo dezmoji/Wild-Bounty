@@ -82,6 +82,7 @@ C:\Users\Ragallough\Documents\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Ma
 C:\Users\Ragallough\Documents\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Form1.resources
 C:\Users\Ragallough\Documents\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Properties.Resources.resources
 C:\Users\Ragallough\Documents\Wild-Bounty\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csproj.GenerateResource.Cache
+<<<<<<< HEAD
 C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.exe
 C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.pdb
 C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Barrel.xnb
@@ -95,3 +96,18 @@ C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map To
 C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Form1.resources
 C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Properties.Resources.resources
 C:\Users\Niko\Documents\WildBounty\WB\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csproj.GenerateResource.Cache
+=======
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.exe
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.pdb
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Barrel.xnb
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Cactus.xnb
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\bin\WindowsGL\Debug\Content\Rubble.xnb
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\bin\WindowsGL\Debug\Map Tool.exe
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\bin\WindowsGL\Debug\Map Tool.pdb
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\bin\WindowsGL\Debug\MonoGame.Framework.dll
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\bin\WindowsGL\Debug\OpenTK.dll
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csprojResolveAssemblyReference.cache
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Form1.resources
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\obj\x86\Debug\Map_Tool.Properties.Resources.resources
+Z:\IGMProfile\WildBounty1\Map Tool New\Map Tool\obj\x86\Debug\Map Tool.csproj.GenerateResource.Cache
+>>>>>>> b31b4450ad719a5aa2bb6374983ea4f00fa7f4f0

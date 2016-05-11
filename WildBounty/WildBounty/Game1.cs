@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
-//<<<<<<< HEAD
+
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -10,13 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-//=======
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//>>>>>>> origin/axm8774-patch-1
 
 namespace WildBounty
 {
@@ -616,7 +609,7 @@ namespace WildBounty
             // Options
             if (gameState == GameState.Options)
             {
-                spriteBatch.Draw(optionsMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.Draw(background4, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250,0), Color.Black);
             }
 
@@ -665,8 +658,8 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Move to avoid enemy bullets!", new Vector2(50, 100), Color.Black);
                 spriteBatch.DrawString(font, "Fire your bullet and move!", new Vector2(50, 150), Color.Black);
                 spriteBatch.DrawString(font, "You shoot faster near the edges of the screen!", new Vector2(50, 200), Color.Black);
-                spriteBatch.DrawString(font, "Try to constantly look for pick-ups!", new Vector2(50, 250), Color.Black);
-                spriteBatch.DrawString(font, "Be vigilant for the different types of enemies!", new Vector2(50, 300), Color.Black);
+                spriteBatch.DrawString(font, "Killing enemies gives ammo!", new Vector2(50, 250), Color.Black);
+                spriteBatch.DrawString(font, "Do not run into enemies!", new Vector2(50, 300), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }

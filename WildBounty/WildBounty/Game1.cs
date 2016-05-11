@@ -99,7 +99,7 @@ namespace WildBounty
             playerLoc = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
 
             // create player
-            user = new Player(playerImg, 0, 0, 50, 50,100);
+            user = new Player(playerImg, 0, 0, 50, 100,100);
             bulletExist = false;
             rgen = new Random();
 
@@ -171,7 +171,7 @@ namespace WildBounty
             background5 = Content.Load<Texture2D>("Wild-West-5");
             background6 = Content.Load<Texture2D>("Wild-West-6");
             font = Content.Load<SpriteFont>("Font/Lemiesz_16");
-            playerImg = Content.Load<Texture2D>("CharacterAsset");
+            playerImg = Content.Load<Texture2D>("CharacterAssetSingle");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
             BarrelTex = Content.Load<Texture2D>("Barrel");
@@ -319,7 +319,11 @@ namespace WildBounty
                         {
                             b.xRec -= 10;
                         }
-                        
+
+                        foreach(Scenery scnry in SceneryColl)
+                        {
+                            b.Collision(scnry);
+                        }
                         if(b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
                         {
                             bulletExist = false;
@@ -355,6 +359,15 @@ namespace WildBounty
                                 ebull.xRec -= 5; //bullet goes left
                             }
                             ebull.Travel(user);
+                            
+                            foreach(Scenery scnry in SceneryColl)
+                            {
+                                if(scnry.Health >0)
+                                {
+                                    ebull.Collision(scnry);
+                                }
+                                
+                            }
                         }
                         else
                         {
@@ -498,14 +511,14 @@ namespace WildBounty
 
                 foreach (var sObj in SceneryColl)
                 {
-                    Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
+                    //Rectangle rect = new Rectangle(sObj.X, sObj.Y, sObj.Width, sObj.Height);
                     if (sObj.Health > 0)
                     {
-                        spriteBatch.Draw(sObj.ObjTexture, rect, Color.White);
+                        spriteBatch.Draw(sObj.ObjTexture, sObj.ObjPos, Color.White);
                     }
                     else
                     {
-                        spriteBatch.Draw(sObj.RubbleTexture, rect, Color.White);
+                        //spriteBatch.Draw(sObj.RubbleTexture, sObj.ObjPos, Color.White);
                     }
                 }
                 spriteBatch.DrawString(font, "Health " + user.Health, new Vector2(GraphicsDevice.Viewport.Width - 150, 10), Color.White);
@@ -695,7 +708,9 @@ namespace WildBounty
             // increment the wave count and calculate how many enemies to make
             wave++;
             int make = 2 * wave + 1;
+            user.Health = 100 + wave * 10;
            
+
             // clear the lists
             enemyObj.Clear();
 
@@ -704,7 +719,7 @@ namespace WildBounty
             {
                 rndX = rgen.Next(50, GraphicsDevice.Viewport.Width - 200);
                 rndY = rgen.Next(50, GraphicsDevice.Viewport.Height - 50);
-                Enemy enemy1 = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 50);
+                Enemy enemy1 = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 20);
                 enemyObj.Add(enemy1);
             }
         }

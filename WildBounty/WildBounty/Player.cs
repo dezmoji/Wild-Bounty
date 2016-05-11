@@ -29,7 +29,7 @@ namespace WildBounty
         public Bullet Bullets
         {
             get { return bullets; }
-            set { bullets = value;}
+            set { bullets = value; }
         }
 
         // Parameterized constructor

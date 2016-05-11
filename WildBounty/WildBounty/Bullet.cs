@@ -52,7 +52,22 @@ namespace WildBounty
                 if (this.Rect.Intersects(obj.Rect)) // Property for game object rectangle
                 {
                     // Use property and subtract 10 health from that
-                    obj.Health = obj.Health - 25;
+                    obj.Health = obj.Health - 10;
+                    this.IsActive = false;
+                }
+            }
+        }
+
+        //overloaded method for scenery
+        public void Collision(Scenery obj)
+        {
+            if (IsActive == true)
+            {
+                // Subtract the health from a general GameObject value without specifying because all GameObjects will have a health
+                if (this.Rect.Intersects(obj.ObjPos)) // Property for game object rectangle
+                {
+                    // Use property and subtract 10 health from that
+                    obj.Health = obj.Health - 10;
                     this.IsActive = false;
                 }
             }

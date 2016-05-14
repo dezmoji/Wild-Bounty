@@ -97,7 +97,7 @@ namespace WildBounty
 
 
         GameState gameState;
-        PlayerState move; 
+        PlayerState move, prevMove; 
         KeyboardState kbState, prevKbState;
 
         public Game1()
@@ -270,7 +270,9 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y - 5, user.Rect.Width, user.Rect.Height);
                         ScreenWrap(user);
-                        strState = "FaceUp";
+                        strState = "WalkUp";
+                        framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                        frame = framesElapsed % numFrames + 1;
                     }
 
                     if(kbState.IsKeyDown(Keys.Left))
@@ -288,7 +290,9 @@ namespace WildBounty
                     {
                         user.Rect = new Rectangle(user.Rect.X, user.Rect.Y + 5, user.Rect.Width, user.Rect.Height); 
                         ScreenWrap(user);
-                        strState = "FaceDown";
+                        strState = "WalkDown";
+                        framesElapsed = (int)(gameTime.TotalGameTime.TotalMilliseconds / timePerFrame);
+                        frame = framesElapsed % numFrames + 1;
                     }
 
                     if(kbState.IsKeyDown(Keys.Right))
@@ -302,20 +306,23 @@ namespace WildBounty
                         frame = framesElapsed % numFrames + 1;
                     }
 
-                    
-                    if(!kbState.IsKeyDown(Keys.Left) && !kbState.IsKeyDown(Keys.Right))
+
+                    if (!kbState.IsKeyDown(Keys.Left) && !kbState.IsKeyDown(Keys.Right) && !kbState.IsKeyDown(Keys.Up) && !kbState.IsKeyDown(Keys.Down))
                     {
-                        if(prevKbState.IsKeyDown(Keys.Left))
-                        {
-                            strState = "FaceLeft";
-                        }
-                        if(prevKbState.IsKeyDown(Keys.Right))
+                        if (prevMove == PlayerState.FaceRight || prevMove == PlayerState.WalkRight)
                         {
                             strState = "FaceRight";
                         }
+                        if (prevMove == PlayerState.FaceLeft || prevMove == PlayerState.WalkLeft)
+                        {
+                            strState = "FaceLeft";
+                        }
                     }
-                     
 
+                    if (move == PlayerState.FaceRight || move == PlayerState.FaceLeft || move == PlayerState.WalkRight || move == PlayerState.WalkLeft)
+                    {
+                        prevMove = move;
+                    }
                     // FSM for player direction
                     switch(strState)
                     {
@@ -339,13 +346,13 @@ namespace WildBounty
                     {
                         if (move == PlayerState.FaceRight)
                         {
-                            b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 10, 10, 15,true);
+                            b = new Bullet(10, bImage, user.Rect.X + user.Rect.Width, user.Rect.Y + 25, 10, 15,true);
                             bulletExist = true;
                         }
 
                         if (move == PlayerState.FaceLeft)
                         {
-                            b = new Bullet(10, bImage, user.Rect.X - 50, user.Rect.Y - 10, 15, 15,false);
+                            b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y + 25, 10, 15,false);
                             bulletExist = true;
                         }
 
@@ -573,6 +580,13 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Ammo " + user.BCount, new Vector2(GraphicsDevice.Viewport.Width - 150, 50), Color.White);
                 spriteBatch.DrawString(font, "Wave " + wave, new Vector2(GraphicsDevice.Viewport.Width - 150, 70), Color.White);
 
+                spriteBatch.DrawString(font, ""+user.Rect.Y, new Vector2(GraphicsDevice.Viewport.Width - 150, 100), Color.White);
+
+                if (prevMove == PlayerState.FaceRight || prevMove == PlayerState.WalkRight)
+                {
+                    spriteBatch.DrawString(font, "Right", new Vector2(GraphicsDevice.Viewport.Width - 150, 130), Color.White);
+                }
+
                 foreach(Enemy e in enemyObj)
                 {
                     // Enemy Direction based on player loc
@@ -607,34 +621,44 @@ namespace WildBounty
 
 
                 // Code for player direction
-                
+                if(move == null)
+                {
+                    move = prevMove;
+                }
+
                 if(move == PlayerState.FaceRight)
                 {
                     //spriteBatch.Draw(playerImg, user.Rect, Color.White);
-                    spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, 0, user.Rect.Width, user.Rect.Height), Color.White);
                 }
 
                 if(move == PlayerState.FaceLeft)
                 {
                     //spriteBatch.Draw(playerImg, user.Rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
-                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, 0, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
                 }
 
                 if(move == PlayerState.WalkRight)
                 {
-                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White);
                 }
 
                 if(move == PlayerState.WalkLeft)
                 {
-                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
                 }
 
                 
                 if(move == PlayerState.WalkUp)
                 {
-                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
-
+                    if (prevMove == PlayerState.FaceRight || prevMove == PlayerState.WalkRight)
+                    {
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White);
+                    }
+                    if (prevMove == PlayerState.FaceLeft || prevMove == PlayerState.WalkLeft)
+                    {
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                    }
                     /*
                     if(prevKbState.IsKeyDown(Keys.Right))
                     {
@@ -649,7 +673,14 @@ namespace WildBounty
 
                 if(move == PlayerState.WalkDown)
                 {
-                    spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                    if (prevMove == PlayerState.FaceRight || prevMove == PlayerState.WalkRight)
+                    {
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White);
+                    }
+                    if (prevMove == PlayerState.FaceLeft || prevMove == PlayerState.WalkLeft)
+                    {
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                    }
                     /*
                     if (prevKbState.IsKeyDown(Keys.Right))
                     {

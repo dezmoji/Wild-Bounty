@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
-
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -24,7 +23,6 @@ namespace WildBounty
     public class Game1 : Game
     {
         // Attributes 
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
@@ -44,8 +42,8 @@ namespace WildBounty
         Bullet b;
         Ammo a;
         List<Enemy> enemyObj;
-        int waveCount;
         int wave = 0;
+        List<int> highScores;
         Random rgen;
         int rndX, rndY;
 
@@ -64,10 +62,6 @@ namespace WildBounty
         const int HERO_WIDTH = 100;
         const int HERO_X_OFFSET = 1;
 
-
-
-
-        
         bool bulletExist; // bool for projectile algorithim
 
         // Enum
@@ -78,7 +72,6 @@ namespace WildBounty
             GameOver,               // when the game is finished
             Credits,                // credit screen
             Scores,                 // screen to display scores
-            Options,                // screen to display the options
             Help,                   // help screen
             About,                  // screen that gives information about the game and the creators
             Tips,                   // screen that gives the user tips on how to succeed and play
@@ -99,7 +92,7 @@ namespace WildBounty
         GameState gameState;
         PlayerState move; 
         KeyboardState kbState, prevKbState;
-
+    
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -127,6 +120,15 @@ namespace WildBounty
             SceneryColl = new List<Scenery>();
             SceneryConColl = new List<Array>();
             EnemyBullets = new List<Bullet>();
+
+            // initialize the arrays for highscores
+            highScores = new List<int>();
+
+            //fill the first five spots in the list to prevent compiler error when showing scores
+            for (int i = 0; i < 5; i++)
+            {
+                highScores.Add(0);
+            }
 
             // read from file
             if (File.Exists("map.dat"))
@@ -441,7 +443,7 @@ namespace WildBounty
                     
                      if(this.SingleKeyPress(Keys.T)== true) // for try again
                      {
-                         waveCount = 0;
+                         wave = 0;
                          user.Health = 100;
                          StartGame();
                         gameState = GameState.Game;
@@ -460,14 +462,6 @@ namespace WildBounty
                         gameState = GameState.Menu;
                      }   
                      
-                    break;
-
-                // Options State
-                case GameState.Options:
-                    if (this.SingleKeyPress(Keys.B) == true)
-                    {
-                        gameState = GameState.Menu;
-                    } 
                     break;
 
                 // Credits State
@@ -698,14 +692,12 @@ namespace WildBounty
                 spriteBatch.Draw(background3, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, 0), Color.Black);
                 spriteBatch.DrawString(font, "High Scores:", new Vector2(GraphicsDevice.Viewport.Width / 2 - 75, 100), Color.Black, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, "1. " + highScores[0], new Vector2(100, 150), Color.Black);
+                spriteBatch.DrawString(font, "2. " + highScores[1], new Vector2(100, 200), Color.Black);
+                spriteBatch.DrawString(font, "3. " + highScores[2], new Vector2(100, 250), Color.Black);
+                spriteBatch.DrawString(font, "4. " + highScores[3], new Vector2(100, 300), Color.Black);
+                spriteBatch.DrawString(font, "5. " + highScores[4], new Vector2(100, 350), Color.Black);
 
-            }
-
-            // Options
-            if (gameState == GameState.Options)
-            {
-                spriteBatch.Draw(background4, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-                spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250,0), Color.Black);
             }
 
             // Credits
@@ -791,7 +783,6 @@ namespace WildBounty
         {
             // reset data
             user.BountyScore = 0;
-            waveCount = 0;
             wave = 0;
             user.BCount = 10;
              
@@ -805,8 +796,7 @@ namespace WildBounty
         {
             // increment the wave count and calculate how many enemies to make
             wave++;
-            waveCount++;
-            int make = 2 * waveCount + 3;
+            int make = 2 * wave + 3;
            
 
             // clear the lists
@@ -866,6 +856,19 @@ namespace WildBounty
                     enemyObj.RemoveAt(i);
                 }
             }
+        }
+
+        // saves the scores *note: does not save elsewhere meaning there are no scores are not cumulative
+        public void SaveHighestScores(int score)
+        {
+            // add the score
+            highScores.Add(score);
+
+            // have the list be sorted
+            highScores.Sort();
+
+            // displays the greatest first
+            highScores.Reverse();
         }
     }
 }

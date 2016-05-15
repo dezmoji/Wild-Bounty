@@ -13,10 +13,9 @@ namespace WildBounty
      * Purpose: Supposed to handle the collision of a bullet with another object and the existence of the bullet itself. 
      * Caveats: Not fully developed. 
      */
-    class Bullet : Character
+    class Bullet : GameObject
     {
         // Bullet Rectangle
-        Rectangle bCollision;
         private int timer;
         private bool side; //bool to determine the direction of the bullet. Only for enemy bullets, player bullets do not use this. {{RIGHT IS TRUE | LEFT IS FALSE}} 
 

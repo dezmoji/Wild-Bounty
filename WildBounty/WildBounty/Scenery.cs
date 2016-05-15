@@ -143,19 +143,6 @@ namespace WildBounty
 
         }
 
-
-        //loot drop method
-        public void LootDrop()
-        {
-            if (Health == 0 && Looted == false)
-            {
-                //code to create loot(ie ammo) goes here
-
-                //set looted to true
-                Looted = true;
-            }
-        }
-
         //collision method
         public void Collide(GameObject obj)
         {

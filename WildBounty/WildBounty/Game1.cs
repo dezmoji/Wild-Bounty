@@ -38,9 +38,7 @@ namespace WildBounty
         Texture2D CactusTex;
         Texture2D RubbleTex;
         Player user;
-        Enemy enemy;
         Bullet b;
-        Ammo a;
         List<Enemy> enemyObj;
         int wave = 0;
         List<int> highScores;
@@ -190,7 +188,6 @@ namespace WildBounty
             background6 = Content.Load<Texture2D>("Wild-West-6");
             font = Content.Load<SpriteFont>("Font/Lemiesz_16");
             playerImg = Content.Load<Texture2D>("CharacterAssetAttempt");
-            //playerImg = Content.Load<Texture2D>("CharacterAssetSingle");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
             BarrelTex = Content.Load<Texture2D>("Barrel");
@@ -352,13 +349,19 @@ namespace WildBounty
                     // Bullets
                     if (user.BCount > 0)
                     {
+<<<<<<< HEAD
                         
+=======
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
                         if (kbState.IsKeyDown(Keys.Space) && bulletExist == false)
                         {
 
                             b = new Bullet(10, bImage, user.Rect.X + user.Rect.Width, user.Rect.Y + 25, 10, 15, true);
                             bulletExist = true;
+<<<<<<< HEAD
                             timer = 0;
+=======
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
 
                             if (move == PlayerState.FaceRight)
                             {
@@ -368,7 +371,11 @@ namespace WildBounty
 
                             if (move == PlayerState.FaceLeft)
                             {
+<<<<<<< HEAD
                                 b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y +25, 10, 15, false);
+=======
+                                b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y + 25, 10, 15, false);
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
                                 bulletExist = true;
                             }
 
@@ -380,12 +387,16 @@ namespace WildBounty
                             if (b.Side == true)
                             {
                                 b.xRec += 10;
+<<<<<<< HEAD
                                 timer++;
+=======
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
                             }
 
                             if (b.Side == false)
                             {
                                 b.xRec -= 10;
+<<<<<<< HEAD
                                 timer++;
                             }
 
@@ -401,6 +412,16 @@ namespace WildBounty
                             }
                         }
                    }
+=======
+                            }
+
+                            if (b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
+                            {
+                                bulletExist = false;
+                            }
+                        }                  
+                    }
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
                     
 
                     foreach(Enemy e in enemyObj)
@@ -468,8 +489,11 @@ namespace WildBounty
                     
                      if(this.SingleKeyPress(Keys.T)== true) // for try again
                      {
+<<<<<<< HEAD
                          wave = 0;
                          user.Health = 100;
+=======
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
                          StartGame();
                         gameState = GameState.Game;
                      }
@@ -622,8 +646,6 @@ namespace WildBounty
                         
                     }
                 }
-                //spriteBatch.DrawString(font,"" + EnemyBullets.Count, new Vector2(100, 100), Color.White); //debug drawstring -- remove before final submission!
-
 
                 // Code for player direction
                 if(move == null)
@@ -657,6 +679,7 @@ namespace WildBounty
                 if(move == PlayerState.WalkUp)
                 {
                     if (prevMove == PlayerState.FaceRight || prevMove == PlayerState.WalkRight)
+<<<<<<< HEAD
                     {
                         spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White);
                     }
@@ -666,14 +689,15 @@ namespace WildBounty
                     }
                     /*
                     if(prevKbState.IsKeyDown(Keys.Right))
+=======
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
                     {
-                        spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White);
                     }
-                    if(prevKbState.IsKeyDown(Keys.Left))
+                    if (prevMove == PlayerState.FaceLeft || prevMove == PlayerState.WalkLeft)
                     {
-                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
+                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
                     }
-                     */
                 }
 
                 if(move == PlayerState.WalkDown)
@@ -788,7 +812,6 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Fire your bullet and move!", new Vector2(50, 150), Color.Black);
                 spriteBatch.DrawString(font, "You shoot faster near the edges of the screen!", new Vector2(50, 200), Color.Black);
                 spriteBatch.DrawString(font, "Killing enemies gives ammo!", new Vector2(50, 250), Color.Black);
-                spriteBatch.DrawString(font, "Do not run into enemies!", new Vector2(50, 300), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
@@ -825,10 +848,13 @@ namespace WildBounty
         {
             // reset data
             user.BountyScore = 0;
+<<<<<<< HEAD
+=======
+            user.Health = 100;
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
             wave = 0;
             user.BCount = 10;
              
-            
             // start the next wave
             this.NextWave();
         }
@@ -836,14 +862,27 @@ namespace WildBounty
         //method to start the next waves
         public void NextWave()
         {
+            // increments some health back to the player but health can never go over 100
+            if((wave*10 + user.Health) <= 100)
+            {
+                user.Health += wave * 10;
+            }
+            else
+            {
+                user.Health = 100;
+            }
+            
             // increment the wave count and calculate how many enemies to make
             wave++;
             int make = 2 * wave + 1;
+<<<<<<< HEAD
             if (user.Health < 100)
             {
                 user.Health += wave * 10;
             }
            
+=======
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
 
             // clear the lists
             enemyObj.Clear();
@@ -904,7 +943,11 @@ namespace WildBounty
             }
         }
 
+<<<<<<< HEAD
         // saves the scores *note: does not save elsewhere meaning there are no scores are not cumulative
+=======
+        // saves the scores *note: does not save elsewhere meaning the scores are only for each time the game is ran
+>>>>>>> 83c80198523c7dffc34baa13af122975ef0d6847
         public void SaveHighestScores(int score)
         {
             // add the score

@@ -348,10 +348,10 @@ namespace WildBounty
                     {
                         if (kbState.IsKeyDown(Keys.Space) && bulletExist == false)
                         {
-<<<<<<< HEAD
-                            b = new Bullet(10, bImage, user.Rect.X + user.Rect.Width, user.Rect.Y + 25, 10, 15,true);
+
+                            b = new Bullet(10, bImage, user.Rect.X + user.Rect.Width, user.Rect.Y + 25, 10, 15, true);
                             bulletExist = true;
-=======
+
                             if (move == PlayerState.FaceRight)
                             {
                                 b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 10, 10, 15, true);
@@ -365,34 +365,30 @@ namespace WildBounty
                             }
 
                             user.UseBullet();
->>>>>>> 7e167dd679e86b725027652dcdcdf57a743509fa
                         }
 
                         if (bulletExist == true)
                         {
-<<<<<<< HEAD
-                            b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y + 25, 10, 15,false);
+                            b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y + 25, 10, 15, false);
                             bulletExist = true;
                         }
-=======
-                            if (b.Side == true)
-                            {
-                                b.xRec += 10;
-                            }
->>>>>>> 7e167dd679e86b725027652dcdcdf57a743509fa
-
-                            if (b.Side == false)
-                            {
-                                b.xRec -= 10;
-                            }
-
-                            if (b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
-                            {
-                                bulletExist = false;
-                            }
-
+                        if (b.Side == true)
+                        {
+                            b.xRec += 10;
                         }
+
+                        if (b.Side == false)
+                        {
+                            b.xRec -= 10;
+                        }
+
+                        if (b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
+                        {
+                            bulletExist = false;
+                        }
+
                     }
+                    
 
                     foreach(Enemy e in enemyObj)
                     {
@@ -459,6 +455,8 @@ namespace WildBounty
                     }
                     break;
 
+                
+                
                 // GameOver State
                 case GameState.GameOver:
                     

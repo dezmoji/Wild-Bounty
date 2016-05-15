@@ -352,13 +352,13 @@ namespace WildBounty
 
                             if (move == PlayerState.FaceRight)
                             {
-                                b = new Bullet(10, bImage, user.Rect.X + 50, user.Rect.Y + 10, 10, 15, true);
+                                b = new Bullet(10, bImage, user.Rect.X + user.Rect.Width, user.Rect.Y + 25, 10, 15, true);
                                 bulletExist = true;
                             }
 
                             if (move == PlayerState.FaceLeft)
                             {
-                                b = new Bullet(10, bImage, user.Rect.X - 50, user.Rect.Y - 10, 15, 15, false);
+                                b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y + 25, 10, 15, false);
                                 bulletExist = true;
                             }
 
@@ -367,24 +367,21 @@ namespace WildBounty
 
                         if (bulletExist == true)
                         {
-                            b = new Bullet(10, bImage, user.Rect.X, user.Rect.Y + 25, 10, 15, false);
-                            bulletExist = true;
-                        }
-                        if (b.Side == true)
-                        {
-                            b.xRec += 10;
-                        }
+                            if (b.Side == true)
+                            {
+                                b.xRec += 10;
+                            }
 
-                        if (b.Side == false)
-                        {
-                            b.xRec -= 10;
-                        }
+                            if (b.Side == false)
+                            {
+                                b.xRec -= 10;
+                            }
 
-                        if (b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
-                        {
-                            bulletExist = false;
-                        }
-
+                            if (b.Rect.X > GraphicsDevice.Viewport.Width || b.Rect.X < 0)
+                            {
+                                bulletExist = false;
+                            }
+                        }                  
                     }
                     
 
@@ -575,13 +572,6 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Ammo " + user.BCount, new Vector2(GraphicsDevice.Viewport.Width - 150, 50), Color.White);
                 spriteBatch.DrawString(font, "Wave " + wave, new Vector2(GraphicsDevice.Viewport.Width - 150, 70), Color.White);
 
-                spriteBatch.DrawString(font, ""+user.Rect.Y, new Vector2(GraphicsDevice.Viewport.Width - 150, 100), Color.White);
-
-                if (prevMove == PlayerState.FaceRight || prevMove == PlayerState.WalkRight)
-                {
-                    spriteBatch.DrawString(font, "Right", new Vector2(GraphicsDevice.Viewport.Width - 150, 130), Color.White);
-                }
-
                 foreach(Enemy e in enemyObj)
                 {
                     // Enemy Direction based on player loc
@@ -612,8 +602,6 @@ namespace WildBounty
                         
                     }
                 }
-                //spriteBatch.DrawString(font,"" + EnemyBullets.Count, new Vector2(100, 100), Color.White); //debug drawstring -- remove before final submission!
-
 
                 // Code for player direction
                 if(move == null)
@@ -654,16 +642,6 @@ namespace WildBounty
                     {
                         spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET + frame * user.Rect.Width, 0, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
                     }
-                    /*
-                    if(prevKbState.IsKeyDown(Keys.Right))
-                    {
-                        spriteBatch.Draw(playerImg, user.Rect, new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White);
-                    }
-                    if(prevKbState.IsKeyDown(Keys.Left))
-                    {
-                        spriteBatch.Draw(playerImg, new Vector2(user.Rect.X, user.Rect.Y), new Rectangle(HERO_X_OFFSET, user.Rect.Y, user.Rect.Width, user.Rect.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0);
-                    }
-                     */
                 }
 
                 if(move == PlayerState.WalkDown)
@@ -825,6 +803,16 @@ namespace WildBounty
         //method to start the next waves
         public void NextWave()
         {
+            // increments some health back to the player but health can never go over 100
+            if((wave*10 + user.Health) <= 100)
+            {
+                user.Health += wave * 10;
+            }
+            else
+            {
+                user.Health = 100;
+            }
+            
             // increment the wave count and calculate how many enemies to make
             wave++;
             int make = 2 * wave + 1;
@@ -837,7 +825,7 @@ namespace WildBounty
             {
                 rndX = rgen.Next(50, GraphicsDevice.Viewport.Width - 200);
                 rndY = rgen.Next(50, GraphicsDevice.Viewport.Height - 50);
-                Enemy enemy = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 50);
+                Enemy enemy = new Enemy(100, enemyImg, rndX, rndY, 50, 100, 20);
                 enemyObj.Add(enemy);
             }
         }

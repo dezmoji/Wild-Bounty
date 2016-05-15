@@ -14,7 +14,7 @@ namespace WildBounty
      * Purpose: class for the enemy
      * Caveats: none
      */
-    class Enemy : Character
+    class Enemy : GameObject
     {
         // attributes
         private int points; // points that are added to the players bounty 
@@ -68,8 +68,10 @@ namespace WildBounty
             return false;
         }
 
+        // method to make the drawing of enemies easier
         public void Draw(SpriteBatch spriteBatch)
         {
+            // only drawn if the enemy is not dead yet
             if (IsActive == true)
             {
                 spriteBatch.Draw(Image,Rect,Color.White);

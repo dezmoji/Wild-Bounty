@@ -54,11 +54,6 @@ namespace WildBounty
             get { return rect.Y; }
         }
  
-        public int hRec
-        {
-            get { return rect.Height; }
-            set { rect.Height = value; }
-        }
         // Most GameObjects will have a health including obstacles
         public int Health
         {

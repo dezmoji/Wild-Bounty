@@ -38,9 +38,7 @@ namespace WildBounty
         Texture2D CactusTex;
         Texture2D RubbleTex;
         Player user;
-        Enemy enemy;
         Bullet b;
-        Ammo a;
         List<Enemy> enemyObj;
         int wave = 0;
         List<int> highScores;
@@ -185,7 +183,6 @@ namespace WildBounty
             background6 = Content.Load<Texture2D>("Wild-West-6");
             font = Content.Load<SpriteFont>("Font/Lemiesz_16");
             playerImg = Content.Load<Texture2D>("CharacterAssetAttempt");
-            //playerImg = Content.Load<Texture2D>("CharacterAssetSingle");
             enemyImg = Content.Load<Texture2D>("EnemyAsset1");
             bImage = Content.Load<Texture2D>("BulletAsset");
             BarrelTex = Content.Load<Texture2D>("Barrel");
@@ -264,6 +261,7 @@ namespace WildBounty
                     // when the player dies, it's game over
                      if(user.Health <= 0)
                      {
+                         SaveHighestScores(user.BountyScore);
                         gameState = GameState.GameOver;
                      }
 
@@ -422,13 +420,6 @@ namespace WildBounty
                             enemyObj[i].Rect = new Rectangle(enemyObj[i].Rect.X + 2, enemyObj[i].Rect.Y + 2, enemyObj[i].Rect.Width, enemyObj[i].Rect.Height);
                             ScreenWrap(enemyObj[i]);
                         }
-
-                        // Damage done by collision
-                        
-                        if (user.Rect.Intersects(enemyObj[i].Rect))
-                        {
-                            user.Health = user.Health - 1;
-                        }
                     }
 
                     // calls the death method for enemies
@@ -446,8 +437,6 @@ namespace WildBounty
                     
                      if(this.SingleKeyPress(Keys.T)== true) // for try again
                      {
-                         wave = 0;
-                         user.Health = 100;
                          StartGame();
                         gameState = GameState.Game;
                      }
@@ -749,7 +738,6 @@ namespace WildBounty
                 spriteBatch.DrawString(font, "Fire your bullet and move!", new Vector2(50, 150), Color.Black);
                 spriteBatch.DrawString(font, "You shoot faster near the edges of the screen!", new Vector2(50, 200), Color.Black);
                 spriteBatch.DrawString(font, "Killing enemies gives ammo!", new Vector2(50, 250), Color.Black);
-                spriteBatch.DrawString(font, "Do not run into enemies!", new Vector2(50, 300), Color.Black);
                 spriteBatch.DrawString(font, "Press B to go Back", new Vector2(GraphicsDevice.Viewport.Width - 250, GraphicsDevice.Viewport.Height - 50), Color.Black);
 
             }
@@ -786,10 +774,10 @@ namespace WildBounty
         {
             // reset data
             user.BountyScore = 0;
+            user.Health = 100;
             wave = 0;
             user.BCount = 10;
              
-            
             // start the next wave
             this.NextWave();
         }
@@ -799,8 +787,7 @@ namespace WildBounty
         {
             // increment the wave count and calculate how many enemies to make
             wave++;
-            int make = 2 * wave + 3;
-           
+            int make = 2 * wave + 1;
 
             // clear the lists
             enemyObj.Clear();
@@ -861,7 +848,7 @@ namespace WildBounty
             }
         }
 
-        // saves the scores *note: does not save elsewhere meaning there are no scores are not cumulative
+        // saves the scores *note: does not save elsewhere meaning the scores are only for each time the game is ran
         public void SaveHighestScores(int score)
         {
             // add the score

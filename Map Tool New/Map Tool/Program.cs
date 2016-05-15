@@ -16,9 +16,9 @@ namespace Map_Tool
             using (var game = new Game1())
                 game.Run();
 
-                //Application.EnableVisualStyles();
-                //game.SetCompatibleTextRenderingDefault(false);
-                //game.Run(new Form1());
+            //Application.EnableVisualStyles();
+            //game.SetCompatibleTextRenderingDefault(false);
+            //game.Run(new Form1());
 
         }
     }

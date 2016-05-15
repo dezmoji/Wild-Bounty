@@ -20,7 +20,7 @@ namespace Map_Tool
         Texture2D RubbleTex;
         Form1 mapForm = new Form1();
         //Scenery test = new Scenery(20, 20, 20, 20, 20, 0, "Barrel");
-       
+
         //List<Scenery> sceneryColl = mapForm.SceneryColl;
 
         public Game1()
@@ -116,7 +116,7 @@ namespace Map_Tool
             //get mouse state
             var mouseState = Mouse.GetState();
             //if in the game screen
-            if(mouseState.X > 0 && mouseState.X < this.GraphicsDevice.Viewport.Width && mouseState.Y > 0 && mouseState.Y < GraphicsDevice.Viewport.Height)
+            if (mouseState.X > 0 && mouseState.X < this.GraphicsDevice.Viewport.Width && mouseState.Y > 0 && mouseState.Y < GraphicsDevice.Viewport.Height)
             {
                 //on click
                 if (mouseState.LeftButton == ButtonState.Pressed)
@@ -126,7 +126,7 @@ namespace Map_Tool
                     mapForm.FY = mouseState.Y;
                 }
             }
-            
+
             base.Update(gameTime);
         }
 

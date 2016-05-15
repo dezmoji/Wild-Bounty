@@ -53,8 +53,8 @@ namespace Map_Tool
         private void Confirm_Click(object sender, EventArgs e)
         {
             //get and store all variables (F is for form)
-            int FHealth = Convert.ToInt32(HealthBox.Value);
-            int FLoot = Convert.ToInt32(LootChanceBox.Value);
+            int FHealth =1;
+            int FLoot = 1;
             FX = Convert.ToInt32(XposBox.Value);
             FY = Convert.ToInt32(YposBox.Value);
             int FWidth = Convert.ToInt32(WidthBox.Value);
@@ -102,8 +102,8 @@ namespace Map_Tool
                         FY = 0;
                         FWidth = 0;
                         FHeight = 0;
-                        HealthBox.Value = 0;
-                        LootChanceBox.Value = 0;
+                       // HealthBox.Value = 0;
+                        //LootChanceBox.Value = 0;
                         XposBox.Value = 0;
                         YposBox.Value = 0;
                         WidthBox.Value = 0;
@@ -184,6 +184,36 @@ namespace Map_Tool
                 TexturePreview.ImageLocation = TextureBox.Text + ".png";
                 TexturePreview.SizeMode = PictureBoxSizeMode.StretchImage;
             }  
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TexturePreview_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

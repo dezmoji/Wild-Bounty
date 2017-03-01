@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/Dez/Desktop/WildBountyFinished/WildBounty/WildBounty/Content/myfont.spritefont</SourceFile>
+  <SourceTime>2016-05-14T19:21:54-04:00</SourceTime>
+  <DestFile>C:/Users/Dez/Desktop/WildBountyFinished/WildBounty/WildBounty/Content/bin/WindowsGL/myfont.xnb</DestFile>
+  <DestTime>2017-03-01T15:46:37.1528747-05:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2017-02-26T02:36:12-05:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2017-02-26T02:36:12-05:00</ProcessorTime>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
